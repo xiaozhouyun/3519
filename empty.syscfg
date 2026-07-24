@@ -5,8 +5,8 @@
  *
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "MSPM0G351X" --part "Default" --package "LQFP-100(PZ)" --product "mspm0_sdk@2.11.00.07"
- * @v2CliArgs --device "MSPM0G3519" --package "LQFP-100(PZ)" --product "mspm0_sdk@2.11.00.07"
+ * @cliArgs --device "MSPM0G351X" --part "Default" --package "LQFP-80(PN)" --product "mspm0_sdk@2.11.00.07"
+ * @v2CliArgs --device "MSPM0G3519" --package "LQFP-80(PN)" --product "mspm0_sdk@2.11.00.07"
  * @versions {"tool":"1.28.0+4712"}
  */
 
@@ -15,28 +15,82 @@
  */
 const GPIO   = scripting.addModule("/ti/driverlib/GPIO", {}, false);
 const GPIO1  = GPIO.addInstance();
+const GPIO2  = GPIO.addInstance();
+const SPI    = scripting.addModule("/ti/driverlib/SPI", {}, false);
+const SPI1   = SPI.addInstance();
 const SYSCTL = scripting.addModule("/ti/driverlib/SYSCTL");
 
 /**
  * Write custom configuration values to the imported modules.
  */
-GPIO1.$name                         = "GPIO_GRP_0";
-GPIO1.port                          = "PORTB";
-GPIO1.associatedPins[0].$name       = "PIN_0";
-GPIO1.associatedPins[0].assignedPin = "0";
-GPIO1.associatedPins[0].ioStructure = "SD";
+GPIO1.$name                           = "led";
+GPIO1.port                            = "PORTA";
+GPIO1.associatedPins.create(2);
+GPIO1.associatedPins[0].$name         = "led1";
+GPIO1.associatedPins[0].assignedPin   = "14";
+GPIO1.associatedPins[0].driveStrength = "HIGH";
+GPIO1.associatedPins[0].pin.$assign   = "PA14";
+GPIO1.associatedPins[1].$name         = "les2";
+GPIO1.associatedPins[1].assignedPin   = "17";
 
-const Board = scripting.addModule("/ti/driverlib/Board", {}, false);
+const Board                       = scripting.addModule("/ti/driverlib/Board", {}, false);
+Board.peripheral.$assign          = "DEBUGSS";
+Board.peripheral.swclkPin.$assign = "PA20";
+Board.peripheral.swdioPin.$assign = "PA19";
 
-SYSCTL.forceDefaultClkConfig = true;
-SYSCTL.clockTreeEn           = true;
+GPIO2.$name                                 = "spi_0";
+GPIO2.associatedPins.create(4);
+GPIO2.associatedPins[0].$name               = "OLED_DC";
+GPIO2.associatedPins[0].assignedPort        = "PORTC";
+GPIO2.associatedPins[0].assignedPin         = "8";
+GPIO2.associatedPins[0].assignedPortSegment = "Lower";
+GPIO2.associatedPins[0].initialValue        = "SET";
+GPIO2.associatedPins[0].ioStructure         = "SD";
+GPIO2.associatedPins[1].$name               = "OLED_CS";
+GPIO2.associatedPins[1].assignedPort        = "PORTC";
+GPIO2.associatedPins[1].assignedPin         = "9";
+GPIO2.associatedPins[1].assignedPortSegment = "Lower";
+GPIO2.associatedPins[1].ioStructure         = "SD";
+GPIO2.associatedPins[1].initialValue        = "SET";
+GPIO2.associatedPins[2].$name               = "OLED_RES";
+GPIO2.associatedPins[2].assignedPort        = "PORTB";
+GPIO2.associatedPins[2].assignedPin         = "23";
+GPIO2.associatedPins[2].initialValue        = "SET";
+GPIO2.associatedPins[2].ioStructure         = "SD";
+GPIO2.associatedPins[3].$name               = "OLED_BLK";
+GPIO2.associatedPins[3].initialValue        = "SET";
+GPIO2.associatedPins[3].ioStructure         = "SD";
+GPIO2.associatedPins[3].assignedPort        = "PORTA";
+GPIO2.associatedPins[3].assignedPin         = "30";
+
+SPI1.$name                      = "SPI_0";
+SPI1.chipSelect                 = [];
+SPI1.frameFormat                = "MOTO3";
+SPI1.sclkPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric0";
+SPI1.mosiPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric1";
+SPI1.misoPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric2";
+SPI1.peripheral.sclkPin.$assign = "PB3";
+SPI1.peripheral.mosiPin.$assign = "PB2";
+
+SYSCTL.BORThresh                      = "1";
+SYSCTL.validateClkStatus              = true;
+SYSCTL.SYSPLL_CLK0En                  = true;
+SYSCTL.MCLKSource                     = "HSCLK";
+SYSCTL.enableWorkaround_SYSPLL_ERR_01 = false;
+
+const ProjectConfig              = scripting.addModule("/ti/project_config/ProjectConfig", {}, false);
+ProjectConfig.migrationCondition = true;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-GPIO1.associatedPins[0].pin.$suggestSolution = "PB0";
-Board.peripheral.$suggestSolution            = "DEBUGSS";
-Board.peripheral.swclkPin.$suggestSolution   = "PA20";
-Board.peripheral.swdioPin.$suggestSolution   = "PA19";
+GPIO1.associatedPins[1].pin.$suggestSolution = "PA17";
+GPIO2.associatedPins[0].pin.$suggestSolution = "PC8";
+GPIO2.associatedPins[1].pin.$suggestSolution = "PC9";
+GPIO2.associatedPins[2].pin.$suggestSolution = "PB23";
+GPIO2.associatedPins[3].pin.$suggestSolution = "PA30";
+SPI1.peripheral.$suggestSolution             = "SPI0";
+SPI1.peripheral.misoPin.$suggestSolution     = "PA10";
+SYSCTL.peripheral.$suggestSolution           = "SYSCTL";
