@@ -1,4 +1,4 @@
-﻿/*********************************************************************************************************************
+/*********************************************************************************************************************
 * MSPM0G3519 IMU660RC 六轴陀螺仪加速度计驱动 (TI Official DriverLib 移植版)
 * 
 * 硬件引脚连接说明 (基于 ti_msp_dl_config.h / empty.syscfg 配置):
@@ -22,22 +22,13 @@
 #include <stdbool.h>
 #include <math.h>
 
-#ifndef uint8
+#ifndef _ZF_TYPES_DEFINED_
+#define _ZF_TYPES_DEFINED_
 typedef uint8_t uint8;
-#endif
-#ifndef uint16
 typedef uint16_t uint16;
-#endif
-#ifndef uint32
 typedef uint32_t uint32;
-#endif
-#ifndef int8
 typedef int8_t int8;
-#endif
-#ifndef int16
 typedef int16_t int16;
-#endif
-#ifndef int32
 typedef int32_t int32;
 #endif
 

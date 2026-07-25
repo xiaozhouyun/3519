@@ -424,6 +424,11 @@
               <FileType>1</FileType>
               <FilePath>..\core\src\zf_device_imu660rc.c</FilePath>
             </File>
+            <File>
+              <FileName>Grayscale.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\core\src\Grayscale.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
