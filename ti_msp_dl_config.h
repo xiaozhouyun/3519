@@ -271,10 +271,6 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define GPIO_IMU660RC_SCLK_PIN                                   DL_GPIO_PIN_16
 #define GPIO_IMU660RC_IOMUX_SCLK                                (IOMUX_PINCM33)
 #define GPIO_IMU660RC_IOMUX_SCLK_FUNC                IOMUX_PINCM33_PF_SPI1_SCLK
-#define GPIO_IMU660RC_CS0_PORT                                            GPIOB
-#define GPIO_IMU660RC_CS0_PIN                                    DL_GPIO_PIN_13
-#define GPIO_IMU660RC_IOMUX_CS0                                 (IOMUX_PINCM30)
-#define GPIO_IMU660RC_IOMUX_CS0_FUNC                  IOMUX_PINCM30_PF_SPI1_CS0
 
 
 
@@ -308,12 +304,6 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 
 
 
-/* Port definition for Pin Group imuInt */
-#define imuInt_PORT                                                      (GPIOB)
-
-/* Defines for int2: GPIOB.24 with pinCMx 52 on package pin 71 */
-#define imuInt_int2_PIN                                         (DL_GPIO_PIN_24)
-#define imuInt_int2_IOMUX                                        (IOMUX_PINCM52)
 /* Port definition for Pin Group buzzer */
 #define buzzer_PORT                                                      (GPIOB)
 
@@ -352,6 +342,19 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define key_key3_PORT                                                    (GPIOC)
 #define key_key3_PIN                                             (DL_GPIO_PIN_7)
 #define key_key3_IOMUX                                           (IOMUX_PINCM85)
+/* Port definition for Pin Group imuInt */
+#define imuInt_PORT                                                      (GPIOB)
+
+/* Defines for int2: GPIOB.24 with pinCMx 52 on package pin 71 */
+// pins affected by this interrupt request:["int2"]
+#define imuInt_INT_IRQN                                         (GPIOB_INT_IRQn)
+#define imuInt_INT_IIDX                         (DL_INTERRUPT_GROUP1_IIDX_GPIOB)
+#define imuInt_int2_IIDX                                    (DL_GPIO_IIDX_DIO24)
+#define imuInt_int2_PIN                                         (DL_GPIO_PIN_24)
+#define imuInt_int2_IOMUX                                        (IOMUX_PINCM52)
+/* Defines for CS: GPIOB.13 with pinCMx 30 on package pin 37 */
+#define imuInt_CS_PIN                                           (DL_GPIO_PIN_13)
+#define imuInt_CS_IOMUX                                          (IOMUX_PINCM30)
 /* Defines for AIN2: GPIOB.22 with pinCMx 50 on package pin 69 */
 #define TB6612_AIN2_PORT                                                 (GPIOB)
 #define TB6612_AIN2_PIN                                         (DL_GPIO_PIN_22)
@@ -397,6 +400,7 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 /* Defines for PIN_3: GPIOA.9 with pinCMx 20 on package pin 23 */
 #define xunjiGPIO_PIN_3_PIN                                      (DL_GPIO_PIN_9)
 #define xunjiGPIO_PIN_3_IOMUX                                    (IOMUX_PINCM20)
+#define GPIOB_EVENT_PUBLISHER_1_CHANNEL                                      (1)
 
 
 /* clang-format on */

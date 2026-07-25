@@ -1,176 +1,144 @@
-/*********************************************************************************************************************
-* RT1064DVL6A Opensourec Library ¼´£¨RT1064DVL6A ¿ªÔ´¿â£©ÊÇÒ»¸ö»ùÓÚ¹Ù·½ SDK ½Ó¿ÚµÄµÚÈý·½¿ªÔ´¿â
-* Copyright (c) 2026 SEEKFREE Öð·É¿Æ¼¼
-*
-* ±¾ÎÄ¼þÊÇ RT1064DVL6A ¿ªÔ´¿âµÄÒ»²¿·Ö
-*
-* RT1064DVL6A ¿ªÔ´¿â ÊÇÃâ·ÑÈí¼þ
-* Äú¿ÉÒÔ¸ù¾Ý×ÔÓÉÈí¼þ»ù½ð»á·¢²¼µÄ GPL£¨GNU General Public License£¬¼´ GNUÍ¨ÓÃ¹«¹²Ðí¿ÉÖ¤£©µÄÌõ¿î
-* ¼´ GPL µÄµÚ3°æ£¨¼´ GPL3.0£©»ò£¨ÄúÑ¡ÔñµÄ£©ÈÎºÎºóÀ´µÄ°æ±¾£¬ÖØÐÂ·¢²¼ºÍ/»òÐÞ¸ÄËü
-*
-* ±¾¿ªÔ´¿âµÄ·¢²¼ÊÇÏ£ÍûËüÄÜ·¢»Ó×÷ÓÃ£¬µ«²¢Î´¶ÔÆä×÷ÈÎºÎµÄ±£Ö¤
-* ÉõÖÁÃ»ÓÐÒþº¬µÄÊÊÏúÐÔ»òÊÊºÏÌØ¶¨ÓÃÍ¾µÄ±£Ö¤
-* ¸ü¶àÏ¸½ÚÇë²Î¼û GPL
-*
-* ÄúÓ¦¸ÃÔÚÊÕµ½±¾¿ªÔ´¿âµÄÍ¬Ê±ÊÕµ½Ò»·Ý GPL µÄ¸±±¾
-* Èç¹ûÃ»ÓÐ£¬Çë²ÎÔÄ<https://www.gnu.org/licenses/>
-*
-* ¶îÍâ×¢Ã÷£º
-* ±¾¿ªÔ´¿âÊ¹ÓÃ GPL3.0 ¿ªÔ´Ðí¿ÉÖ¤Ð­Òé ÒÔÉÏÐí¿ÉÉêÃ÷ÎªÒëÎÄ°æ±¾
-* Ðí¿ÉÉêÃ÷Ó¢ÎÄ°æÔÚ libraries/doc ÎÄ¼þ¼ÐÏÂµÄ GPL3_permission_statement.txt ÎÄ¼þÖÐ
-* Ðí¿ÉÖ¤¸±±¾ÔÚ libraries ÎÄ¼þ¼ÐÏÂ ¼´¸ÃÎÄ¼þ¼ÐÏÂµÄ LICENSE ÎÄ¼þ
-* »¶Ó­¸÷Î»Ê¹ÓÃ²¢´«²¥±¾³ÌÐò µ«ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÖð·É¿Æ¼¼µÄ°æÈ¨ÉùÃ÷£¨¼´±¾ÉùÃ÷£©
-*
-* ÎÄ¼þÃû³Æ          zf_device_imu660rc
-* ¹«Ë¾Ãû³Æ          ³É¶¼Öð·É¿Æ¼¼ÓÐÏÞ¹«Ë¾
-* °æ±¾ÐÅÏ¢          ²é¿´ libraries/doc ÎÄ¼þ¼ÐÄÚ version ÎÄ¼þ °æ±¾ËµÃ÷
-* ¿ª·¢»·¾³          MDK 5.38
-* ÊÊÓÃÆ½Ì¨          MSPM0G3519
-* µêÆÌÁ´½Ó          https://seekfree.taobao.com/
-*
-* ÐÞ¸Ä¼ÇÂ¼
-* ÈÕÆÚ              ×÷Õß                ±¸×¢
-* 2025-12-12        SeekFree            first version
+ï»¿/*********************************************************************************************************************
+* MSPM0G3519 IMU660RC å…­è½´é™€èžºä»ªåŠ é€Ÿåº¦è®¡é©±åŠ¨ (TI Official DriverLib ç§»æ¤ç‰ˆ)
+* 
+* ç¡¬ä»¶å¼•è„šè¿žæŽ¥è¯´æ˜Ž (åŸºäºŽ ti_msp_dl_config.h / empty.syscfg é…ç½®):
+* -------------------------------------------------------------------------------------------------------------------
+* IMU660RC æ¨¡å—å¼•è„š      å•ç‰‡æœºå¼•è„š (MSPM0G3519)                      è¯´æ˜Ž
+* SCL / SPC             PB16 (GPIO_IMU660RC_SCLK, SPI1 SCLK)        SPI æ—¶é’Ÿçº¿
+* SDA / SDI / MOSI      PB15 (GPIO_IMU660RC_PICO, SPI1 PICO)        SPI ä¸»å‡ºä»Žå…¥
+* SA0 / SDO / MISO      PB14 (GPIO_IMU660RC_POCI, SPI1 POCI)        SPI ä¸»å…¥ä»Žå‡º
+* CS                    PB13 (imuInt_CS_PIN, GPIOB)                  SPI è½¯ä»¶æŽ§åˆ¶ç‰‡é€‰ä¿¡å· (GPIO)
+* INT2                  PB24 (imuInt_int2_PIN, GPIOB)                æ•°æ®å°±ç»ª/å››å…ƒæ•°æ›´æ–°ä¸­æ–­è„š (å¼•è„šå¤–éƒ¨ä¸­æ–­)
+* VCC                   3.3V
+* GND                   ç”µæºåœ°
+* -------------------------------------------------------------------------------------------------------------------
 ********************************************************************************************************************/
-/*********************************************************************************************************************
-* ½ÓÏß¶¨Òå£º
-*                   ------------------------------------
-*                   Ä£¿é¹Ü½Å            µ¥Æ¬»ú¹Ü½Å
-*                   // Ó²¼þ SPI Òý½Å
-*                   SCL/SPC           ²é¿´ zf_device_imu660rc.h ÖÐ IMU660RC_SPC_PIN ºê¶¨Òå
-*                   SDA/DSI           ²é¿´ zf_device_imu660rc.h ÖÐ IMU660RC_SDI_PIN ºê¶¨Òå
-*                   SA0/SDO           ²é¿´ zf_device_imu660rc.h ÖÐ IMU660RC_SDO_PIN ºê¶¨Òå
-*                   CS                ²é¿´ zf_device_imu660rc.h ÖÐ IMU660RC_CS_PIN ºê¶¨Òå
-*     							INT2              ²é¿´ zf_device_imu660rc.h ÖÐ IMU660RC_INT2_PIN  ºê¶¨Òå
-*                   VCC               3.3VµçÔ´
-*                   GND               µçÔ´µØ
-*                   ÆäÓàÒý½ÅÐü¿Õ
-*
-*                   // Èí¼þ IIC Òý½Å
-*                   SCL/SPC           ²é¿´ zf_device_imu660rc.h ÖÐ IMU660RC_SCL_PIN ºê¶¨Òå
-*                   SDA/DSI           ²é¿´ zf_device_imu660rc.h ÖÐ IMU660RC_SDA_PIN ºê¶¨Òå
-*                   VCC               3.3VµçÔ´
-*                   GND               µçÔ´µØ
-*                   ÆäÓàÒý½ÅÐü¿Õ
-*                   ------------------------------------
-********************************************************************************************************************/
-
 
 #ifndef _zf_device_imu660rc_h_
 #define _zf_device_imu660rc_h_
 
-#include "zf_common_typedef.h"
+#include "ti_msp_dl_config.h"
+#include <stdint.h>
+#include <stdbool.h>
+#include <math.h>
 
-
-// IMU660RC_USE_SOFT_IIC¶¨ÒåÎª0±íÊ¾Ê¹ÓÃÓ²¼þSPIÇý¶¯ ¶¨ÒåÎª1±íÊ¾Ê¹ÓÃÈí¼þIICÇý¶¯
-// µ±¸ü¸ÄIMU660RC_USE_SOFT_IIC¶¨Òåºó£¬ÐèÒªÏÈ±àÒë²¢ÏÂÔØ³ÌÐò£¬µ¥Æ¬»úÓëÄ£¿éÐèÒª¶ÏµçÖØÆô²ÅÄÜÕý³£Í¨Ñ¶
-#define IMU660RC_USE_SOFT_IIC           ( 0 )                                   // Ä¬ÈÏÊ¹ÓÃÓ²¼þ SPI ·½Ê½Çý¶¯
-#define IMU660RC_USE_IIC                ( 0 )
-
-#if IMU660RC_USE_SOFT_IIC                                                       // ÕâÁ½¶Î ÑÕÉ«Õý³£µÄ²ÅÊÇÕýÈ·µÄ ÑÕÉ«»ÒµÄ¾ÍÊÇÃ»ÓÐÓÃµÄ
-//====================================================Èí¼þ IIC Çý¶¯====================================================
-#define IMU660RC_SOFT_IIC_DELAY         ( 10 )                                  // Èí¼þ IIC µÄÊ±ÖÓÑÓÊ±ÖÜÆÚ ÊýÖµÔ½Ð¡ IIC Í¨ÐÅËÙÂÊÔ½¿ì
-#define IMU660RC_SCL_PIN                ( B23 )                                 // Èí¼þ IIC SCL Òý½Å Á¬½Ó IMU660RC µÄ SCL Òý½Å
-#define IMU660RC_SDA_PIN                ( B22 )                                 // Èí¼þ IIC SDA Òý½Å Á¬½Ó IMU660RC µÄ SDA Òý½Å
-//====================================================Èí¼þ IIC Çý¶¯====================================================
-#else
-
-//====================================================Ó²¼þ SPI Çý¶¯====================================================
-#define IMU660RC_SPI_SPEED              ( 8 * 1000 * 1000)                      // Ó²¼þ SPI ËÙÂÊ
-#define IMU660RC_SPI                    ( SPI_1         )                       // Ó²¼þ SPI ºÅ
-#define IMU660RC_SPC_PIN                ( SPI1_SCK_B23  )                       // Ó²¼þ SPI SCK Òý½Å
-#define IMU660RC_SDI_PIN                ( SPI1_MOSI_B22 )                       // Ó²¼þ SPI MOSI Òý½Å
-#define IMU660RC_SDO_PIN                ( SPI1_MISO_B21 )                       // Ó²¼þ SPI MISO Òý½Å
-//====================================================Ó²¼þ SPI Çý¶¯====================================================
+#ifndef uint8
+typedef uint8_t uint8;
 #endif
-#define IMU660RC_CS_PIN                 ( B19 )                                 // CS Æ¬Ñ¡Òý½Å
-#define IMU660RC_CS(x)                  ( (x) ? (gpio_high(IMU660RC_CS_PIN)) : (gpio_low(IMU660RC_CS_PIN)) )
-#define IMU660RC_INT2_PIN               ( B24 )                                 // ÖÐ¶ÏÐÅºÅÒý½Å£¬ÔÚ¶ÁÈ¡ËÄÔªÊýÊ±ÐèÒªÊ¹ÓÃ
+#ifndef uint16
+typedef uint16_t uint16;
+#endif
+#ifndef uint32
+typedef uint32_t uint32;
+#endif
+#ifndef int8
+typedef int8_t int8;
+#endif
+#ifndef int16
+typedef int16_t int16;
+#endif
+#ifndef int32
+typedef int32_t int32;
+#endif
 
+//==================================================== ç¡¬ä»¶ä¸Žä¸­æ–­å¼•è„šé…ç½® ====================================================
+#define IMU660RC_INT2_PORT              ( imuInt_PORT )                         // INT2 æŒ‚è½½ç«¯å£ï¼šGPIOB
+#define IMU660RC_INT2_PIN               ( imuInt_int2_PIN )                     // INT2 æŒ‚è½½å¼•è„šï¼šDL_GPIO_PIN_24 (PB24)
 
-#define IMU660RC_QUARTERNION_GET_GYRO   ( 1 )                                   // 1£ºÔÚÊä³öËÄÔªÊýµÄÄ£Ê½Ê±£¬¶ÁÈ¡ËÄÔªÊýÊ±×Ô¶¯¶ÁÈ¡½ÇËÙ¶È 0£º²»×Ô¶¯¶ÁÈ¡
-#define IMU660RC_QUARTERNION_GET_ACC    ( 1 )                                   // 1£ºÔÚÊä³öËÄÔªÊýµÄÄ£Ê½Ê±£¬¶ÁÈ¡ËÄÔªÊýÊ±×Ô¶¯¶ÁÈ¡¼ÓËÙ¶È 0£º²»×Ô¶¯¶ÁÈ¡
-#define IMU660RC_ACC_SAMPLE_DEFAULT     ( IMU660RC_ACC_SAMPLE_SGN_8G )          // ÔÚÕâÉèÖÃÄ¬ÈÏµÄ ¼ÓËÙ¶È¼Æ ³õÊ¼»¯Á¿³Ì
-#define IMU660RC_GYRO_SAMPLE_DEFAULT    ( IMU660RC_GYRO_SAMPLE_SGN_2000DPS )    // ÔÚÕâÉèÖÃÄ¬ÈÏµÄ ÍÓÂÝÒÇ   ³õÊ¼»¯Á¿³Ì
+// å…¼å®¹ç”¨æˆ·é‡æ–°å®šä¹‰çš„ PB13 CS ç‰‡é€‰å® (ä¼˜å…ˆä½¿ç”¨ç”¨æˆ·å®šä¹‰çš„ imuInt_CS_PIN)
+#ifdef imuInt_CS_PIN
+#define IMU660RC_CS_PORT                ( imuInt_PORT )
+#define IMU660RC_CS_PIN                 ( imuInt_CS_PIN )
+#else
+#define IMU660RC_CS_PORT                ( GPIOB )
+#define IMU660RC_CS_PIN                 ( DL_GPIO_PIN_13 )
+#endif
 
+#define IMU660RC_QUARTERNION_GET_GYRO   ( 1 )                                   // 1-å§¿æ€æ›´æ–°æ—¶åŒæ—¶è¯»å–è§’é€Ÿåº¦åŽŸå§‹æ•°æ® 0-ä¸è¯»å–
+#define IMU660RC_QUARTERNION_GET_ACC    ( 1 )                                   // 1-å§¿æ€æ›´æ–°æ—¶åŒæ—¶è¯»å–åŠ é€Ÿåº¦åŽŸå§‹æ•°æ® 0-ä¸è¯»å–
+#define IMU660RC_ACC_SAMPLE_DEFAULT     ( IMU660RC_ACC_SAMPLE_SGN_8G )          // é»˜è®¤åŠ é€Ÿåº¦è®¡é‡‡æ ·é‡ç¨‹ (Â±8G)
+#define IMU660RC_GYRO_SAMPLE_DEFAULT    ( IMU660RC_GYRO_SAMPLE_SGN_2000DPS )    // é»˜è®¤é™€èžºä»ªé‡‡æ ·é‡ç¨‹ (Â±2000DPS)
+
+// å†…å­˜ Bank åˆ‡æ¢æžšä¸¾å®šä¹‰
 typedef enum
 {
-    IMU660RC_MAIN_MEM_BANK  = 0x00,
-    IMU660RC_HUB_MEM_BANK   = 0x40,
-    IMU660RC_EMBED_MEM_BANK = 0x80,
-}imu660rc_mem_bank_enum;
+    IMU660RC_MAIN_MEM_BANK  = 0x00,                                             // ä¸»å†…å­˜ Bank
+    IMU660RC_HUB_MEM_BANK   = 0x40,                                             // Hub å†…å­˜ Bank
+    IMU660RC_EMBED_MEM_BANK = 0x80,                                             // åµŒå…¥å¼åŠŸèƒ½ Bank (å››å…ƒæ•°è§£ç®—å¼•æ“Ž)
+} imu660rc_mem_bank_enum;
 
+// åŠ é€Ÿåº¦è®¡é‡‡æ ·é‡ç¨‹æžšä¸¾
 typedef enum
 {
-    IMU660RC_ACC_SAMPLE_SGN_2G ,                                                // ¼ÓËÙ¶È¼ÆÁ¿³Ì ¡À2G  (ACC = Accelerometer ¼ÓËÙ¶È¼Æ) (SGN = signum ´ø·ûºÅÊý ±íÊ¾Õý¸º·¶Î§) (G = g ÖØÁ¦¼ÓËÙ¶È g¡Ö9.80 m/s^2)
-    IMU660RC_ACC_SAMPLE_SGN_4G ,                                                // ¼ÓËÙ¶È¼ÆÁ¿³Ì ¡À4G  
-    IMU660RC_ACC_SAMPLE_SGN_8G ,                                                // ¼ÓËÙ¶È¼ÆÁ¿³Ì ¡À8G  
-    IMU660RC_ACC_SAMPLE_SGN_16G,                                                // ¼ÓËÙ¶È¼ÆÁ¿³Ì ¡À16G 
-}imu660rc_acc_sample_config;
+    IMU660RC_ACC_SAMPLE_SGN_2G ,                                                // åŠ é€Ÿåº¦é‡ç¨‹ Â±2G
+    IMU660RC_ACC_SAMPLE_SGN_4G ,                                                // åŠ é€Ÿåº¦é‡ç¨‹ Â±4G  
+    IMU660RC_ACC_SAMPLE_SGN_8G ,                                                // åŠ é€Ÿåº¦é‡ç¨‹ Â±8G  
+    IMU660RC_ACC_SAMPLE_SGN_16G,                                                // åŠ é€Ÿåº¦é‡ç¨‹ Â±16G 
+} imu660rc_acc_sample_config;
 
+// é™€èžºä»ªé‡‡æ ·é‡ç¨‹æžšä¸¾
 typedef enum
 {
-    IMU660RC_GYRO_SAMPLE_SGN_125DPS ,                                           // ÍÓÂÝÒÇÁ¿³Ì ¡À125DPS  (GYRO = Gyroscope ÍÓÂÝÒÇ) (SGN = signum ´ø·ûºÅÊý ±íÊ¾Õý¸º·¶Î§) (DPS = Degree Per Second ½ÇËÙ¶Èµ¥Î» ¡ã/S)
-    IMU660RC_GYRO_SAMPLE_SGN_250DPS ,                                           // ÍÓÂÝÒÇÁ¿³Ì ¡À250DPS  
-    IMU660RC_GYRO_SAMPLE_SGN_500DPS ,                                           // ÍÓÂÝÒÇÁ¿³Ì ¡À500DPS  
-    IMU660RC_GYRO_SAMPLE_SGN_1000DPS,                                           // ÍÓÂÝÒÇÁ¿³Ì ¡À1000DPS 
-    IMU660RC_GYRO_SAMPLE_SGN_2000DPS,                                           // ÍÓÂÝÒÇÁ¿³Ì ¡À2000DPS 
-    IMU660RC_GYRO_SAMPLE_SGN_4000DPS,                                           // ÍÓÂÝÒÇÁ¿³Ì ¡À4000DPS 
-}imu660rc_gyro_sample_config;
+    IMU660RC_GYRO_SAMPLE_SGN_125DPS ,                                           // é™€èžºä»ªé‡ç¨‹ Â±125DPS (åº¦/ç§’)
+    IMU660RC_GYRO_SAMPLE_SGN_250DPS ,                                           // é™€èžºä»ªé‡ç¨‹ Â±250DPS  
+    IMU660RC_GYRO_SAMPLE_SGN_500DPS ,                                           // é™€èžºä»ªé‡ç¨‹ Â±500DPS  
+    IMU660RC_GYRO_SAMPLE_SGN_1000DPS,                                           // é™€èžºä»ªé‡ç¨‹ Â±1000DPS 
+    IMU660RC_GYRO_SAMPLE_SGN_2000DPS,                                           // é™€èžºä»ªé‡ç¨‹ Â±2000DPS 
+    IMU660RC_GYRO_SAMPLE_SGN_4000DPS,                                           // é™€èžºä»ªé‡ç¨‹ Â±4000DPS 
+} imu660rc_gyro_sample_config;
 
+// å››å…ƒæ•°èžåˆå§¿æ€åˆ·æ–°çŽ‡é…ç½®æžšä¸¾
 typedef enum
 {
-    IMU660RC_QUARTERNION_15HZ,                                                  // 15 Hz
-    IMU660RC_QUARTERNION_30HZ,                                                  // 30 Hz
-    IMU660RC_QUARTERNION_60HZ,                                                  // 60 Hz
-    IMU660RC_QUARTERNION_120HZ,                                                 // 120Hz
-    IMU660RC_QUARTERNION_240HZ,                                                 // 240Hz
-    IMU660RC_QUARTERNION_480HZ,                                                 // 480Hz
-    IMU660RC_QUARTERNION_DISABLE,                                               // ½ûÓÃËÄÔªÊýÊä³ö
-}imu660rc_quarternion_rate_config;
+    IMU660RC_QUARTERNION_15HZ,                                                  // å§¿æ€è§£ç®—åˆ·æ–°çŽ‡ 15 Hz
+    IMU660RC_QUARTERNION_30HZ,                                                  // å§¿æ€è§£ç®—åˆ·æ–°çŽ‡ 30 Hz
+    IMU660RC_QUARTERNION_60HZ,                                                  // å§¿æ€è§£ç®—åˆ·æ–°çŽ‡ 60 Hz
+    IMU660RC_QUARTERNION_120HZ,                                                 // å§¿æ€è§£ç®—åˆ·æ–°çŽ‡ 120 Hz
+    IMU660RC_QUARTERNION_240HZ,                                                 // å§¿æ€è§£ç®—åˆ·æ–°çŽ‡ 240 Hz
+    IMU660RC_QUARTERNION_480HZ,                                                 // å§¿æ€è§£ç®—åˆ·æ–°çŽ‡ 480 Hz
+    IMU660RC_QUARTERNION_DISABLE,                                               // ç¦ç”¨ç¡¬ä»¶å››å…ƒæ•°è¾“å‡º (ä»…æ‰‹åŠ¨è¯»å–åŽŸå§‹æ•°æ®)
+} imu660rc_quarternion_rate_config;
 
+//==================================================== IMU660RC é€šè®¯åè®®ä¸Žå¯„å­˜å™¨åœ°å€ ====================================================
+#define IMU660RC_DEV_ADDR           ( 0x6B )                                    // I2C è®¾å¤‡åœ°å€ (SA0æ‹‰é«˜0x6B, æ‹‰ä½Ž0x6A)
+#define IMU660RC_SPI_W              ( 0x00 )                                    // SPI å†™æŽ©ç  (Bit7 = 0)
+#define IMU660RC_SPI_R              ( 0x80 )                                    // SPI è¯»æŽ©ç  (Bit7 = 1)
+#define IMU660RC_TIMEOUT_COUNT      ( 0x00FF )                                  // é€šè®¯è¶…æ—¶åˆ¤æ–­è®¡æ•°é˜ˆå€¼
 
-//================================================¶¨Òå IMU660RC ÄÚ²¿µØÖ·================================================
-#define IMU660RC_DEV_ADDR           ( 0x6B )                                    // SA0½ÓµØ£º0x6A SA0ÉÏÀ­£º0x6B Ä£¿éÄ¬ÈÏÉÏÀ­
-#define IMU660RC_SPI_W              ( 0x00 )
-#define IMU660RC_SPI_R              ( 0x80 )
-#define IMU660RC_TIMEOUT_COUNT      ( 0x00FF )                                  // IMU660RC ³¬Ê±¼ÆÊý
-
-
-//================================================¶¨Òå IMU660RC ¼Ä´æÆ÷µØÖ·================================================
-#define IMU660RC_FUNC_CFG_ACCESS    ( 0x01 )
-#define IMU660RC_FIFO_CRTL1         ( 0x07 )
-#define IMU660RC_FIFO_CRTL2         ( 0x08 )
-#define IMU660RC_FIFO_CRTL3         ( 0x09 )
-#define IMU660RC_FIFO_CRTL4         ( 0x0A )
-#define IMU660RC_INT2_CTRL          ( 0x0E )
-#define IMU660RC_CHIP_ID            ( 0x0F )
-#define IMU660RC_CTRL1              ( 0x10 )
-#define IMU660RC_CTRL2              ( 0x11 )
-#define IMU660RC_CTRL3              ( 0x12 )
-#define IMU660RC_CTRL4              ( 0x13 )
-#define IMU660RC_CTRL5              ( 0x14 )
-#define IMU660RC_CTRL6              ( 0x15 )
-#define IMU660RC_CTRL7              ( 0x16 )
-#define IMU660RC_CTRL8              ( 0x17 )
-#define IMU660RC_CTRL9              ( 0x18 )
-#define IMU660RC_CTRL10             ( 0x19 )
-#define IMU660RC_CTRL_STATUS        ( 0x1A )
-#define IMU660RC_STATUS_REG         ( 0x1E )
-#define IMU660RC_OUT_TEMP_L         ( 0x20 )
-#define IMU660RC_OUT_TEMP_H         ( 0x21 )
-#define IMU660RC_OUTX_L_G           ( 0x22 )
-#define IMU660RC_OUTX_H_G           ( 0x23 )
-#define IMU660RC_OUTY_L_G           ( 0x24 )
-#define IMU660RC_OUTY_H_G           ( 0x25 )
-#define IMU660RC_OUTZ_L_G           ( 0x26 )
-#define IMU660RC_OUTZ_H_G           ( 0x27 )
-#define IMU660RC_OUTX_L_A           ( 0x28 )
-#define IMU660RC_OUTX_H_A           ( 0x29 )
-#define IMU660RC_OUTY_L_A           ( 0x2A )
-#define IMU660RC_OUTY_H_A           ( 0x2B )
-#define IMU660RC_OUTZ_L_A           ( 0x2C )
-#define IMU660RC_OUTZ_H_A           ( 0x2D )
+// æ ¸å¿ƒæŽ§åˆ¶ä¸Žæ•°æ®å¯„å­˜å™¨åœ°å€å®šä¹‰
+#define IMU660RC_FUNC_CFG_ACCESS    ( 0x01 )                                    // å†…å­˜ Bank åˆ‡æ¢æŽ§åˆ¶å¯„å­˜å™¨
+#define IMU660RC_FIFO_CRTL1         ( 0x07 )                                    // FIFO æŽ§åˆ¶å¯„å­˜å™¨ 1
+#define IMU660RC_FIFO_CRTL2         ( 0x08 )                                    // FIFO æŽ§åˆ¶å¯„å­˜å™¨ 2
+#define IMU660RC_FIFO_CRTL3         ( 0x09 )                                    // FIFO æŽ§åˆ¶å¯„å­˜å™¨ 3
+#define IMU660RC_FIFO_CRTL4         ( 0x0A )                                    // FIFO æŽ§åˆ¶å¯„å­˜å™¨ 4
+#define IMU660RC_INT2_CTRL          ( 0x0E )                                    // INT2 ä¸­æ–­å¼•è„šæŽ§åˆ¶å¯„å­˜å™¨
+#define IMU660RC_CHIP_ID            ( 0x0F )                                    // WHO_AM_I èŠ¯ç‰‡ ID å¯„å­˜å™¨ (é»˜è®¤å€¼ 0x70)
+#define IMU660RC_CTRL1              ( 0x10 )                                    // åŠ é€Ÿåº¦è®¡æŽ§åˆ¶å¯„å­˜å™¨ 1
+#define IMU660RC_CTRL2              ( 0x11 )                                    // é™€èžºä»ªæŽ§åˆ¶å¯„å­˜å™¨ 2
+#define IMU660RC_CTRL3              ( 0x12 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 3 (è½¯ä»¶å¤ä½/BDUè®¾ç½®)
+#define IMU660RC_CTRL4              ( 0x13 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 4
+#define IMU660RC_CTRL5              ( 0x14 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 5
+#define IMU660RC_CTRL6              ( 0x15 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 6 (é™€èžºä»ªé‡ç¨‹ä¸Žä½Žé€šæ»¤æ³¢å™¨)
+#define IMU660RC_CTRL7              ( 0x16 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 7
+#define IMU660RC_CTRL8              ( 0x17 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 8 (åŠ é€Ÿåº¦è®¡é‡ç¨‹è®¾ç½®)
+#define IMU660RC_CTRL9              ( 0x18 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 9
+#define IMU660RC_CTRL10             ( 0x19 )                                    // æŽ§åˆ¶å¯„å­˜å™¨ 10
+#define IMU660RC_CTRL_STATUS        ( 0x1A )                                    // æŽ§åˆ¶çŠ¶æ€å¯„å­˜å™¨
+#define IMU660RC_STATUS_REG         ( 0x1E )                                    // æ•°æ®å°±ç»ªçŠ¶æ€å¯„å­˜å™¨
+#define IMU660RC_OUT_TEMP_L         ( 0x20 )                                    // æ¸©åº¦ä½Žå­—èŠ‚
+#define IMU660RC_OUT_TEMP_H         ( 0x21 )                                    // æ¸©åº¦é«˜å­—èŠ‚
+#define IMU660RC_OUTX_L_G           ( 0x22 )                                    // é™€èžºä»ª X è½´ä½Žå­—èŠ‚
+#define IMU660RC_OUTX_H_G           ( 0x23 )                                    // é™€èžºä»ª X è½´é«˜å­—èŠ‚
+#define IMU660RC_OUTY_L_G           ( 0x24 )                                    // é™€èžºä»ª Y è½´ä½Žå­—èŠ‚
+#define IMU660RC_OUTY_H_G           ( 0x25 )                                    // é™€èžºä»ª Y è½´é«˜å­—èŠ‚
+#define IMU660RC_OUTZ_L_G           ( 0x26 )                                    // é™€èžºä»ª Z è½´ä½Žå­—èŠ‚
+#define IMU660RC_OUTZ_H_G           ( 0x27 )                                    // é™€èžºä»ª Z è½´é«˜å­—èŠ‚
+#define IMU660RC_OUTX_L_A           ( 0x28 )                                    // åŠ é€Ÿåº¦è®¡ X è½´ä½Žå­—èŠ‚
+#define IMU660RC_OUTX_H_A           ( 0x29 )                                    // åŠ é€Ÿåº¦è®¡ X è½´é«˜å­—èŠ‚
+#define IMU660RC_OUTY_L_A           ( 0x2A )                                    // åŠ é€Ÿåº¦è®¡ Y è½´ä½Žå­—èŠ‚
+#define IMU660RC_OUTY_H_A           ( 0x2B )                                    // åŠ é€Ÿåº¦è®¡ Y è½´é«˜å­—èŠ‚
+#define IMU660RC_OUTZ_L_A           ( 0x2C )                                    // åŠ é€Ÿåº¦è®¡ Z è½´ä½Žå­—èŠ‚
+#define IMU660RC_OUTZ_H_A           ( 0x2D )                                    // åŠ é€Ÿåº¦è®¡ Z è½´é«˜å­—èŠ‚
 
 #define IMU660RC_PAGE_SEL           ( 0x02 )
 #define IMU660RC_EMB_FUNC_EN_A      ( 0x04 )
@@ -179,39 +147,45 @@ typedef enum
 #define IMU660RC_SFLP_ODR           ( 0x5E )
 #define IMU660RC_EMB_FUNC_CFG       ( 0x63 )
 
+//==================================================== å…¨å±€å˜é‡å£°æ˜Ž ====================================================
+extern float imu660rc_transition_factor[2];                                   // ç‰©ç†å•ä½è½¬æ¢æ¯”ä¾‹å› å­ [0]:åŠ é€Ÿåº¦, [1]:é™€èžºä»ª
+extern int16 imu660rc_gyro_x,   imu660rc_gyro_y,    imu660rc_gyro_z;            // é™€èžºä»ªä¸‰è½´åŽŸå§‹æµ‹é‡å€¼
+extern int16 imu660rc_acc_x ,   imu660rc_acc_y ,    imu660rc_acc_z;             // åŠ é€Ÿåº¦è®¡ä¸‰è½´åŽŸå§‹æµ‹é‡å€¼
+extern float imu660rc_roll  ,   imu660rc_pitch ,    imu660rc_yaw;               // å§¿æ€è§£ç®—å¾—åˆ°çš„æ¬§æ‹‰è§’ (å•ä½: è§’åº¦ deg)
+extern float imu660rc_quarternion[4];                                           // å§¿æ€èžåˆå››å…ƒæ•° [q0, q1, q2, q3]
 
+//==================================================== å‡½æ•°æŽ¥å£å£°æ˜Ž ====================================================
 
-extern float imu660rc_transition_factor[2];
-extern int16 imu660rc_gyro_x,   imu660rc_gyro_y,    imu660rc_gyro_z;    // ÈýÖáÍÓÂÝÒÇÊý¾Ý  
-extern int16 imu660rc_acc_x ,   imu660rc_acc_y ,    imu660rc_acc_z;     // ÈýÖá¼ÓËÙ¶È¼ÆÊý¾Ý
-extern float imu660rc_roll  ,   imu660rc_pitch ,    imu660rc_yaw;       // Å·À­½Ç
-extern float imu660rc_quarternion[4];                                   // ËÄÔªÊý
-
-
+/**
+ * @brief  èŽ·å–åŠ é€Ÿåº¦è®¡åŽŸå§‹æ•°æ® (ä»…åœ¨ç¦ç”¨å››å…ƒæ•°æ¨¡å¼ä¸‹å•ç‹¬è°ƒç”¨)
+ */
 void    imu660rc_get_acc            (void);
+
+/**
+ * @brief  èŽ·å–é™€èžºä»ªåŽŸå§‹æ•°æ® (ä»…åœ¨ç¦ç”¨å››å…ƒæ•°æ¨¡å¼ä¸‹å•ç‹¬è°ƒç”¨)
+ */
 void    imu660rc_get_gyro           (void);
+
+/**
+ * @brief  èŽ·å–å¹¶æ›´æ–°ç¡¬ä»¶èžåˆå››å…ƒæ•°åŠæ¬§æ‹‰è§’ (INT2ä¸­æ–­è‡ªåŠ¨è°ƒç”¨æˆ–æ‰‹åŠ¨åˆ·æ–°)
+ */
 void    imu660rc_get_quarternion    (void);
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êý¼ò½é     ½« IMU660RC ¼ÓËÙ¶È¼ÆÊý¾Ý×ª»»ÎªÊµ¼ÊÎïÀíÊý¾Ý
-// ²ÎÊýËµÃ÷     acc_value       ÈÎÒâÖáµÄ¼ÓËÙ¶È¼ÆÊý¾Ý
-// ·µ»Ø²ÎÊý     void
-// Ê¹ÓÃÊ¾Àý     float data = imu660rc_acc_transition(imu660rc_acc_x);           // µ¥Î»Îª g(m/s^2)
-// ±¸×¢ÐÅÏ¢
-//-------------------------------------------------------------------------------------------------------------------
+/**
+ * @brief  å°†åŠ é€Ÿåº¦è®¡åŽŸå§‹æ•°æ®è½¬æ¢ä¸ºç‰©ç†åŠ é€Ÿåº¦ (å•ä½: g, 1g â‰ˆ 9.80 m/s^2)
+ */
 #define imu660rc_acc_transition(acc_value)      ((float)(acc_value) / imu660rc_transition_factor[0])
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êý¼ò½é     ½« IMU660RC ÍÓÂÝÒÇÊý¾Ý×ª»»ÎªÊµ¼ÊÎïÀíÊý¾Ý
-// ²ÎÊýËµÃ÷     gyro_value      ÈÎÒâÖáµÄÍÓÂÝÒÇÊý¾Ý
-// ·µ»Ø²ÎÊý     void
-// Ê¹ÓÃÊ¾Àý     float data = imu660rc_gyro_transition(imu660rc_gyro_x);         // µ¥Î»Îª ¡ã/s
-// ±¸×¢ÐÅÏ¢
-//-------------------------------------------------------------------------------------------------------------------
+/**
+ * @brief  å°†é™€èžºä»ªåŽŸå§‹æ•°æ®è½¬æ¢ä¸ºè§’é€Ÿåº¦ (å•ä½: deg/s è§’åº¦æ¯ç§’)
+ */
 #define imu660rc_gyro_transition(gyro_value)    ((float)(gyro_value) / imu660rc_transition_factor[1])
-    
+
+/**
+ * @brief  åˆå§‹åŒ– IMU660RC å…­è½´ä¼ æ„Ÿå™¨ (åˆå§‹åŒ– SPIã€è‡ªæ£€ã€é‡ç¨‹åŠ INT2 ä¸­æ–­)
+ * @param  quarternion_rate  å››å…ƒæ•°å§¿æ€è§£ç®—åˆ·æ–°çŽ‡é…ç½®
+ * @return uint8  0: åˆå§‹åŒ–æˆåŠŸ, 1: åˆå§‹åŒ–å¤±è´¥(è‡ªæ£€å¤±è´¥æˆ–é…ç½®é”™è¯¯)
+ */
 uint8   imu660rc_init               (imu660rc_quarternion_rate_config quarternion_rate);
-
-
 
 #endif

@@ -202,12 +202,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
         GPIO_IMU660RC_IOMUX_PICO, GPIO_IMU660RC_IOMUX_PICO_FUNC);
     DL_GPIO_initPeripheralInputFunction(
         GPIO_IMU660RC_IOMUX_POCI, GPIO_IMU660RC_IOMUX_POCI_FUNC);
-    DL_GPIO_initPeripheralOutputFunction(
-        GPIO_IMU660RC_IOMUX_CS0, GPIO_IMU660RC_IOMUX_CS0_FUNC);
-
-    DL_GPIO_initDigitalInputFeatures(imuInt_int2_IOMUX,
-		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
-		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
 
     DL_GPIO_initDigitalOutput(buzzer_PIN_0_IOMUX);
 
@@ -234,6 +228,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initDigitalInputFeatures(key_key3_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
 		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+
+    DL_GPIO_initDigitalInputFeatures(imuInt_int2_IOMUX,
+		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
+		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+
+    DL_GPIO_initDigitalOutput(imuInt_CS_IOMUX);
 
     DL_GPIO_initDigitalOutput(TB6612_AIN2_IOMUX);
 
@@ -277,14 +277,21 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
 		DRV8873HPWPT_PH2_PIN);
-    DL_GPIO_setPins(GPIOB, TFT_TFT_RES_PIN);
+    DL_GPIO_setPins(GPIOB, TFT_TFT_RES_PIN |
+		imuInt_CS_PIN);
     DL_GPIO_enableOutput(GPIOB, buzzer_PIN_0_PIN |
 		TFT_TFT_RES_PIN |
+		imuInt_CS_PIN |
 		TB6612_AIN2_PIN |
 		TB6612_AIN1_PIN |
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
 		DRV8873HPWPT_PH2_PIN);
+    DL_GPIO_setUpperPinsPolarity(GPIOB, DL_GPIO_PIN_24_EDGE_RISE);
+    DL_GPIO_clearInterruptStatus(GPIOB, imuInt_int2_PIN);
+    DL_GPIO_enableInterrupt(GPIOB, imuInt_int2_PIN);
+    DL_GPIO_setPublisherChanID(GPIOB, DL_GPIO_PUBLISHER_INDEX_1, GPIOB_EVENT_PUBLISHER_1_CHANNEL);
+    DL_GPIO_enableEvents(GPIOB, DL_GPIO_EVENT_ROUTE_2, imuInt_int2_PIN);
     DL_GPIO_setPins(GPIOC, TFT_TFT_DC_PIN |
 		TFT_TFT_CS_PIN);
     DL_GPIO_enableOutput(GPIOC, TFT_TFT_DC_PIN |
@@ -396,6 +403,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
     }
     DL_SYSCTL_setULPCLKDivider(DL_SYSCTL_ULPCLK_DIV_2);
     DL_SYSCTL_setMCLKSource(SYSOSC, HSCLK, DL_SYSCTL_HSCLK_SOURCE_SYSPLL);
+    /* INT_GROUP1 Priority */
+    NVIC_SetPriority(GPIOB_INT_IRQn, 2);
 
 }
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_CLK_init(void) {
@@ -756,11 +765,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_TFT_SPI0_init(void) {
 }
 static const DL_SPI_Config gIMU660RC_config = {
     .mode        = DL_SPI_MODE_CONTROLLER,
-    .frameFormat = DL_SPI_FRAME_FORMAT_MOTO4_POL0_PHA0,
+    .frameFormat = DL_SPI_FRAME_FORMAT_MOTO3_POL0_PHA0,
     .parity      = DL_SPI_PARITY_NONE,
     .dataSize    = DL_SPI_DATA_SIZE_8,
     .bitOrder    = DL_SPI_BIT_ORDER_MSB_FIRST,
-    .chipSelectPin = DL_SPI_CHIP_SELECT_0,
 };
 
 static const DL_SPI_ClockConfig gIMU660RC_clockConfig = {
@@ -777,9 +785,9 @@ SYSCONFIG_WEAK void SYSCFG_DL_IMU660RC_init(void) {
     /*
      * Set the bit rate clock divider to generate the serial output clock
      *     outputBitRate = (spiInputClock) / ((1 + SCR) * 2)
-     *     13333333.33 = (80000000)/((1 + 2) * 2)
+     *     8000000 = (80000000)/((1 + 4) * 2)
      */
-    DL_SPI_setBitRateSerialClockDivider(IMU660RC_INST, 2);
+    DL_SPI_setBitRateSerialClockDivider(IMU660RC_INST, 4);
     /* Set RX and TX FIFO threshold levels */
     DL_SPI_setFIFOThreshold(IMU660RC_INST, DL_SPI_RX_FIFO_LEVEL_1_2_FULL, DL_SPI_TX_FIFO_LEVEL_1_2_EMPTY);
 

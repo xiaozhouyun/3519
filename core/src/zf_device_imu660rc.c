@@ -1,166 +1,172 @@
-/*********************************************************************************************************************
-* RT1064DVL6A Opensourec Library ¼´£¨RT1064DVL6A ¿ªÔ´¿â£©ÊÇÒ»¸ö»ùÓÚ¹Ù·½ SDK ½Ó¿ÚµÄµÚÈı·½¿ªÔ´¿â
-* Copyright (c) 2026 SEEKFREE Öğ·É¿Æ¼¼
-*
-* ±¾ÎÄ¼şÊÇ RT1064DVL6A ¿ªÔ´¿âµÄÒ»²¿·Ö
-*
-* RT1064DVL6A ¿ªÔ´¿â ÊÇÃâ·ÑÈí¼ş
-* Äú¿ÉÒÔ¸ù¾İ×ÔÓÉÈí¼ş»ù½ğ»á·¢²¼µÄ GPL£¨GNU General Public License£¬¼´ GNUÍ¨ÓÃ¹«¹²Ğí¿ÉÖ¤£©µÄÌõ¿î
-* ¼´ GPL µÄµÚ3°æ£¨¼´ GPL3.0£©»ò£¨ÄúÑ¡ÔñµÄ£©ÈÎºÎºóÀ´µÄ°æ±¾£¬ÖØĞÂ·¢²¼ºÍ/»òĞŞ¸ÄËü
-*
-* ±¾¿ªÔ´¿âµÄ·¢²¼ÊÇÏ£ÍûËüÄÜ·¢»Ó×÷ÓÃ£¬µ«²¢Î´¶ÔÆä×÷ÈÎºÎµÄ±£Ö¤
-* ÉõÖÁÃ»ÓĞÒşº¬µÄÊÊÏúĞÔ»òÊÊºÏÌØ¶¨ÓÃÍ¾µÄ±£Ö¤
-* ¸ü¶àÏ¸½ÚÇë²Î¼û GPL
-*
-* ÄúÓ¦¸ÃÔÚÊÕµ½±¾¿ªÔ´¿âµÄÍ¬Ê±ÊÕµ½Ò»·İ GPL µÄ¸±±¾
-* Èç¹ûÃ»ÓĞ£¬Çë²ÎÔÄ<https://www.gnu.org/licenses/>
-*
-* ¶îÍâ×¢Ã÷£º
-* ±¾¿ªÔ´¿âÊ¹ÓÃ GPL3.0 ¿ªÔ´Ğí¿ÉÖ¤Ğ­Òé ÒÔÉÏĞí¿ÉÉêÃ÷ÎªÒëÎÄ°æ±¾
-* Ğí¿ÉÉêÃ÷Ó¢ÎÄ°æÔÚ libraries/doc ÎÄ¼ş¼ĞÏÂµÄ GPL3_permission_statement.txt ÎÄ¼şÖĞ
-* Ğí¿ÉÖ¤¸±±¾ÔÚ libraries ÎÄ¼ş¼ĞÏÂ ¼´¸ÃÎÄ¼ş¼ĞÏÂµÄ LICENSE ÎÄ¼ş
-* »¶Ó­¸÷Î»Ê¹ÓÃ²¢´«²¥±¾³ÌĞò µ«ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÖğ·É¿Æ¼¼µÄ°æÈ¨ÉùÃ÷£¨¼´±¾ÉùÃ÷£©
-*
-* ÎÄ¼şÃû³Æ          zf_device_imu660rc
-* ¹«Ë¾Ãû³Æ          ³É¶¼Öğ·É¿Æ¼¼ÓĞÏŞ¹«Ë¾
-* °æ±¾ĞÅÏ¢          ²é¿´ libraries/doc ÎÄ¼ş¼ĞÄÚ version ÎÄ¼ş °æ±¾ËµÃ÷
-* ¿ª·¢»·¾³          MDK 5.38
-* ÊÊÓÃÆ½Ì¨          MSPM0G3519
-* µêÆÌÁ´½Ó          https://seekfree.taobao.com/
-*
-* ĞŞ¸Ä¼ÇÂ¼
-* ÈÕÆÚ              ×÷Õß                ±¸×¢
-* 2025-12-12        SeekFree            first version
-********************************************************************************************************************/
-/*********************************************************************************************************************
-* ½ÓÏß¶¨Òå£º
-*                   ------------------------------------
-*                   Ä£¿é¹Ü½Å            µ¥Æ¬»ú¹Ü½Å
-*                   // Ó²¼ş SPI Òı½Å
-*                   SCL/SPC           ²é¿´ zf_device_imu660rc.h ÖĞ IMU660RC_SPC_PIN ºê¶¨Òå
-*                   SDA/DSI           ²é¿´ zf_device_imu660rc.h ÖĞ IMU660RC_SDI_PIN ºê¶¨Òå
-*                   SA0/SDO           ²é¿´ zf_device_imu660rc.h ÖĞ IMU660RC_SDO_PIN ºê¶¨Òå
-*                   CS                ²é¿´ zf_device_imu660rc.h ÖĞ IMU660RC_CS_PIN ºê¶¨Òå
-*     							INT2              ²é¿´ zf_device_imu660rc.h ÖĞ IMU660RC_INT2_PIN  ºê¶¨Òå
-*                   VCC               3.3VµçÔ´
-*                   GND               µçÔ´µØ
-*                   ÆäÓàÒı½ÅĞü¿Õ
-*
-*                   // Èí¼ş IIC Òı½Å
-*                   SCL/SPC           ²é¿´ zf_device_imu660rc.h ÖĞ IMU660RC_SCL_PIN ºê¶¨Òå
-*                   SDA/DSI           ²é¿´ zf_device_imu660rc.h ÖĞ IMU660RC_SDA_PIN ºê¶¨Òå
-*                   VCC               3.3VµçÔ´
-*                   GND               µçÔ´µØ
-*                   ÆäÓàÒı½ÅĞü¿Õ
-*                   ------------------------------------
+ï»¿/*********************************************************************************************************************
+* MSPM0G3519 IMU660RC å…­è½´ä¼ æ„Ÿå™¨é©±åŠ¨ (TI Official DriverLib ç§»æ¤ç‰ˆ)
+* 
+* æ–‡ä»¶          zf_device_imu660rc.c
+* å¹³å°          MSPM0G3519 (ti_msp_dl_config.h)
+* è¯´æ˜          æœ¬æ–‡ä»¶åŒ…å« IMU660RC å¯„å­˜å™¨è¯»å†™ã€SPI é€šè®¯åŒæ­¥ã€FP16 è§£å‹ç®—æ³•ã€
+*               å››å…ƒæ•°ä¸æ¬§æ‹‰è§’è½¬æ¢ã€PB24(INT2) å¼•è„šä¸­æ–­æœåŠ¡å‡½æ•°åŠåˆå§‹åŒ–æµç¨‹ã€‚
 ********************************************************************************************************************/
 
-
-#include "math.h"
-#include "zf_common_debug.h"
-#include "zf_driver_delay.h"
-#include "zf_driver_spi.h"
-#include "zf_driver_gpio.h"
-#include "zf_driver_soft_iic.h"
-#include "zf_device_config.h"
-#include "zf_driver_uart.h"
-#include "zf_driver_exti.h"
-
-#include "zf_device_imu660rc.h"
+#include "../inc/zf_device_imu660rc.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
 
 #ifndef M_PI
-#define M_PI 3.1415926f
+#define M_PI 3.14159265358979323846f
 #endif
 
+// æ¯«ç§’çº§ä¸å¾®ç§’çº§ç²¾å‡†å»¶æ—¶ (åŸºäº DriverLib ç³»ç»Ÿæ—¶é’Ÿ CPUCLK_FREQ)
+#define delay_ms(ms)            delay_cycles(CPUCLK_FREQ / 1000 * (ms))
+#define system_delay_ms(ms)     delay_ms(ms)
 
-static uint8 imu660rc_quarternion_rate;
+// è½¯ä»¶ GPIO ç‰‡é€‰å¼•è„š (ä½¿ç”¨å¤´æ–‡ä»¶ä¸­å®šä¹‰çš„ IMU660RC_CS_PORT / IMU660RC_CS_PIN) æ§åˆ¶å®
+#define IMU660RC_CS(x)          ((x) ? DL_GPIO_setPins(IMU660RC_CS_PORT, IMU660RC_CS_PIN) : DL_GPIO_clearPins(IMU660RC_CS_PORT, IMU660RC_CS_PIN))
 
-float imu660rc_transition_factor[2];
-int16 imu660rc_gyro_x = 0,  imu660rc_gyro_y = 0,    imu660rc_gyro_z = 0;    // ÈıÖáÍÓÂİÒÇÊı¾İ   gyro (ÍÓÂİÒÇ)
-int16 imu660rc_acc_x  = 0,  imu660rc_acc_y  = 0,    imu660rc_acc_z  = 0;    // ÈıÖá¼ÓËÙ¶È¼ÆÊı¾İ acc  (accelerometer ¼ÓËÙ¶È¼Æ)
-float imu660rc_roll   = 0,  imu660rc_pitch  = 0,    imu660rc_yaw    = 0;    // Å·À­½Ç
-float imu660rc_quarternion[4];                                              // ËÄÔªÊı
+static uint8 imu660rc_quarternion_rate;                                         // å§¿æ€è§£ç®—åˆ·æ–°ç‡å…¨å±€é…ç½®
 
+float imu660rc_transition_factor[2];                                           // è½¬æ¢ç³»æ•° [0]:åŠ é€Ÿåº¦, [1]:é™€èºä»ª
+int16 imu660rc_gyro_x = 0,  imu660rc_gyro_y = 0,    imu660rc_gyro_z = 0;    // é™€èºä»ªåŸå§‹æ•°æ®
+int16 imu660rc_acc_x  = 0,  imu660rc_acc_y  = 0,    imu660rc_acc_z  = 0;    // åŠ é€Ÿåº¦è®¡åŸå§‹æ•°æ®
+float imu660rc_roll   = 0,  imu660rc_pitch  = 0,    imu660rc_yaw    = 0;    // è§£ç®—æ¬§æ‹‰è§’ (æ¨ªæ»šè§’ Roll, ä¿¯ä»°è§’ Pitch, åèˆªè§’ Yaw)
+float imu660rc_quarternion[4];                                              // å§¿æ€èåˆå››å…ƒæ•°
 
+// ===================================================================================================================
+// åº•å±‚ SPI æ¥å£ä¸åŒæ­¥ç­‰å¾…å‡½æ•° (é€‚é… MSPM0 DriverLib SPI1 å¤–è®¾)
+// ===================================================================================================================
 
-#if IMU660RC_USE_SOFT_IIC
-static soft_iic_info_struct imu660rc_iic_struct;
-
-#define imu660rc_write_register(reg, data)        (soft_iic_write_8bit_register (&imu660rc_iic_struct, (reg), (data)))
-#define imu660rc_write_registers(reg, data, len)  (soft_iic_write_8bit_registers(&imu660rc_iic_struct, (reg), (data), (len)))
-#define imu660rc_read_register(reg)               (soft_iic_read_8bit_register  (&imu660rc_iic_struct, (reg)))
-#define imu660rc_read_registers(reg, data, len)   (soft_iic_read_8bit_registers (&imu660rc_iic_struct, (reg), (data), (len)))
-#else
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC Ğ´¼Ä´æÆ÷
-// ²ÎÊıËµÃ÷     reg             ¼Ä´æÆ÷µØÖ·
-// ²ÎÊıËµÃ÷     data            Êı¾İ
-// ·µ»Ø²ÎÊı     void
-// Ê¹ÓÃÊ¾Àı     
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
-static void imu660rc_write_register (uint8 reg, uint8 data)
+/**
+ * @brief  ç­‰å¾… SPI1 æ€»çº¿å‘é€å®Œæ¯•ä¸”æ€»çº¿è¿›å…¥ç©ºé—²çŠ¶æ€ (é˜²æ•°æ®ç¢°æ’)
+ */
+static inline void imu660rc_spi_wait_idle(void)
 {
-    IMU660RC_CS(0);
-    spi_write_8bit_register(IMU660RC_SPI, reg | IMU660RC_SPI_W, data);
-    IMU660RC_CS(1);
+    uint32_t timeout = 100000U;
+    while ((!DL_SPI_isTXFIFOEmpty(IMU660RC_INST) || DL_SPI_isBusy(IMU660RC_INST)) && --timeout);
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC ¶Á¼Ä´æÆ÷
-// ²ÎÊıËµÃ÷     reg             ¼Ä´æÆ÷µØÖ·
-// ·µ»Ø²ÎÊı     uint8           Êı¾İ
-// Ê¹ÓÃÊ¾Àı     imu660rc_read_register(IMU660RC_CHIP_ID);
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
-static uint8 imu660rc_read_register (uint8 reg)
+/**
+ * @brief  æ¸…ç©º SPI1 æ¥æ”¶ FIFO ç¼“å†²åŒº (é˜²æ—§æ®‹ç•™æ•°æ®å¹²æ‰°)
+ */
+static inline void imu660rc_spi_flush_rx(void)
 {
-    uint8 data;
-    IMU660RC_CS(0);
-    data = spi_read_8bit_register(IMU660RC_SPI, reg | IMU660RC_SPI_R);
-    IMU660RC_CS(1);
-    return data;
+    while (!DL_SPI_isRXFIFOEmpty(IMU660RC_INST))
+    {
+        (void)DL_SPI_receiveData8(IMU660RC_INST);
+    }
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC ¶ÁÊı¾İ
-// ²ÎÊıËµÃ÷     reg             ¼Ä´æÆ÷µØÖ·
-// ²ÎÊıËµÃ÷     data            Êı¾İ»º³åÇø
-// ²ÎÊıËµÃ÷     len             Êı¾İ³¤¶È
-// ·µ»Ø²ÎÊı     void
-// Ê¹ÓÃÊ¾Àı     imu660rc_read_registers(IMU660RC_ACC_ADDRESS, dat, 6);
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
-static void imu660rc_read_registers (uint8 reg, uint8 *data, uint32 len)
+/**
+ * @brief  å†™å•ä¸ª 8 ä½ IMU660RC å¯„å­˜å™¨
+ * @param  reg   å¯„å­˜å™¨ç›®æ ‡åœ°å€
+ * @param  data  å¾…å†™å…¥çš„æ•°æ®å­—èŠ‚
+ */
+static void imu660rc_write_register(uint8 reg, uint8 data)
 {
-    IMU660RC_CS(0);
-    spi_read_8bit_registers(IMU660RC_SPI, reg | IMU660RC_SPI_R, data, len);
-    IMU660RC_CS(1);
-}
-#endif
+    IMU660RC_CS(0); // æ‹‰ä½ CS å¯åŠ¨ SPI ä¼ è¾“
+    delay_cycles(10);
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC fp16×ª¸¡µãÊı
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     uint8           
-// Ê¹ÓÃÊ¾Àı     
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
+    imu660rc_spi_flush_rx();
+
+    while (DL_SPI_isTXFIFOFull(IMU660RC_INST));
+    DL_SPI_transmitData8(IMU660RC_INST, reg | IMU660RC_SPI_W);
+
+    while (DL_SPI_isTXFIFOFull(IMU660RC_INST));
+    DL_SPI_transmitData8(IMU660RC_INST, data);
+
+    imu660rc_spi_wait_idle();
+    imu660rc_spi_flush_rx();
+
+    delay_cycles(10);
+    IMU660RC_CS(1); // æ‹‰é«˜ CS å®Œæˆ SPI ä¼ è¾“
+}
+
+/**
+ * @brief  è¯»å•ä¸ª 8 ä½ IMU660RC å¯„å­˜å™¨
+ * @param  reg   å¯„å­˜å™¨ç›®æ ‡åœ°å€
+ * @return uint8 è¯»å–åˆ°çš„å¯„å­˜å™¨å­—èŠ‚å†…å®¹
+ */
+static uint8 imu660rc_read_register(uint8 reg)
+{
+    uint8 val;
+    IMU660RC_CS(0); // æ‹‰ä½ CS å¯åŠ¨ SPI ä¼ è¾“
+    delay_cycles(10);
+
+    imu660rc_spi_flush_rx();
+
+    while (DL_SPI_isTXFIFOFull(IMU660RC_INST));
+    DL_SPI_transmitData8(IMU660RC_INST, reg | IMU660RC_SPI_R);
+
+    while (DL_SPI_isTXFIFOFull(IMU660RC_INST));
+    DL_SPI_transmitData8(IMU660RC_INST, 0x00);
+
+    imu660rc_spi_wait_idle();
+
+    (void)DL_SPI_receiveData8(IMU660RC_INST); // æŠ›å¼ƒåœ°å€å‘é€é˜¶æ®µè¿”å›çš„æ•°æ®
+    val = (uint8)DL_SPI_receiveData8(IMU660RC_INST); // è¯»å–å¹¶è¿”å›æ•°æ®é˜¶æ®µçš„æ•°æ®
+
+    delay_cycles(10);
+    IMU660RC_CS(1); // æ‹‰é«˜ CS å®Œæˆ SPI ä¼ è¾“
+    return val;
+}
+
+/**
+ * @brief  è¿ç»­è¯»å–å¤šä¸ª IMU660RC å¯„å­˜å™¨
+ * @param  reg   èµ·å§‹å¯„å­˜å™¨åœ°å€
+ * @param  data  ç›®æ ‡æ¥æ”¶ç¼“å†²åŒºæŒ‡é’ˆ
+ * @param  len   è¿ç»­è¯»å–å­—èŠ‚æ•°
+ */
+static void imu660rc_read_registers(uint8 reg, uint8 *data, uint32 len)
+{
+    uint32 i;
+    IMU660RC_CS(0); // æ‹‰ä½ CS å¯åŠ¨ SPI ä¼ è¾“
+    delay_cycles(10);
+
+    imu660rc_spi_flush_rx();
+
+    while (DL_SPI_isTXFIFOFull(IMU660RC_INST));
+    DL_SPI_transmitData8(IMU660RC_INST, reg | IMU660RC_SPI_R);
+
+    for (i = 0; i < len; i++)
+    {
+        while (DL_SPI_isTXFIFOFull(IMU660RC_INST));
+        DL_SPI_transmitData8(IMU660RC_INST, 0x00);
+    }
+
+    imu660rc_spi_wait_idle();
+
+    (void)DL_SPI_receiveData8(IMU660RC_INST); // æŠ›å¼ƒåœ°å€å‘é€é˜¶æ®µæ¥æ”¶åˆ°çš„æ— æ•ˆå­—èŠ‚
+    for (i = 0; i < len; i++)
+    {
+        data[i] = (uint8)DL_SPI_receiveData8(IMU660RC_INST);
+    }
+
+    delay_cycles(10);
+    IMU660RC_CS(1); // æ‹‰é«˜ CS å®Œæˆ SPI ä¼ è¾“
+}
+
+// ===================================================================================================================
+// æ•°å­¦è¿ç®—ä¸å§¿æ€è§£ç®—è¾…åŠ©å‡½æ•° (FP16æµ®ç‚¹è§£åŒ…ã€å››å…ƒæ•°å½’ä¸€åŒ–ä¸æ¬§æ‹‰è§’è½¬æ¢)
+// ===================================================================================================================
+
+/**
+ * @brief  å°†åŠç²¾åº¦æµ®ç‚¹æ•° (FP16) è½¬æ¢ä¸ºæ ‡å‡†å•ç²¾åº¦ 32 ä½ IEEE 754 æµ®ç‚¹æ•°ä½æ ¼å¼
+ * @param  h  16ä½åŠç²¾åº¦æµ®ç‚¹æ•°æ®
+ * @return uint32 è½¬æ¢åçš„32ä½æµ®ç‚¹äºŒè¿›åˆ¶ä½
+ */
 static uint32 fp16_to_float(uint16 h)
 {
     uint16 h_exp = (h & 0x7c00u);
     uint32 f_sgn = ((uint32)h & 0x8000u) << 16;
     switch (h_exp)
     {
-        case 0x0000u:   // 0 or subnormal
+        case 0x0000u:   // 0 æˆ–éè§„æ ¼åŒ–æ•°
         {
             uint16 h_sig = (h & 0x03ffu);
-            // Signed zero
             if (h_sig == 0)
             {
                 return f_sgn;
             }
-            // Subnormal
             h_sig <<= 1;
             while ((h_sig & 0x0400u) == 0)
             {
@@ -171,43 +177,39 @@ static uint32 fp16_to_float(uint16 h)
             uint32 f_sig = ((uint32)(h_sig & 0x03ffu)) << 13;
             return f_sgn + f_exp + f_sig;
         }
-        case 0x7c00u: // inf or NaN
+        case 0x7c00u:   // æ— ç©·å¤§æˆ– NaN
         {
-            // All-ones exponent and a copy of the significand
             return f_sgn + 0x7f800000u + (((uint32)(h & 0x03ffu)) << 13);
         }
-        default: // normalized
+        default:        // è§„æ ¼åŒ–æµ®ç‚¹æ•°
         {
-            // Just need to adjust the exponent and shift
             return f_sgn + (((uint32)(h & 0x7fffu) + 0x1c000u) << 13);
         }
     }
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC ËÄÔªÊı¹éÒ»»¯
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     uint8           
-// Ê¹ÓÃÊ¾Àı     
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
+/**
+ * @brief  å››å…ƒæ•°å½’ä¸€åŒ–å¤„ç†
+ * @param  quat  å½’ä¸€åŒ–åçš„å››å…ƒæ•°è¾“å‡ºæ•°ç»„ [q0, q1, q2, q3]
+ * @param  fp16  ä¼ æ„Ÿå™¨ SRAM è¯»å‡ºçš„ 4 ä¸ª 16ä½ FP16 å››å…ƒæ•°åŸå§‹æ•°æ®
+ */
 static void quarternion_normalize(float quat[4], uint16 *fp16)
 {
     float n = 0;
     float temp[4];
-    
+
     *(uint32 *)(&temp[0]) = fp16_to_float(fp16[0]);
     *(uint32 *)(&temp[1]) = fp16_to_float(fp16[1]);
     *(uint32 *)(&temp[2]) = fp16_to_float(fp16[2]);
     *(uint32 *)(&temp[3]) = fp16_to_float(fp16[3]);
-    
+
     n = temp[0] * temp[0] + temp[1] * temp[1] + temp[2] * temp[2] + temp[3] * temp[3];
     n = sqrtf(n);
-    
-    if(n > 0.001f)  // ±ÜÃâ³ıÒÔ½Ó½ü0µÄÖµ
+
+    if (n > 0.001f) // é˜²æ­¢é™¤é›¶æº¢å‡º
     {
         n = temp[3] < 0.0f ? -n : n;
-        
+
         quat[0] = temp[1] / n;
         quat[1] = temp[2] / n;
         quat[2] = temp[0] / n;
@@ -215,105 +217,96 @@ static void quarternion_normalize(float quat[4], uint16 *fp16)
     }
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC ËÄÔªÊı×ªÅ·À­½Ç
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     uint8           
-// Ê¹ÓÃÊ¾Àı     
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
+/**
+ * @brief  ç”±å•ä½å››å…ƒæ•°è®¡ç®—æ¬§æ‹‰è§’ (Roll, Pitch, Yaw)
+ * @param  quat   è¾“å…¥çš„å½’ä¸€åŒ–å››å…ƒæ•°
+ * @param  roll   æ¨ªæ»šè§’è¾“å‡ºæŒ‡é’ˆ (å•ä½: åº¦ deg)
+ * @param  pitch  ä¿¯ä»°è§’è¾“å‡ºæŒ‡é’ˆ (å•ä½: åº¦ deg)
+ * @param  yaw    åèˆªè§’è¾“å‡ºæŒ‡é’ˆ (å•ä½: åº¦ deg, èŒƒå›´: 0 ~ 360 åº¦)
+ */
 static void quarternion_to_euler(float quat[4], float *roll, float *pitch, float *yaw)
 {
     float euler[3];
 
-  	float sqx = quat[0] * quat[0];
-  	float sqy = quat[1] * quat[1];
-  	float sqz = quat[2] * quat[2];
-    
-  	euler[0] =  atan2f(2.0f * (quat[1] * quat[3] + quat[0] * quat[2]), 1.0f - 2.0f * (sqy + sqx));
-  	euler[1] = -asinf(2.0f * (quat[0] * quat[3] - quat[1] * quat[2]));
-  	euler[2] =  atan2f(2.0f * (quat[0] * quat[1] + quat[2] * quat[3]), 1.0f - 2.0f * (sqx + sqz));
-    
-    // »¡¶È×ª½Ç¶È
-    euler[0] = 180 * (euler[0]) / M_PI;
-    euler[1] = 180 * (euler[1]) / M_PI;
-    euler[2] = 180 * (euler[2]) / M_PI;
-    
-    // ½Ç¶Èµ÷Õû
-    euler[2] = 0 > euler[2] ? euler[2] + 360 : euler[2];
-    
+    float sqx = quat[0] * quat[0];
+    float sqy = quat[1] * quat[1];
+    float sqz = quat[2] * quat[2];
+
+    // æ—‹è½¬çŸ©é˜µåç®—å¼§åº¦åˆ¶å§¿æ€è§’
+    euler[0] =  atan2f(2.0f * (quat[1] * quat[3] + quat[0] * quat[2]), 1.0f - 2.0f * (sqy + sqx));
+    euler[1] = -asinf(2.0f * (quat[0] * quat[3] - quat[1] * quat[2]));
+    euler[2] =  atan2f(2.0f * (quat[0] * quat[1] + quat[2] * quat[3]), 1.0f - 2.0f * (sqx + sqz));
+
+    // å¼§åº¦è½¬åŒ–ä¸ºè§’åº¦
+    euler[0] = 180.0f * (euler[0]) / M_PI;
+    euler[1] = 180.0f * (euler[1]) / M_PI;
+    euler[2] = 180.0f * (euler[2]) / M_PI;
+
+    // åèˆªè§’å½’ä¸€åŒ–è‡³ 0 ~ 360 åº¦
+    euler[2] = 0.0f > euler[2] ? euler[2] + 360.0f : euler[2];
+
     *roll   = euler[0];
     *pitch  = euler[1];
     *yaw    = euler[2];
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC ÉèÖÃ·ÃÎÊÇøÓò
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     uint8           
-// Ê¹ÓÃÊ¾Àı     
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
-static void imu660rc_set_mem_bank (imu660rc_mem_bank_enum bank)
+/**
+ * @brief  åˆ‡æ¢ IMU660RC çš„ Memory Bank å†…å­˜é¡µé¢
+ * @param  bank ç›®æ ‡ Bank
+ */
+static void imu660rc_set_mem_bank(imu660rc_mem_bank_enum bank)
 {
     imu660rc_write_register(IMU660RC_FUNC_CFG_ACCESS, bank);
 }
 
-
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RC ×Ô¼ì
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     uint8           1-×Ô¼ìÊ§°Ü 0-×Ô¼ì³É¹¦
-// Ê¹ÓÃÊ¾Àı     imu660rc_self_check();
-// ±¸×¢ĞÅÏ¢     ÄÚ²¿µ÷ÓÃ
-//-------------------------------------------------------------------------------------------------------------------
-static uint8 imu660rc_self_check (void)
+/**
+ * @brief  IMU660RC é€šè®¯è‡ªæ£€
+ * @return uint8 0-è‡ªæ£€é€šè¿‡, 1-è‡ªæ£€å¤±è´¥
+ */
+static uint8 imu660rc_self_check(void)
 {
     uint8 dat = 0, return_state = 0;
     uint16 timeout_count = 0;
     do
     {
-        if(IMU660RC_TIMEOUT_COUNT < timeout_count ++)
+        if (IMU660RC_TIMEOUT_COUNT < timeout_count++)
         {
-            return_state =  1;
+            return_state = 1;
             break;
         }
         dat = imu660rc_read_register(IMU660RC_CHIP_ID);
         system_delay_ms(1);
-    }while(0x70 != dat);                                                        // ¶ÁÈ¡Éè±¸IDÊÇ·ñµÈÓÚ0x70£¬Èç¹û²»ÊÇ0x70ÔòÈÏÎªÃ»¼ì²âµ½Éè±¸
+    } while (0x70 != dat && 0x6C != dat && 0x6B != dat); // æ”¯æŒ 0x70(LSM6DSO16IS), 0x6C(LSM6DSO), 0x6B(ISM330)
     return return_state;
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     »ñÈ¡ IMU660RC ¼ÓËÙ¶È¼ÆÊı¾İ
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     void
-// Ê¹ÓÃÊ¾Àı     imu660rc_get_acc();                                             // Ö´ĞĞ¸Ãº¯Êıºó£¬Ö±½Ó²é¿´¶ÔÓ¦µÄ±äÁ¿¼´¿É
-// ±¸×¢ĞÅÏ¢     Ê¹ÓÃ SPI µÄ²É¼¯Ê±¼äÎª10us
-//-------------------------------------------------------------------------------------------------------------------
-void imu660rc_get_acc (void)
+// ===================================================================================================================
+// åº”ç”¨å±‚æ•°æ®è·å–æ¥å£
+// ===================================================================================================================
+
+/**
+ * @brief  è¯»å–åŠ é€Ÿåº¦è®¡ 3 è½´åŸå§‹æ•°æ® (ä»…åœ¨æœªä½¿èƒ½å››å…ƒæ•°èåˆæ—¶ç”Ÿæ•ˆ)
+ */
+void imu660rc_get_acc(void)
 {
     int16 dat[3];
-    if(IMU660RC_QUARTERNION_DISABLE == imu660rc_quarternion_rate)
-    {   // ½öÔÚËÄÔªÊı¹Ø±Õ×´Ì¬ÏÂÖ§³Öµ÷ÓÃ´Ëº¯Êı£¬ ËÄÔªÊı¿ªÆôÊ±Èç¹ûĞèÒª¶ÁÈ¡¼ÓËÙ¶ÈĞÅÏ¢ÔòIMU660RC_QUARTERNION_GET_ACCÉèÖÃÎª1
+    if (IMU660RC_QUARTERNION_DISABLE == imu660rc_quarternion_rate)
+    {
         imu660rc_read_registers(IMU660RC_OUTX_L_A, (uint8 *)dat, 6);
         imu660rc_acc_x = dat[0];
         imu660rc_acc_y = dat[1];
         imu660rc_acc_z = dat[2];
     }
 }
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     »ñÈ¡ IMU660RC ÍÓÂİÒÇÊı¾İ
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     void
-// Ê¹ÓÃÊ¾Àı     imu660rc_get_gyro();                                            // Ö´ĞĞ¸Ãº¯Êıºó£¬Ö±½Ó²é¿´¶ÔÓ¦µÄ±äÁ¿¼´¿É
-// ±¸×¢ĞÅÏ¢     Ê¹ÓÃ SPI µÄ²É¼¯Ê±¼äÎª10us
-//-------------------------------------------------------------------------------------------------------------------
-void imu660rc_get_gyro (void)
+
+/**
+ * @brief  è¯»å–é™€èºä»ª 3 è½´åŸå§‹æ•°æ® (ä»…åœ¨æœªä½¿èƒ½å››å…ƒæ•°èåˆæ—¶ç”Ÿæ•ˆ)
+ */
+void imu660rc_get_gyro(void)
 {
     int16 dat[3];
-    if(IMU660RC_QUARTERNION_DISABLE == imu660rc_quarternion_rate)
-    {   // ½öÔÚËÄÔªÊı¹Ø±Õ×´Ì¬ÏÂÖ§³Öµ÷ÓÃ´Ëº¯Êı£¬ ËÄÔªÊı¿ªÆôÊ±Èç¹ûĞèÒª¶ÁÈ¡¼ÓËÙ¶ÈĞÅÏ¢ÔòIMU660RC_QUARTERNION_GET_GYROÉèÖÃÎª1
+    if (IMU660RC_QUARTERNION_DISABLE == imu660rc_quarternion_rate)
+    {
         imu660rc_read_registers(IMU660RC_OUTX_L_G, (uint8 *)dat, 6);
         imu660rc_gyro_x = dat[0];
         imu660rc_gyro_y = dat[1];
@@ -321,15 +314,9 @@ void imu660rc_get_gyro (void)
     }
 }
 
-
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     »ñÈ¡ IMU660RC ËÄÔªÊıÊı¾İ²¢×ª»»ÎªÅ·À­½Ç
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     void
-// Ê¹ÓÃÊ¾Àı     imu660rc_get_quarternion();                                     // Ö´ĞĞ¸Ãº¯Êıºó£¬Ö±½Ó²é¿´¶ÔÓ¦µÄ±äÁ¿¼´¿É
-// ±¸×¢ĞÅÏ¢     ĞèÒªÔÚINT2Òı½Å´¥·¢µÄÉÏÉıÑØÖĞ¶Ïµ÷ÓÃ´Ëº¯Êı
-//             
-//-------------------------------------------------------------------------------------------------------------------
+/**
+ * @brief  è·å–å§¿æ€è§£ç®—å››å…ƒæ•°ä¸æ¬§æ‹‰è§’ (ä½¿èƒ½å››å…ƒæ•°æ—¶ï¼Œä»åµŒå…¥å¼ SRAM è¯»å–ç¡¬ä»¶èåˆè§£ç®—æ•°æ®)
+ */
 void imu660rc_get_quarternion(void)
 {
     uint8   i;
@@ -337,234 +324,223 @@ void imu660rc_get_quarternion(void)
     uint8   *buff1_ptr;
     int16   *buff2_ptr;
 
-    if(IMU660RC_QUARTERNION_DISABLE != imu660rc_quarternion_rate)
+    if (IMU660RC_QUARTERNION_DISABLE != imu660rc_quarternion_rate)
     {
         buff1_ptr = (uint8 *)buff;
-        
+
+        // åˆ‡æ¢è‡³åµŒå…¥å¼åŠŸèƒ½å†…å­˜ Bank å¹¶æå–èåˆå››å…ƒæ•°æ•°æ®
         imu660rc_set_mem_bank(IMU660RC_EMBED_MEM_BANK);
         imu660rc_write_register(IMU660RC_PAGE_RW, 0x20);
         imu660rc_write_register(IMU660RC_PAGE_SEL, 0x31);
 
-        for(i = 0; 8 > i; i++) 
+        for (i = 0; 8 > i; i++)
         {
             imu660rc_write_register(0x08, 0x4C + i);
             buff1_ptr[i] = imu660rc_read_register(0x09);
         }
-        
+
         imu660rc_write_register(IMU660RC_PAGE_RW, 0x0);
         imu660rc_set_mem_bank(IMU660RC_MAIN_MEM_BANK);
-        
-        // ËÄÔªÊı¹éÒ»»¯
+
+        // å››å…ƒæ•°å½’ä¸€åŒ–ä¸æ¬§æ‹‰è§’è®¡ç®—
         quarternion_normalize(imu660rc_quarternion, buff);
-        // ËÄÔªÊı×ªÅ·À­½Ç
         quarternion_to_euler(imu660rc_quarternion, &imu660rc_roll, &imu660rc_pitch, &imu660rc_yaw);
-        
-        // ¶ÁÈ¡¼ÓËÙ¶ÈÓë½ÇËÙ¶ÈĞÅÏ¢
-        #if(1 == IMU660RC_QUARTERNION_GET_ACC)
-        {
-            buff2_ptr = (int16 *)buff;
-            imu660rc_read_registers(IMU660RC_OUTX_L_A, (uint8 *)buff2_ptr, 6);
-            imu660rc_acc_x = buff2_ptr[0];
-            imu660rc_acc_y = buff2_ptr[1];
-            imu660rc_acc_z = buff2_ptr[2];
-        }
-        #endif
-        #if(1 == IMU660RC_QUARTERNION_GET_GYRO)
-        {
-            buff2_ptr = (int16 *)buff;
-            imu660rc_read_registers(IMU660RC_OUTX_L_G, (uint8 *)buff2_ptr, 6);
-            imu660rc_gyro_x = buff2_ptr[0];
-            imu660rc_gyro_y = buff2_ptr[1];
-            imu660rc_gyro_z = buff2_ptr[2];
-        }
-        #endif
+
+#if (1 == IMU660RC_QUARTERNION_GET_ACC)
+        // åŒæ—¶åŒæ­¥åŠ é€Ÿåº¦åŸå§‹æ•°æ®
+        buff2_ptr = (int16 *)buff;
+        imu660rc_read_registers(IMU660RC_OUTX_L_A, (uint8 *)buff2_ptr, 6);
+        imu660rc_acc_x = buff2_ptr[0];
+        imu660rc_acc_y = buff2_ptr[1];
+        imu660rc_acc_z = buff2_ptr[2];
+#endif
+#if (1 == IMU660RC_QUARTERNION_GET_GYRO)
+        // åŒæ—¶åŒæ­¥é™€èºä»ªåŸå§‹æ•°æ®
+        buff2_ptr = (int16 *)buff;
+        imu660rc_read_registers(IMU660RC_OUTX_L_G, (uint8 *)buff2_ptr, 6);
+        imu660rc_gyro_x = buff2_ptr[0];
+        imu660rc_gyro_y = buff2_ptr[1];
+        imu660rc_gyro_z = buff2_ptr[2];
+#endif
     }
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     IMU660RCÖĞ¶Ï»Øµ÷º¯Êı£¬Ö÷ÒªÔÚÖĞ¶ÏÄÚ¶ÁÈ¡ËÄÔªÊı
-// ²ÎÊıËµÃ÷     void
-// ·µ»Ø²ÎÊı     void
-// Ê¹ÓÃÊ¾Àı     
-// ±¸×¢ĞÅÏ¢     
-//             
-//-------------------------------------------------------------------------------------------------------------------
-void imu660rc_callback(uint32 event, void *ptr)
-{
-    imu660rc_get_quarternion();
+// ===================================================================================================================
+// PB24 (INT2) å¤–éƒ¨ä¸­æ–­æœåŠ¡å…¥å£ (å¯¹åº” MSPM0 GROUP1 ä¸­æ–­å‘é‡)
+// ===================================================================================================================
 
+/**
+ * @brief  MSPM0 ç»„ 1 GPIO ä¸­æ–­æœåŠ¡å‡½æ•° (åŒ…å« GPIOB ç«¯å£çš„ä¸­æ–­è§¦å‘)
+ *         å½“ IMU660RC è§£ç®—å®Œæˆå¹¶ä» INT2 (PB24) è¾“å‡ºä¸Šå‡æ²¿è„‰å†²æ—¶ï¼Œè‡ªåŠ¨è§¦å‘æœ¬ ISR è¿›è¡Œå§¿æ€æ›´æ–°
+ */
+void GROUP1_IRQHandler(void)
+{
+    // è·å– GPIOB ç«¯å£å¼•è„š 24 (imuInt_int2_PIN) çš„ä¸­æ–­ä½¿èƒ½çŠ¶æ€
+    uint32_t gpioStat = DL_GPIO_getEnabledInterruptStatus(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
+    if (gpioStat & IMU660RC_INT2_PIN)
+    {
+        // æ¸…é™¤ PB24 æ‚¬æŒ‚ä¸­æ–­æ ‡å¿—
+        DL_GPIO_clearInterruptStatus(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
+        // æ‰§è¡Œå››å…ƒæ•°ä¸å§¿æ€è§’æ›´æ–°
+        imu660rc_get_quarternion();
+    }
 }
 
-//-------------------------------------------------------------------------------------------------------------------
-// º¯Êı¼ò½é     ³õÊ¼»¯ IMU660RC
-// ²ÎÊıËµÃ÷     quarternion_rate	Ñ¡ÔñËÄÔªÊıÊä³öËÙÂÊ
-// ·µ»Ø²ÎÊı     uint8           	1-³õÊ¼»¯Ê§°Ü 0-³õÊ¼»¯³É¹¦
-// Ê¹ÓÃÊ¾Àı     imu660rc_init(IMU660RC_QUARTERNION_120HZ);
-// ±¸×¢ĞÅÏ¢     
-//-------------------------------------------------------------------------------------------------------------------
+// ===================================================================================================================
+// æ ¸å¿ƒåˆå§‹åŒ–å…¥å£
+// ===================================================================================================================
+
+/**
+ * @brief  åˆå§‹åŒ– IMU660RC å…­è½´ä¼ æ„Ÿå™¨åŠ INT2 ç¡¬ä»¶ä¸­æ–­
+ * @param  quarternion_rate å§¿æ€èåˆå››å…ƒæ•°æ›´æ–°é€Ÿç‡ (è‹¥è®¾ä¸º DISABLE åˆ™ä¸ä½¿èƒ½ INT2 ä¸­æ–­)
+ * @return uint8 0: åˆå§‹åŒ–æˆåŠŸ, 1: åˆå§‹åŒ–å¤±è´¥
+ */
 uint8 imu660rc_init(imu660rc_quarternion_rate_config quarternion_rate)
 {
     uint8 return_state = 0;
 
     imu660rc_quarternion_rate = quarternion_rate;
-    #if IMU660RC_USE_IIC
-    #if IMU660RC_USE_SOFT_IIC
-        soft_iic_init(&imu660rc_iic_struct, IMU660RC_DEV_ADDR, IMU660RC_SOFT_IIC_DELAY, IMU660RC_SCL_PIN, IMU660RC_SDA_PIN);        // ÅäÖÃ IMU660RC µÄ IIC ¶Ë¿Ú
-    #else
-        iic_init(IMU660RC_IIC_INDEX, IMU660RC_DEV_ADDR, IMU660RC_IIC_SPEED, IMU660RC_SCL_PIN, IMU660RC_SDA_PIN);        // ÅäÖÃ IMU660RC µÄ IIC ¶Ë¿Ú
-    #endif
-    #else
-        spi_init(IMU660RC_SPI, SPI_MODE0, IMU660RC_SPI_SPEED, IMU660RC_SPC_PIN, IMU660RC_SDI_PIN, IMU660RC_SDO_PIN, SPI_CS_NULL);   // ÅäÖÃ IMU660RC µÄ SPI ¶Ë¿Ú
-        gpio_init(IMU660RC_CS_PIN, GPO, GPIO_HIGH, GPO_PUSH_PULL);                  // ÅäÖÃ IMU660RC µÄCS¶Ë¿Ú
-    #endif
+
+    // é…ç½® CS (PB13) å¼•è„šä¸ºæ™®é€š GPIO æ¨æŒ½è¾“å‡º
+#ifdef imuInt_CS_IOMUX
+    DL_GPIO_initDigitalOutput(imuInt_CS_IOMUX);
+#elif defined(GPIO_IMU660RC_CS0_IOMUX)
+    DL_GPIO_initDigitalOutput(GPIO_IMU660RC_CS0_IOMUX);
+#else
+    DL_GPIO_initDigitalOutput(IOMUX_PINCM30);
+#endif
+    DL_GPIO_setPins(IMU660RC_CS_PORT, IMU660RC_CS_PIN);
+    DL_GPIO_enableOutput(IMU660RC_CS_PORT, IMU660RC_CS_PIN);
 
     system_delay_ms(10);
-    imu660rc_read_register(IMU660RC_CHIP_ID);
+    // ä¸Šç”µé¦–æ¬¡è¯» SPIï¼Œä¿ƒä½¿ä¼ æ„Ÿå™¨ç”± I2C æ¨¡å¼åˆ‡æ¢ä¸º SPI æ¨¡å¼
+    (void)imu660rc_read_register(IMU660RC_CHIP_ID);
+    system_delay_ms(5);
+
     do
     {
-        if(imu660rc_self_check())                                               // IMU660RC ×Ô¼ì
+        // 1. æ£€æŸ¥é€šè®¯è‡ªæ£€
+        if (imu660rc_self_check())
         {
-            // Èç¹û³ÌĞòÔÚÊä³öÁË¶ÏÑÔĞÅÏ¢ ²¢ÇÒÌáÊ¾³ö´íÎ»ÖÃÔÚÕâÀï
-            // ÄÇÃ´¾ÍÊÇ IMU660RC ×Ô¼ì³ö´í²¢³¬Ê±ÍË³öÁË
-            // ¼ì²éÒ»ÏÂ½ÓÏßÓĞÃ»ÓĞÎÊÌâ Èç¹ûÃ»ÎÊÌâ¿ÉÄÜ¾ÍÊÇ»µÁË
-            zf_log(0, "imu660rc self check error.");
             return_state = 1;
             break;
         }
-                
-        // ¸´Î»´«¸ĞÆ÷
+
+        // 2. å¤ä½æ§åˆ¶ä¸åŠŸèƒ½å¼€å¯
         imu660rc_write_register(IMU660RC_FUNC_CFG_ACCESS, 0x04);
         system_delay_ms(30);
 
-        // ÆôÓÃ¿é¸üĞÂ¹¦ÄÜÓëµØÖ·µİÔö
-		
         imu660rc_write_register(IMU660RC_CTRL3, 0x44);
-        
-        switch(IMU660RC_ACC_SAMPLE_DEFAULT)
+
+        // 3. é…ç½®åŠ é€Ÿåº¦è®¡é‡ç¨‹ä¸æ¯”ä¾‹å› å­
+        switch (IMU660RC_ACC_SAMPLE_DEFAULT)
         {
             default:
             {
-                zf_log(0, "IMU660RC_ACC_SAMPLE_DEFAULT set error.");
                 return_state = 1;
             }break;
             case IMU660RC_ACC_SAMPLE_SGN_2G:
             {
                 imu660rc_write_register(IMU660RC_CTRL8, 0x00);
-                imu660rc_transition_factor[0] = 16393.44;
+                imu660rc_transition_factor[0] = 16393.44f;
             }break;
             case IMU660RC_ACC_SAMPLE_SGN_4G:
             {
                 imu660rc_write_register(IMU660RC_CTRL8, 0x01);
-                imu660rc_transition_factor[0] = 8196.72;
+                imu660rc_transition_factor[0] = 8196.72f;
             }break;
             case IMU660RC_ACC_SAMPLE_SGN_8G:
             {
                 imu660rc_write_register(IMU660RC_CTRL8, 0x02);
-                imu660rc_transition_factor[0] = 4098.36;
+                imu660rc_transition_factor[0] = 4098.36f;
             }break;
             case IMU660RC_ACC_SAMPLE_SGN_16G:
             {
                 imu660rc_write_register(IMU660RC_CTRL8, 0x03);
-                imu660rc_transition_factor[0] = 2049.18;
+                imu660rc_transition_factor[0] = 2049.18f;
             }break;
         }
-        if(1 == return_state)
+        if (1 == return_state)
         {
             break;
         }
-        
-        switch(IMU660RC_GYRO_SAMPLE_DEFAULT)
+
+        // 4. é…ç½®é™€èºä»ªé‡ç¨‹ä¸æ¯”ä¾‹å› å­
+        switch (IMU660RC_GYRO_SAMPLE_DEFAULT)
         {
             default:
             {
-                zf_log(0, "IMU660RC_GYRO_SAMPLE_DEFAULT set error.");
                 return_state = 1;
             }break;
             case IMU660RC_GYRO_SAMPLE_SGN_125DPS:
             {
                 imu660rc_write_register(IMU660RC_CTRL6, 0x00);
-                imu660rc_transition_factor[1] = 228.5714;
+                imu660rc_transition_factor[1] = 228.5714f;
             }break;
             case IMU660RC_GYRO_SAMPLE_SGN_250DPS:
             {
                 imu660rc_write_register(IMU660RC_CTRL6, 0x01);
-                imu660rc_transition_factor[1] = 114.2857;
+                imu660rc_transition_factor[1] = 114.2857f;
             }break;
             case IMU660RC_GYRO_SAMPLE_SGN_500DPS:
             {
                 imu660rc_write_register(IMU660RC_CTRL6, 0x02);
-                imu660rc_transition_factor[1] = 57.1428;
+                imu660rc_transition_factor[1] = 57.1428f;
             }break;
             case IMU660RC_GYRO_SAMPLE_SGN_1000DPS:
             {
                 imu660rc_write_register(IMU660RC_CTRL6, 0x03);
-                imu660rc_transition_factor[1] = 28.5714;
+                imu660rc_transition_factor[1] = 28.5714f;
             }break;
             case IMU660RC_GYRO_SAMPLE_SGN_2000DPS:
             {
                 imu660rc_write_register(IMU660RC_CTRL6, 0x04);
-                imu660rc_transition_factor[1] = 14.2857;
+                imu660rc_transition_factor[1] = 14.2857f;
             }break;
             case IMU660RC_GYRO_SAMPLE_SGN_4000DPS:
             {
                 imu660rc_write_register(IMU660RC_CTRL6, 0x0C);
-                imu660rc_transition_factor[1] = 7.14285;
+                imu660rc_transition_factor[1] = 7.14285f;
             }break;
         }
-        if(1 == return_state)
+        if (1 == return_state)
         {
             break;
         }
-        
-        // ÉèÖÃ´«¸ĞÆ÷Ä£Ê½£¬ÉèÖÃÎª¸ß¾«¶ÈÄ£Ê½ÒÔ¼°Êä³öËÙÂÊ
+
+        // 5. æ»¤æ³¢å™¨ä¸å·¥ä½œæ¨¡å¼è®¾ç½®
         imu660rc_write_register(IMU660RC_CTRL1, 0x15);
         imu660rc_write_register(IMU660RC_CTRL2, 0x18);
-        
-        // ¿ªÆôLPF1ÂË²¨Æ÷
         imu660rc_write_register(IMU660RC_CTRL7, 0x01);
-        
-        // ¿ªÆôLPF2ÂË²¨Æ÷
         imu660rc_write_register(IMU660RC_CTRL9, 0x08);
-        
-        // Èç¹ûÆôÓÃËÄÔªÊıÊä³ö£¬ÔòÅäÖÃÏàÓ¦Êı¾İ
-        if(IMU660RC_QUARTERNION_DISABLE != quarternion_rate)
+
+        // 6. é…ç½®å§¿æ€èè§£å¼•æ“ä¸ INT2 ä¸­æ–­è„šè¾“å‡º
+        if (IMU660RC_QUARTERNION_DISABLE != quarternion_rate)
         {
             imu660rc_write_register(IMU660RC_FIFO_CRTL1, 0x01);
             imu660rc_write_register(IMU660RC_FIFO_CRTL4, 0x06);
-            // ÉèÖÃÖĞ¶Ï´¥·¢ĞÅºÅ
-            imu660rc_write_register(IMU660RC_INT2_CTRL, 0x80);
+            imu660rc_write_register(IMU660RC_INT2_CTRL, 0x80);                 // é…ç½®ç¡¬ä»¶æ•°æ®å°±ç»ªè¾“å‡ºè‡³ INT2 ç‰©ç†å¼•è„š
             imu660rc_write_register(IMU660RC_CTRL4, 0x08);
-            
-            // ÖØĞÂÅäÖÃ¼ÓËÙ¶È¡¢½ÇËÙ¶ÈÊä³öËÙÂÊ
+
             imu660rc_write_register(IMU660RC_CTRL1, 0x10 | (quarternion_rate + 3));
             imu660rc_write_register(IMU660RC_CTRL2, 0x10 | (quarternion_rate + 3));
-            
-            // ÉèÖÃËÄÔªÊıÊä³öËÙÂÊ²¢¿ªÆô
+
             imu660rc_set_mem_bank(IMU660RC_EMBED_MEM_BANK);
-            
+
             imu660rc_write_register(IMU660RC_EMB_FUNC_FIFO_EN_A, 0x02);
             imu660rc_write_register(IMU660RC_SFLP_ODR, 0x43 | (quarternion_rate << 3));
             imu660rc_write_register(IMU660RC_EMB_FUNC_EN_A, 0x02);
             imu660rc_write_register(IMU660RC_PAGE_RW, 0x00);
             imu660rc_set_mem_bank(IMU660RC_MAIN_MEM_BANK);
 
-			// ¿ªÆôÖĞ¶Ï¼ì²âÒı½Å
-			exti_init(IMU660RC_INT2_PIN, EXTI_TRIGGER_RISING, imu660rc_callback, NULL);
+            // 7. é…ç½® MSPM0 å•ç‰‡æœº PB24 å¼•è„šä¸Šå‡æ²¿ä¸­æ–­ä¸ NVIC
+            DL_GPIO_setUpperPinsPolarity(IMU660RC_INT2_PORT, DL_GPIO_PIN_24_EDGE_RISE);
+            DL_GPIO_clearInterruptStatus(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
+            DL_GPIO_enableInterrupt(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
+            NVIC_ClearPendingIRQ(GPIOB_INT_IRQn);
+            NVIC_EnableIRQ(GPIOB_INT_IRQn);
         }
-    }while(0);
-	
-	return return_state;
+    } while (0);
+
+    return return_state;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
