@@ -45,6 +45,15 @@ const UART2  = UART.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+const divider9       = system.clockTree["UDIV"];
+divider9.divideValue = 2;
+
+const multiplier2         = system.clockTree["PLL_QDIV"];
+multiplier2.multiplyValue = 5;
+
+const mux8       = system.clockTree["HSCLKMUX"];
+mux8.inputSelect = "HSCLKMUX_SYSPLL0";
+
 ADC121.$name                             = "xunji";
 ADC121.sampClkDiv                        = "DL_ADC12_CLOCK_DIVIDE_4";
 ADC121.peripheral.$assign                = "ADC1";
@@ -231,13 +240,11 @@ PWM2.ccp1PinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric24";
 
 PWM3.$name                              = "servo";
 PWM3.ccIndex                            = [0,1,2,3];
-PWM3.clockPrescale                      = 63;
-PWM3.timerCount                         = 10000;
 PWM3.pwmMode                            = "EDGE_ALIGN_UP";
+PWM3.clockPrescale                      = 79;
+PWM3.timerCount                         = 20000;
 PWM3.PWM_CHANNEL_0.$name                = "ti_driverlib_pwm_PWMTimerCC0";
-PWM3.PWM_CHANNEL_0.ccValue              = 1500;
 PWM3.PWM_CHANNEL_1.$name                = "ti_driverlib_pwm_PWMTimerCC1";
-PWM3.PWM_CHANNEL_1.ccValue              = 1500;
 PWM3.ccp0PinConfig.direction            = scripting.forceWrite("OUTPUT");
 PWM3.ccp0PinConfig.hideOutputInversion  = scripting.forceWrite(false);
 PWM3.ccp0PinConfig.onlyInternalResistor = scripting.forceWrite(false);
@@ -254,9 +261,7 @@ PWM3.peripheral.ccp1Pin.$assign         = "PC4";
 PWM3.peripheral.ccp2Pin.$assign         = "PC0";
 PWM3.peripheral.ccp3Pin.$assign         = "PA17";
 PWM3.PWM_CHANNEL_2.$name                = "ti_driverlib_pwm_PWMTimerCC2";
-PWM3.PWM_CHANNEL_2.ccValue              = 1500;
 PWM3.PWM_CHANNEL_3.$name                = "ti_driverlib_pwm_PWMTimerCC3";
-PWM3.PWM_CHANNEL_3.ccValue              = 1500;
 PWM3.ccp2PinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric15";
 PWM3.ccp3PinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric16";
 
@@ -337,7 +342,6 @@ SYSCTL.clockTreeEn                    = true;
 UART1.targetBaudRate                   = 115200;
 UART1.enableFIFO                       = true;
 UART1.rxFifoThreshold                  = "DL_UART_RX_FIFO_LEVEL_ONE_ENTRY";
-UART1.enableInternalLoopback           = false;
 UART1.enableDMARX                      = false;
 UART1.enableDMATX                      = false;
 UART1.$name                            = "UART_1";
@@ -354,7 +358,11 @@ UART1.rxPinConfig.onlyInternalResistor = scripting.forceWrite(false);
 UART1.rxPinConfig.passedPeripheralType = scripting.forceWrite("Digital");
 UART1.rxPinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric6";
 
-UART2.profile                          = "CONFIG_PROFILE_1";
+UART2.targetBaudRate                   = 115200;
+UART2.enableFIFO                       = true;
+UART2.rxFifoThreshold                  = "DL_UART_RX_FIFO_LEVEL_ONE_ENTRY";
+UART2.enableDMARX                      = false;
+UART2.enableDMATX                      = false;
 UART2.enableInternalLoopback           = false;
 UART2.$name                            = "UART_4";
 UART2.peripheral.$assign               = "UART4";

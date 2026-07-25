@@ -293,20 +293,118 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 }
 
 
+static const DL_SYSCTL_SYSPLLConfig gSYSPLLConfig = {
+    .inputFreq              = DL_SYSCTL_SYSPLL_INPUT_FREQ_32_48_MHZ,
+	.rDivClk2x              = 1,
+	.rDivClk1               = 0,
+	.rDivClk0               = 0,
+	.enableCLK2x            = DL_SYSCTL_SYSPLL_CLK2X_DISABLE,
+	.enableCLK1             = DL_SYSCTL_SYSPLL_CLK1_DISABLE,
+	.enableCLK0             = DL_SYSCTL_SYSPLL_CLK0_ENABLE,
+	.sysPLLMCLK             = DL_SYSCTL_SYSPLL_MCLK_CLK0,
+	.sysPLLRef              = DL_SYSCTL_SYSPLL_REF_SYSOSC,
+	.qDiv                   = 4,
+	.pDiv                   = DL_SYSCTL_SYSPLL_PDIV_1
+};
 
+SYSCONFIG_WEAK bool SYSCFG_DL_SYSCTL_SYSPLL_init(void)
+{
+    bool fFCCRatioStatus = false;
+    uint32_t fFCCSysoscCount;
+    uint32_t fFCCPllCount;
+    uint32_t fFCCRatio;
+    uint32_t fccTimeOutCounter;
+
+    DL_SYSCTL_setFCCPeriods( DL_SYSCTL_FCC_TRIG_CNT_01 );
+
+    /* Measuring PLL. */
+    DL_SYSCTL_configFCC(DL_SYSCTL_FCC_TRIG_TYPE_RISE_RISE,
+                        DL_SYSCTL_FCC_TRIG_SOURCE_LFCLK,
+                        DL_SYSCTL_FCC_CLOCK_SOURCE_SYSPLLCLK0);
+    /* Get SYSPLL frequency using FCC */
+    fccTimeOutCounter = 0;
+    DL_SYSCTL_startFCC();
+    while (DL_SYSCTL_isFCCDone() == 0) {
+        delay_cycles(977);  /* 1x LFCLK cycle = 32MHz/32.768kHz = 977, 30.5us */
+        fccTimeOutCounter++;
+        if(fccTimeOutCounter > 65){
+            /* Timeout set to approximately 2ms (user-customizable) */
+            break;
+        }
+    }
+
+    /* get measA= SYSPLLCLK0 freq wrt LFOSC*/
+    fFCCPllCount = DL_SYSCTL_readFCC();
+
+    /* Measuring SYSPLL Source */
+    DL_SYSCTL_configFCC(DL_SYSCTL_FCC_TRIG_TYPE_RISE_RISE,
+                        DL_SYSCTL_FCC_TRIG_SOURCE_LFCLK,
+                        DL_SYSCTL_FCC_CLOCK_SOURCE_SYSOSC);
+    /* Get SYSPLL frequency using FCC */
+    fccTimeOutCounter = 0;
+    DL_SYSCTL_startFCC();
+    while (DL_SYSCTL_isFCCDone() == 0) {
+        delay_cycles(977);  /* 1x LFCLK cycle = 32MHz/32.768kHz = 977, 30.5us */
+        fccTimeOutCounter++;
+        if(fccTimeOutCounter > 65){
+            /* Timeout set to approximately 2ms (user-customizable) */
+            break;
+        }
+    }
+
+    /* get measB= SYSOSC freq wrt LFOSC*/
+    fFCCSysoscCount = DL_SYSCTL_readFCC();
+
+    /* Get ratio of both measurements*/
+    fFCCRatio = (fFCCPllCount * FLOAT_TO_INT_SCALE) / fFCCSysoscCount;
+    /* Check ratio is within bounds*/
+    if ((FCC_LOWER_BOUND <  fFCCRatio) && (fFCCRatio < FCC_UPPER_BOUND))
+    {
+        /* ratio is good for proceeding into application code. */
+        fFCCRatioStatus = true;
+    }
+
+    return fFCCRatioStatus;
+}
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
 {
 
 	//Low Power Mode is configured to be SLEEP0
     DL_SYSCTL_setBORThreshold(DL_SYSCTL_BOR_THRESHOLD_LEVEL_1);
+    DL_SYSCTL_setFlashWaitState(DL_SYSCTL_FLASH_WAIT_STATE_2);
 
     
 	DL_SYSCTL_setSYSOSCFreq(DL_SYSCTL_SYSOSC_FREQ_BASE);
+    DL_SYSCTL_configSYSPLL((DL_SYSCTL_SYSPLLConfig *) &gSYSPLLConfig);
+
+    /*
+     * [SYSPLL_ERR_01]
+     * PLL Incorrect locking WA start.
+     * Insert after every PLL enable.
+     * This can lead an infinite loop if the condition persists
+     * and can block entry to the application code.
+     */
+
+    while (SYSCFG_DL_SYSCTL_SYSPLL_init() == false)
+    {
+        /* Toggle SYSPLL enable to re-enable SYSPLL and re-check incorrect locking */
+        DL_SYSCTL_disableSYSPLL();
+        DL_SYSCTL_enableSYSPLL();
+
+        /* Wait until SYSPLL startup is stabilized*/
+        while ((DL_SYSCTL_getClockStatus() & SYSCTL_CLKSTATUS_SYSPLLGOOD_MASK) != DL_SYSCTL_CLK_STATUS_SYSPLL_GOOD){}
+    }
+    DL_SYSCTL_setULPCLKDivider(DL_SYSCTL_ULPCLK_DIV_2);
+    DL_SYSCTL_setMCLKSource(SYSOSC, HSCLK, DL_SYSCTL_HSCLK_SOURCE_SYSPLL);
 
 }
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_CLK_init(void) {
-    while ((DL_SYSCTL_getClockStatus() & (DL_SYSCTL_CLK_STATUS_LFOSC_GOOD))
-	       != (DL_SYSCTL_CLK_STATUS_LFOSC_GOOD))
+    while ((DL_SYSCTL_getClockStatus() & (DL_SYSCTL_CLK_STATUS_SYSPLL_GOOD
+		 | DL_SYSCTL_CLK_STATUS_HSCLK_GOOD
+		 | DL_SYSCTL_CLK_STATUS_LFOSC_GOOD))
+	       != (DL_SYSCTL_CLK_STATUS_SYSPLL_GOOD
+		 | DL_SYSCTL_CLK_STATUS_HSCLK_GOOD
+		 | DL_SYSCTL_CLK_STATUS_LFOSC_GOOD))
 	{
 		/* Ensure that clocks are in default POR configuration before initialization.
 		* Additionally once LFXT is enabled, the internal LFOSC is disabled, and cannot
@@ -318,9 +416,9 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_CLK_init(void) {
 
 
 /*
- * Timer clock configuration to be sourced by  / 1 (32000000 Hz)
+ * Timer clock configuration to be sourced by  / 1 (80000000 Hz)
  * timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
- *   4000000 Hz = 32000000 Hz / (1 * (7 + 1))
+ *   10000000 Hz = 80000000 Hz / (1 * (7 + 1))
  */
 static const DL_TimerA_ClockConfig gTB6612PWMClockConfig = {
     .clockSel = DL_TIMER_CLOCK_BUSCLK,
@@ -369,9 +467,9 @@ SYSCONFIG_WEAK void SYSCFG_DL_TB6612PWM_init(void) {
 
 }
 /*
- * Timer clock configuration to be sourced by  / 1 (32000000 Hz)
+ * Timer clock configuration to be sourced by  / 1 (80000000 Hz)
  * timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
- *   32000000 Hz = 32000000 Hz / (1 * (0 + 1))
+ *   80000000 Hz = 80000000 Hz / (1 * (0 + 1))
  */
 static const DL_TimerG_ClockConfig gDRV8873ClockConfig = {
     .clockSel = DL_TIMER_CLOCK_BUSCLK,
@@ -420,19 +518,19 @@ SYSCONFIG_WEAK void SYSCFG_DL_DRV8873_init(void) {
 
 }
 /*
- * Timer clock configuration to be sourced by  / 1 (32000000 Hz)
+ * Timer clock configuration to be sourced by  / 1 (80000000 Hz)
  * timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
- *   507936.50793650793 Hz = 32000000 Hz / (1 * (62 + 1))
+ *   1012658.2278481013 Hz = 80000000 Hz / (1 * (78 + 1))
  */
 static const DL_TimerA_ClockConfig gservoClockConfig = {
     .clockSel = DL_TIMER_CLOCK_BUSCLK,
     .divideRatio = DL_TIMER_CLOCK_DIVIDE_1,
-    .prescale = 62U
+    .prescale = 78U
 };
 
 static const DL_TimerA_PWMConfig gservoConfig = {
     .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN_UP,
-    .period = 10000,
+    .period = 20000,
     .isTimerWithFourCC = true,
     .startTimer = DL_TIMER_STOP,
 };
@@ -453,28 +551,28 @@ SYSCONFIG_WEAK void SYSCFG_DL_servo_init(void) {
 		DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(servo_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
-    DL_TimerA_setCaptureCompareValue(servo_INST, 1500, DL_TIMER_CC_0_INDEX);
+    DL_TimerA_setCaptureCompareValue(servo_INST, 0, DL_TIMER_CC_0_INDEX);
 
     DL_TimerA_setCaptureCompareOutCtl(servo_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
 		DL_TIMERA_CAPTURE_COMPARE_1_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(servo_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_1_INDEX);
-    DL_TimerA_setCaptureCompareValue(servo_INST, 1500, DL_TIMER_CC_1_INDEX);
+    DL_TimerA_setCaptureCompareValue(servo_INST, 0, DL_TIMER_CC_1_INDEX);
 
     DL_TimerA_setCaptureCompareOutCtl(servo_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
 		DL_TIMERA_CAPTURE_COMPARE_2_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(servo_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_2_INDEX);
-    DL_TimerA_setCaptureCompareValue(servo_INST, 1500, DL_TIMER_CC_2_INDEX);
+    DL_TimerA_setCaptureCompareValue(servo_INST, 0, DL_TIMER_CC_2_INDEX);
 
     DL_TimerA_setCaptureCompareOutCtl(servo_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
 		DL_TIMERA_CAPTURE_COMPARE_3_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(servo_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_3_INDEX);
-    DL_TimerA_setCaptureCompareValue(servo_INST, 1500, DL_TIMER_CC_3_INDEX);
+    DL_TimerA_setCaptureCompareValue(servo_INST, 0, DL_TIMER_CC_3_INDEX);
 
     DL_TimerA_enableClock(servo_INST);
 
@@ -542,7 +640,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_OLED_init(void) {
     /* Configure Controller Mode */
     DL_I2C_resetControllerTransfer(OLED_INST);
     /* Set frequency to 100000 Hz*/
-    DL_I2C_setTimerPeriod(OLED_INST, 31);
+    DL_I2C_setTimerPeriod(OLED_INST, 39);
     DL_I2C_setControllerTXFIFOThreshold(OLED_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
     DL_I2C_setControllerRXFIFOThreshold(OLED_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
     DL_I2C_enableControllerClockStretching(OLED_INST);
@@ -576,10 +674,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_UART_1_init(void)
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
      *  Target baud rate: 115200
-     *  Actual baud rate: 115211.52
+     *  Actual baud rate: 115190.78
      */
     DL_UART_Main_setOversampling(UART_1_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(UART_1_INST, UART_1_IBRD_32_MHZ_115200_BAUD, UART_1_FBRD_32_MHZ_115200_BAUD);
+    DL_UART_Main_setBaudRateDivisor(UART_1_INST, UART_1_IBRD_40_MHZ_115200_BAUD, UART_1_FBRD_40_MHZ_115200_BAUD);
 
 
     /* Configure FIFOs */
@@ -611,10 +709,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_UART_4_init(void)
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
      *  Target baud rate: 115200
-     *  Actual baud rate: 115211.52
+     *  Actual baud rate: 115190.78
      */
     DL_UART_Main_setOversampling(UART_4_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(UART_4_INST, UART_4_IBRD_32_MHZ_115200_BAUD, UART_4_FBRD_32_MHZ_115200_BAUD);
+    DL_UART_Main_setBaudRateDivisor(UART_4_INST, UART_4_IBRD_80_MHZ_115200_BAUD, UART_4_FBRD_80_MHZ_115200_BAUD);
 
 
     /* Configure FIFOs */
@@ -647,9 +745,9 @@ SYSCONFIG_WEAK void SYSCFG_DL_TFT_SPI0_init(void) {
     /*
      * Set the bit rate clock divider to generate the serial output clock
      *     outputBitRate = (spiInputClock) / ((1 + SCR) * 2)
-     *     8000000 = (32000000)/((1 + 1) * 2)
+     *     8000000 = (80000000)/((1 + 4) * 2)
      */
-    DL_SPI_setBitRateSerialClockDivider(TFT_SPI0_INST, 1);
+    DL_SPI_setBitRateSerialClockDivider(TFT_SPI0_INST, 4);
     /* Set RX and TX FIFO threshold levels */
     DL_SPI_setFIFOThreshold(TFT_SPI0_INST, DL_SPI_RX_FIFO_LEVEL_1_2_FULL, DL_SPI_TX_FIFO_LEVEL_1_2_EMPTY);
 
@@ -679,9 +777,9 @@ SYSCONFIG_WEAK void SYSCFG_DL_IMU660RC_init(void) {
     /*
      * Set the bit rate clock divider to generate the serial output clock
      *     outputBitRate = (spiInputClock) / ((1 + SCR) * 2)
-     *     16000000 = (32000000)/((1 + 0) * 2)
+     *     13333333.33 = (80000000)/((1 + 2) * 2)
      */
-    DL_SPI_setBitRateSerialClockDivider(IMU660RC_INST, 0);
+    DL_SPI_setBitRateSerialClockDivider(IMU660RC_INST, 2);
     /* Set RX and TX FIFO threshold levels */
     DL_SPI_setFIFOThreshold(IMU660RC_INST, DL_SPI_RX_FIFO_LEVEL_1_2_FULL, DL_SPI_TX_FIFO_LEVEL_1_2_EMPTY);
 

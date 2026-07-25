@@ -74,15 +74,22 @@ extern "C" {
 
 
 
-#define CPUCLK_FREQ                                                     32000000
+#define CPUCLK_FREQ                                                     80000000
+/* Defines for SYSPLL_ERR_01 Workaround */
+/* Represent 1.000 as 1000 */
+#define FLOAT_TO_INT_SCALE                                               (1000U)
+#define FCC_EXPECTED_RATIO                                                  2500
+#define FCC_UPPER_BOUND                       (FCC_EXPECTED_RATIO * (1 + 0.003))
+#define FCC_LOWER_BOUND                       (FCC_EXPECTED_RATIO * (1 - 0.003))
 
+bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 
 
 /* Defines for TB6612PWM */
 #define TB6612PWM_INST                                                     TIMA1
 #define TB6612PWM_INST_IRQHandler                               TIMA1_IRQHandler
 #define TB6612PWM_INST_INT_IRQN                                 (TIMA1_INT_IRQn)
-#define TB6612PWM_INST_CLK_FREQ                                          4000000
+#define TB6612PWM_INST_CLK_FREQ                                         10000000
 /* GPIO defines for channel 0 */
 #define GPIO_TB6612PWM_C0_PORT                                             GPIOA
 #define GPIO_TB6612PWM_C0_PIN                                     DL_GPIO_PIN_28
@@ -100,7 +107,7 @@ extern "C" {
 #define DRV8873_INST                                                      TIMG12
 #define DRV8873_INST_IRQHandler                                TIMG12_IRQHandler
 #define DRV8873_INST_INT_IRQN                                  (TIMG12_INT_IRQn)
-#define DRV8873_INST_CLK_FREQ                                           32000000
+#define DRV8873_INST_CLK_FREQ                                           80000000
 /* GPIO defines for channel 0 */
 #define GPIO_DRV8873_C0_PORT                                               GPIOB
 #define GPIO_DRV8873_C0_PIN                                       DL_GPIO_PIN_20
@@ -118,7 +125,7 @@ extern "C" {
 #define servo_INST                                                         TIMA0
 #define servo_INST_IRQHandler                                   TIMA0_IRQHandler
 #define servo_INST_INT_IRQN                                     (TIMA0_INT_IRQn)
-#define servo_INST_CLK_FREQ                                   507936.50793650793
+#define servo_INST_CLK_FREQ                                   1012658.2278481013
 /* GPIO defines for channel 0 */
 #define GPIO_servo_C0_PORT                                                 GPIOC
 #define GPIO_servo_C0_PIN                                          DL_GPIO_PIN_2
@@ -196,7 +203,7 @@ extern "C" {
 
 /* Defines for UART_1 */
 #define UART_1_INST                                                        UART1
-#define UART_1_INST_FREQUENCY                                           32000000
+#define UART_1_INST_FREQUENCY                                           40000000
 #define UART_1_INST_IRQHandler                                  UART1_IRQHandler
 #define UART_1_INST_INT_IRQN                                      UART1_INT_IRQn
 #define GPIO_UART_1_RX_PORT                                                GPIOB
@@ -208,11 +215,11 @@ extern "C" {
 #define GPIO_UART_1_IOMUX_RX_FUNC                      IOMUX_PINCM18_PF_UART1_RX
 #define GPIO_UART_1_IOMUX_TX_FUNC                      IOMUX_PINCM17_PF_UART1_TX
 #define UART_1_BAUD_RATE                                                (115200)
-#define UART_1_IBRD_32_MHZ_115200_BAUD                                      (17)
-#define UART_1_FBRD_32_MHZ_115200_BAUD                                      (23)
+#define UART_1_IBRD_40_MHZ_115200_BAUD                                      (21)
+#define UART_1_FBRD_40_MHZ_115200_BAUD                                      (45)
 /* Defines for UART_4 */
 #define UART_4_INST                                                        UART4
-#define UART_4_INST_FREQUENCY                                           32000000
+#define UART_4_INST_FREQUENCY                                           80000000
 #define UART_4_INST_IRQHandler                                  UART4_IRQHandler
 #define UART_4_INST_INT_IRQN                                      UART4_INT_IRQn
 #define GPIO_UART_4_RX_PORT                                                GPIOB
@@ -224,8 +231,8 @@ extern "C" {
 #define GPIO_UART_4_IOMUX_RX_FUNC                      IOMUX_PINCM28_PF_UART4_RX
 #define GPIO_UART_4_IOMUX_TX_FUNC                      IOMUX_PINCM27_PF_UART4_TX
 #define UART_4_BAUD_RATE                                                (115200)
-#define UART_4_IBRD_32_MHZ_115200_BAUD                                      (17)
-#define UART_4_FBRD_32_MHZ_115200_BAUD                                      (23)
+#define UART_4_IBRD_80_MHZ_115200_BAUD                                      (43)
+#define UART_4_FBRD_80_MHZ_115200_BAUD                                      (26)
 
 
 
@@ -394,6 +401,8 @@ void SYSCFG_DL_initPower(void);
 void SYSCFG_DL_GPIO_init(void);
 void SYSCFG_DL_SYSCTL_init(void);
 void SYSCFG_DL_SYSCTL_CLK_init(void);
+
+bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 void SYSCFG_DL_TB6612PWM_init(void);
 void SYSCFG_DL_DRV8873_init(void);
 void SYSCFG_DL_servo_init(void);

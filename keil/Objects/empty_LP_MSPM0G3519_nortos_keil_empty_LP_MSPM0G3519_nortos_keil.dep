@@ -1,10 +1,10 @@
 Dependencies for Project 'empty_LP_MSPM0G3519_nortos_keil', Target 'empty_LP_MSPM0G3519_nortos_keil': (DO NOT MODIFY !)
 CompilerVersion: 6240000::V6.24::ARMCLANG
-F (../empty.syscfg)(0x6A6385D0)()
+F (../empty.syscfg)(0x6A6416EF)()
 F (startup_mspm0g351x_uvision.s)(0x6A62E20E)(--target=arm-arm-none-eabi -mcpu=cortex-m0plus -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4-Wa,armasm,--pd,"__UVISION_VERSION SETA 543" -Wa,armasm,--pd,"__MSPM0G3519__ SETA 1"-o ./objects/startup_mspm0g351x_uvision.o)
-F (../ti_msp_dl_config.h)(0x6A6385D0)()
-F (../ti_msp_dl_config.c)(0x6A6385D0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/ti_msp_dl_config.o -MMD)
-I (..\ti_msp_dl_config.h)(0x6A6385D0)
+F (../ti_msp_dl_config.h)(0x6A6416EF)()
+F (../ti_msp_dl_config.c)(0x6A6416EF)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/ti_msp_dl_config.o -MMD)
+I (..\ti_msp_dl_config.h)(0x6A6416EF)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -89,7 +89,7 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
 F (..\main.c)(0x6A62E7DF)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/main.o -MMD)
-I (..\ti_msp_dl_config.h)(0x6A6385D0)
+I (..\ti_msp_dl_config.h)(0x6A6416EF)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -173,10 +173,10 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_vref.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
-I (..\core\inc\zf_device_tft180.h)(0x6A62E7BE)
-F (..\core\src\zf_device_tft180.c)(0x6A62EC38)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/zf_device_tft180.o -MMD)
-I (..\core\src\..\inc\zf_device_tft180.h)(0x6A62E7BE)
-I (..\ti_msp_dl_config.h)(0x6A6385D0)
+I (..\core\inc\zf_device_tft180.h)(0x6A63881D)
+F (..\core\src\zf_device_tft180.c)(0x6A638827)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/zf_device_tft180.o -MMD)
+I (..\core\src\..\inc\zf_device_tft180.h)(0x6A63881D)
+I (..\ti_msp_dl_config.h)(0x6A6416EF)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
