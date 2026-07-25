@@ -2,6 +2,7 @@
 ".\objects\startup_mspm0g351x_uvision.o"
 ".\objects\ti_msp_dl_config.o"
 ".\objects\main.o"
+".\objects\zf_device_tft180.o"
 --strict --scatter "./mspm0g3519.sct"
 "D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\lib\keil\m0p\mspm0g1x0x_g3x0x\driverlib.a" --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

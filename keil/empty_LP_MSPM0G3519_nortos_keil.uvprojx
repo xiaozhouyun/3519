@@ -285,12 +285,12 @@
                 <Size>0x80000</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
-                <Type>1</Type>
+                <Type>0</Type>
                 <StartAddress>0x20200000</StartAddress>
                 <Size>0x20000</Size>
               </OCR_RVCT6>
               <OCR_RVCT7>
-                <Type>1</Type>
+                <Type>0</Type>
                 <StartAddress>0x20300000</StartAddress>
                 <Size>0x10000</Size>
               </OCR_RVCT7>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>__MSPM0G3519__</Define>
               <Undefine></Undefine>
-              <IncludePath>../;../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;D:\ti\mspm0_sdk_2_11_00_07\source;D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include</IncludePath>
+              <IncludePath>../;../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;D:\ti\mspm0_sdk_2_11_00_07\source;D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include;..\core\src;..\core\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -408,6 +408,16 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>core</GroupName>
+          <Files>
+            <File>
+              <FileName>zf_device_tft180.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\core\src\zf_device_tft180.c</FilePath>
             </File>
           </Files>
         </Group>
