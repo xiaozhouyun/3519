@@ -278,27 +278,33 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 
 
 
-/* Defines for xunji */
-#define xunji_INST                                                          ADC1
-#define xunji_INST_IRQHandler                                    ADC1_IRQHandler
-#define xunji_INST_INT_IRQN                                      (ADC1_INT_IRQn)
-#define xunji_ADCMEM_0                                        DL_ADC12_MEM_IDX_0
-#define xunji_ADCMEM_0_REF                  DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA
-#define GPIO_xunji_C0_PORT                                                 GPIOA
-#define GPIO_xunji_C0_PIN                                         DL_GPIO_PIN_15
-#define GPIO_xunji_IOMUX_C0                                      (IOMUX_PINCM37)
-#define GPIO_xunji_IOMUX_C0_FUNC                  (IOMUX_PINCM37_PF_UNCONNECTED)
+/* Defines for ADC1 */
+#define ADC1_INST                                                           ADC1
+#define ADC1_INST_IRQHandler                                     ADC1_IRQHandler
+#define ADC1_INST_INT_IRQN                                       (ADC1_INT_IRQn)
+#define ADC1_ADCMEM_DRC8873_ADC0                              DL_ADC12_MEM_IDX_0
+#define ADC1_ADCMEM_DRC8873_ADC0_REF        DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA
+#define ADC1_ADCMEM_DRC8873_ADC1                              DL_ADC12_MEM_IDX_1
+#define ADC1_ADCMEM_DRC8873_ADC1_REF        DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA
+#define GPIO_ADC1_C0_PORT                                                  GPIOA
+#define GPIO_ADC1_C0_PIN                                          DL_GPIO_PIN_15
+#define GPIO_ADC1_IOMUX_C0                                       (IOMUX_PINCM37)
+#define GPIO_ADC1_IOMUX_C0_FUNC                   (IOMUX_PINCM37_PF_UNCONNECTED)
+#define GPIO_ADC1_C4_PORT                                                  GPIOB
+#define GPIO_ADC1_C4_PIN                                          DL_GPIO_PIN_17
+#define GPIO_ADC1_IOMUX_C4                                       (IOMUX_PINCM43)
+#define GPIO_ADC1_IOMUX_C4_FUNC                   (IOMUX_PINCM43_PF_UNCONNECTED)
 
-/* Defines for ADC12_0 */
-#define ADC12_0_INST                                                        ADC0
-#define ADC12_0_INST_IRQHandler                                  ADC0_IRQHandler
-#define ADC12_0_INST_INT_IRQN                                    (ADC0_INT_IRQn)
-#define ADC12_0_ADCMEM_0                                      DL_ADC12_MEM_IDX_0
-#define ADC12_0_ADCMEM_0_REF                DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA
-#define GPIO_ADC12_0_C0_PORT                                               GPIOA
-#define GPIO_ADC12_0_C0_PIN                                       DL_GPIO_PIN_27
-#define GPIO_ADC12_0_IOMUX_C0                                    (IOMUX_PINCM60)
-#define GPIO_ADC12_0_IOMUX_C0_FUNC                (IOMUX_PINCM60_PF_UNCONNECTED)
+/* Defines for ADC0_xunji */
+#define ADC0_xunji_INST                                                     ADC0
+#define ADC0_xunji_INST_IRQHandler                               ADC0_IRQHandler
+#define ADC0_xunji_INST_INT_IRQN                                 (ADC0_INT_IRQn)
+#define ADC0_xunji_ADCMEM_0                                   DL_ADC12_MEM_IDX_0
+#define ADC0_xunji_ADCMEM_0_REF             DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA
+#define GPIO_ADC0_xunji_C0_PORT                                            GPIOA
+#define GPIO_ADC0_xunji_C0_PIN                                    DL_GPIO_PIN_27
+#define GPIO_ADC0_xunji_IOMUX_C0                                 (IOMUX_PINCM60)
+#define GPIO_ADC0_xunji_IOMUX_C0_FUNC             (IOMUX_PINCM60_PF_UNCONNECTED)
 
 
 
@@ -371,13 +377,12 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 /* Defines for dian2: GPIOB.26 with pinCMx 57 on package pin 76 */
 #define dianci_dian2_PIN                                        (DL_GPIO_PIN_26)
 #define dianci_dian2_IOMUX                                       (IOMUX_PINCM57)
-/* Port definition for Pin Group DRV8873HPWPT */
-#define DRV8873HPWPT_PORT                                                (GPIOB)
-
-/* Defines for PH1: GPIOB.17 with pinCMx 43 on package pin 58 */
-#define DRV8873HPWPT_PH1_PIN                                    (DL_GPIO_PIN_17)
-#define DRV8873HPWPT_PH1_IOMUX                                   (IOMUX_PINCM43)
+/* Defines for PH1: GPIOA.22 with pinCMx 47 on package pin 62 */
+#define DRV8873HPWPT_PH1_PORT                                            (GPIOA)
+#define DRV8873HPWPT_PH1_PIN                                    (DL_GPIO_PIN_22)
+#define DRV8873HPWPT_PH1_IOMUX                                   (IOMUX_PINCM47)
 /* Defines for PH2: GPIOB.18 with pinCMx 44 on package pin 59 */
+#define DRV8873HPWPT_PH2_PORT                                            (GPIOB)
 #define DRV8873HPWPT_PH2_PIN                                    (DL_GPIO_PIN_18)
 #define DRV8873HPWPT_PH2_IOMUX                                   (IOMUX_PINCM44)
 /* Port definition for Pin Group xunjiGPIO */
@@ -413,8 +418,8 @@ void SYSCFG_DL_UART_1_init(void);
 void SYSCFG_DL_UART_4_init(void);
 void SYSCFG_DL_TFT_SPI0_init(void);
 void SYSCFG_DL_IMU660RC_init(void);
-void SYSCFG_DL_xunji_init(void);
-void SYSCFG_DL_ADC12_0_init(void);
+void SYSCFG_DL_ADC1_init(void);
+void SYSCFG_DL_ADC0_xunji_init(void);
 
 
 bool SYSCFG_DL_saveConfiguration(void);

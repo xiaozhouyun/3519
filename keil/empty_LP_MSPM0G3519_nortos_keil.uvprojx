@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>empty_LP_MSPM0G3519_nortos_keil</TargetName>
+      <TargetName>empty_LP_MSPM0G3519_freertos_keil</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>empty_LP_MSPM0G3519_nortos_keil</OutputName>
+          <OutputName>empty_LP_MSPM0G3519_freertos_keil</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -137,7 +137,7 @@
             <DriverSelection>0</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2></Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>__MSPM0G3519__</Define>
               <Undefine></Undefine>
-              <IncludePath>../;../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;D:\ti\mspm0_sdk_2_11_00_07\source;D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include;..\core\src;..\core\inc</IncludePath>
+              <IncludePath>../;../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;D:\ti\mspm0_sdk_2_11_00_07\source;D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include;D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include;D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\portable\GCC\ARM_CM0;D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\builds\LP_MSPM0G3519\release;..\core\src;..\core\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,7 +374,7 @@
             <ScatterFile>./mspm0g3519.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>"D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\lib\keil\m0p\mspm0g1x0x_g3x0x\driverlib.a"</Misc>
+            <Misc>"D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\lib\keil\m0p\mspm0g1x0x_g3x0x\driverlib.a" "D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\builds\LP_MSPM0G3519\release\keil\Objects\freertos_builds_LP_MSPM0G3519_release_keil.lib"</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>

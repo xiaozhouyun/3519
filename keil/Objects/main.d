@@ -82,4 +82,13 @@
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h \
-  ..\core\inc\zf_device_tft180.h
+  ..\core\inc\zf_device_tft180.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include\FreeRTOS.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\builds\LP_MSPM0G3519\release\FreeRTOSConfig.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include\projdefs.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include\portable.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include\deprecated_definitions.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\portable\GCC\ARM_CM0\portmacro.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include\mpu_wrappers.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include\task.h \
+  D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include\list.h

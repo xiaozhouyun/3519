@@ -66,8 +66,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_UART_4_init();
     SYSCFG_DL_TFT_SPI0_init();
     SYSCFG_DL_IMU660RC_init();
-    SYSCFG_DL_xunji_init();
-    SYSCFG_DL_ADC12_0_init();
+    SYSCFG_DL_ADC1_init();
+    SYSCFG_DL_ADC0_xunji_init();
     SYSCFG_DL_SYSCTL_CLK_init();
     /* Ensure backup structures have no valid state */
 	gTB6612PWMBackup.backupRdy 	= false;
@@ -124,8 +124,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_UART_Main_reset(UART_4_INST);
     DL_SPI_reset(TFT_SPI0_INST);
     DL_SPI_reset(IMU660RC_INST);
-    DL_ADC12_reset(xunji_INST);
-    DL_ADC12_reset(ADC12_0_INST);
+    DL_ADC12_reset(ADC1_INST);
+    DL_ADC12_reset(ADC0_xunji_INST);
 
     DL_GPIO_enablePower(GPIOA);
     DL_GPIO_enablePower(GPIOB);
@@ -140,8 +140,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_UART_Main_enablePower(UART_4_INST);
     DL_SPI_enablePower(TFT_SPI0_INST);
     DL_SPI_enablePower(IMU660RC_INST);
-    DL_ADC12_enablePower(xunji_INST);
-    DL_ADC12_enablePower(ADC12_0_INST);
+    DL_ADC12_enablePower(ADC1_INST);
+    DL_ADC12_enablePower(ADC0_xunji_INST);
     delay_cycles(POWER_STARTUP_DELAY);
 }
 
@@ -259,6 +259,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_clearPins(GPIOA, TB6612_BIN1_PIN |
 		TB6612_BIN2_PIN |
+		DRV8873HPWPT_PH1_PIN |
 		xunjiGPIO_PIN_1_PIN |
 		xunjiGPIO_PIN_2_PIN |
 		xunjiGPIO_PIN_3_PIN);
@@ -266,6 +267,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_enableOutput(GPIOA, TFT_TFT_BLK_PIN |
 		TB6612_BIN1_PIN |
 		TB6612_BIN2_PIN |
+		DRV8873HPWPT_PH1_PIN |
 		xunjiGPIO_PIN_1_PIN |
 		xunjiGPIO_PIN_2_PIN |
 		xunjiGPIO_PIN_3_PIN);
@@ -274,7 +276,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		TB6612_AIN1_PIN |
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
-		DRV8873HPWPT_PH1_PIN |
 		DRV8873HPWPT_PH2_PIN);
     DL_GPIO_setPins(GPIOB, TFT_TFT_RES_PIN);
     DL_GPIO_enableOutput(GPIOB, buzzer_PIN_0_PIN |
@@ -283,7 +284,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		TB6612_AIN1_PIN |
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
-		DRV8873HPWPT_PH1_PIN |
 		DRV8873HPWPT_PH2_PIN);
     DL_GPIO_setPins(GPIOC, TFT_TFT_DC_PIN |
 		TFT_TFT_CS_PIN);
@@ -787,32 +787,40 @@ SYSCONFIG_WEAK void SYSCFG_DL_IMU660RC_init(void) {
     DL_SPI_enable(IMU660RC_INST);
 }
 
-/* xunji Initialization */
-static const DL_ADC12_ClockConfig gxunjiClockConfig = {
+/* ADC1 Initialization */
+static const DL_ADC12_ClockConfig gADC1ClockConfig = {
     .clockSel       = DL_ADC12_CLOCK_SYSOSC,
     .divideRatio    = DL_ADC12_CLOCK_DIVIDE_4,
     .freqRange      = DL_ADC12_CLOCK_FREQ_RANGE_24_TO_32,
 };
-SYSCONFIG_WEAK void SYSCFG_DL_xunji_init(void)
+SYSCONFIG_WEAK void SYSCFG_DL_ADC1_init(void)
 {
-    DL_ADC12_setClockConfig(xunji_INST, (DL_ADC12_ClockConfig *) &gxunjiClockConfig);
-    DL_ADC12_configConversionMem(xunji_INST, xunji_ADCMEM_0,
+    DL_ADC12_setClockConfig(ADC1_INST, (DL_ADC12_ClockConfig *) &gADC1ClockConfig);
+
+    DL_ADC12_initSeqSample(ADC1_INST,
+        DL_ADC12_REPEAT_MODE_DISABLED, DL_ADC12_SAMPLING_SOURCE_MANUAL, DL_ADC12_TRIG_SRC_SOFTWARE,
+        DL_ADC12_SEQ_START_ADDR_00, DL_ADC12_SEQ_END_ADDR_01, DL_ADC12_SAMP_CONV_RES_12_BIT,
+        DL_ADC12_SAMP_CONV_DATA_FORMAT_UNSIGNED);
+    DL_ADC12_configConversionMem(ADC1_INST, ADC1_ADCMEM_DRC8873_ADC0,
         DL_ADC12_INPUT_CHAN_0, DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA, DL_ADC12_SAMPLE_TIMER_SOURCE_SCOMP0, DL_ADC12_AVERAGING_MODE_DISABLED,
         DL_ADC12_BURN_OUT_SOURCE_DISABLED, DL_ADC12_TRIGGER_MODE_AUTO_NEXT, DL_ADC12_WINDOWS_COMP_MODE_DISABLED);
-    DL_ADC12_enableConversions(xunji_INST);
+    DL_ADC12_configConversionMem(ADC1_INST, ADC1_ADCMEM_DRC8873_ADC1,
+        DL_ADC12_INPUT_CHAN_4, DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA, DL_ADC12_SAMPLE_TIMER_SOURCE_SCOMP0, DL_ADC12_AVERAGING_MODE_DISABLED,
+        DL_ADC12_BURN_OUT_SOURCE_DISABLED, DL_ADC12_TRIGGER_MODE_AUTO_NEXT, DL_ADC12_WINDOWS_COMP_MODE_DISABLED);
+    DL_ADC12_enableConversions(ADC1_INST);
 }
-/* ADC12_0 Initialization */
-static const DL_ADC12_ClockConfig gADC12_0ClockConfig = {
+/* ADC0_xunji Initialization */
+static const DL_ADC12_ClockConfig gADC0_xunjiClockConfig = {
     .clockSel       = DL_ADC12_CLOCK_SYSOSC,
     .divideRatio    = DL_ADC12_CLOCK_DIVIDE_1,
     .freqRange      = DL_ADC12_CLOCK_FREQ_RANGE_24_TO_32,
 };
-SYSCONFIG_WEAK void SYSCFG_DL_ADC12_0_init(void)
+SYSCONFIG_WEAK void SYSCFG_DL_ADC0_xunji_init(void)
 {
-    DL_ADC12_setClockConfig(ADC12_0_INST, (DL_ADC12_ClockConfig *) &gADC12_0ClockConfig);
-    DL_ADC12_configConversionMem(ADC12_0_INST, ADC12_0_ADCMEM_0,
+    DL_ADC12_setClockConfig(ADC0_xunji_INST, (DL_ADC12_ClockConfig *) &gADC0_xunjiClockConfig);
+    DL_ADC12_configConversionMem(ADC0_xunji_INST, ADC0_xunji_ADCMEM_0,
         DL_ADC12_INPUT_CHAN_0, DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA, DL_ADC12_SAMPLE_TIMER_SOURCE_SCOMP0, DL_ADC12_AVERAGING_MODE_DISABLED,
         DL_ADC12_BURN_OUT_SOURCE_DISABLED, DL_ADC12_TRIGGER_MODE_AUTO_NEXT, DL_ADC12_WINDOWS_COMP_MODE_DISABLED);
-    DL_ADC12_enableConversions(ADC12_0_INST);
+    DL_ADC12_enableConversions(ADC0_xunji_INST);
 }
 

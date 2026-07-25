@@ -54,14 +54,21 @@ multiplier2.multiplyValue = 5;
 const mux8       = system.clockTree["HSCLKMUX"];
 mux8.inputSelect = "HSCLKMUX_SYSPLL0";
 
-ADC121.$name                             = "xunji";
 ADC121.sampClkDiv                        = "DL_ADC12_CLOCK_DIVIDE_4";
-ADC121.peripheral.$assign                = "ADC1";
-ADC121.peripheral.adcPin0.$assign        = "PA15";
+ADC121.samplingOperationMode             = "sequence";
+ADC121.endAdd                            = 1;
+ADC121.$name                             = "ADC1";
+ADC121.sampleMode                        = "DL_ADC12_SAMPLING_SOURCE_MANUAL";
+ADC121.adcMem1chansel                    = "DL_ADC12_INPUT_CHAN_4";
+ADC121.adcMem1_name                      = "DRC8873_ADC1";
+ADC121.adcMem0_name                      = "DRC8873_ADC0";
 ADC121.adcPin0Config.hideOutputInversion = scripting.forceWrite(false);
 ADC121.adcPin0Config.$name               = "ti_driverlib_gpio_GPIOPinGeneric25";
+ADC121.peripheral.$assign                = "ADC1";
+ADC121.peripheral.adcPin0.$assign        = "PA15";
+ADC121.adcPin4Config.$name               = "ti_driverlib_gpio_GPIOPinGeneric27";
 
-ADC122.$name                             = "ADC12_0";
+ADC122.$name                             = "ADC0_xunji";
 ADC122.peripheral.$assign                = "ADC0";
 ADC122.peripheral.adcPin0.$assign        = "PA27";
 ADC122.adcPin0Config.hideOutputInversion = scripting.forceWrite(false);
@@ -166,10 +173,9 @@ GPIO6.associatedPins[0].assignedPin  = "1";
 GPIO7.$name                          = "DRV8873HPWPT";
 GPIO7.associatedPins.create(2);
 GPIO7.associatedPins[0].$name        = "PH1";
-GPIO7.associatedPins[0].assignedPort = "PORTB";
 GPIO7.associatedPins[0].ioStructure  = "SD";
-GPIO7.associatedPins[0].assignedPin  = "17";
-GPIO7.associatedPins[0].pin.$assign  = "PB17";
+GPIO7.associatedPins[0].assignedPort = "PORTA";
+GPIO7.associatedPins[0].pin.$assign  = "PA22";
 GPIO7.associatedPins[1].$name        = "PH2";
 GPIO7.associatedPins[1].ioStructure  = "SD";
 GPIO7.associatedPins[1].assignedPort = "PORTB";
@@ -386,6 +392,7 @@ ProjectConfig.migrationCondition = true;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+ADC121.peripheral.adcPin4.$suggestSolution   = "PB17";
 GPIO1.associatedPins[0].pin.$suggestSolution = "PC8";
 GPIO1.associatedPins[1].pin.$suggestSolution = "PC9";
 GPIO1.associatedPins[2].pin.$suggestSolution = "PB23";

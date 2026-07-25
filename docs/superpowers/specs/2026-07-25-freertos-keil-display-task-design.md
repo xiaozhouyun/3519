@@ -20,7 +20,7 @@ FreeRTOS 内核。首版只将 `main.c` 中的 TFT180 周期刷新循环迁移�
 
 ## 构建设计
 
-在原 Keil 工程内保留 no-RTOS Target，并新增独立的 FreeRTOS Target。后者：
+在原 Keil 工程内操作：
 
 1. 保留当前 `main.c`、`ti_msp_dl_config.c`、TFT 源文件、散装加载文件和启动文件。
 2. 加入 SDK 的 FreeRTOS 预编译库
