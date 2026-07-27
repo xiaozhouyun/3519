@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>__MSPM0G3519__</Define>
               <Undefine></Undefine>
-              <IncludePath>../;../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;D:\ti\mspm0_sdk_2_11_00_07\source;D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include;D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\include;D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\Source\portable\GCC\ARM_CM0;D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\builds\LP_MSPM0G3519\release;..\core\src;..\core\inc</IncludePath>
+              <IncludePath>../;../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;D:\ti\mspm0_sdk_2_11_00_07\source;D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include;../freertos/Source/include;../freertos/Source/portable/GCC/ARM_CM0;../freertos/builds/LP_MSPM0G3507/release;..\core\src;..\core\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,7 +374,7 @@
             <ScatterFile>./mspm0g3519.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>"D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\lib\keil\m0p\mspm0g1x0x_g3x0x\driverlib.a" "D:\ti\mspm0_sdk_2_11_00_07\kernel\freertos\builds\LP_MSPM0G3519\release\keil\Objects\freertos_builds_LP_MSPM0G3519_release_keil.lib"</Misc>
+            <Misc>"D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\lib\keil\m0p\mspm0g1x0x_g3x0x\driverlib.a"</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -428,6 +428,61 @@
               <FileName>Grayscale.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\core\src\Grayscale.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FreeRTOS</GroupName>
+          <Files>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/list.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/timers.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/portable/GCC/ARM_CM0/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/portable/GCC/ARM_CM0/portasm.c</FilePath>
+            </File>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos/Source/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../freertos_hooks.c</FilePath>
             </File>
           </Files>
         </Group>
