@@ -30,3 +30,11 @@ keil/Objects/
 
 # 构建日志（脚本生成）
 keil/build_output.txt
+
+# Keil 输出目录补充
+keil/List/
+keil/DebugConfig/
+
+# Keil/ARM 浏览与数据库文件
+*.crf
+*.browse

@@ -436,7 +436,7 @@ static const DL_TimerA_ClockConfig gTB6612PWMClockConfig = {
 };
 
 static const DL_TimerA_PWMConfig gTB6612PWMConfig = {
-    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN_UP,
+    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN,
     .period = 400,
     .isTimerWithFourCC = false,
     .startTimer = DL_TIMER_STOP,
@@ -458,14 +458,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_TB6612PWM_init(void) {
 		DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(TB6612PWM_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
-    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 0, DL_TIMER_CC_0_INDEX);
+    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 400, DL_TIMER_CC_0_INDEX);
 
     DL_TimerA_setCaptureCompareOutCtl(TB6612PWM_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
 		DL_TIMERA_CAPTURE_COMPARE_1_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(TB6612PWM_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_1_INDEX);
-    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 0, DL_TIMER_CC_1_INDEX);
+    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 400, DL_TIMER_CC_1_INDEX);
 
     DL_TimerA_enableClock(TB6612PWM_INST);
 
@@ -682,11 +682,11 @@ SYSCONFIG_WEAK void SYSCFG_DL_blue_init(void)
     DL_UART_Main_init(blue_INST, (DL_UART_Main_Config *) &gblueConfig);
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
-     *  Target baud rate: 9600
-     *  Actual baud rate: 9599.81
+     *  Target baud rate: 115200
+     *  Actual baud rate: 115190.78
      */
     DL_UART_Main_setOversampling(blue_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(blue_INST, blue_IBRD_40_MHZ_9600_BAUD, blue_FBRD_40_MHZ_9600_BAUD);
+    DL_UART_Main_setBaudRateDivisor(blue_INST, blue_IBRD_40_MHZ_115200_BAUD, blue_FBRD_40_MHZ_115200_BAUD);
 
 
     /* Configure FIFOs */

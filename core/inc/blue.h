@@ -27,9 +27,6 @@ extern volatile uint8_t g_bt_color_mode;
 extern volatile uint8_t g_bt_speed_grade;
 extern volatile uint8_t g_bt_running_flag;
 
-extern volatile int32_t g_encoder_left_total;
-extern volatile int32_t g_encoder_right_total;
-
 /**
  * @brief  初始化蓝牙模块 (使能 UART1 接收中断及 NVIC 中断线)
  */
@@ -40,23 +37,6 @@ void Bluetooth_Init(void);
  * @param  data 接收到的字符字节
  */
 void Bluetooth_Process_Byte(uint8_t data);
-
-/**
- * @brief  通过蓝牙串口发送单字节数据
- * @param  ch 待发送字节
- */
-void Bluetooth_Send_Byte(uint8_t ch);
-
-/**
- * @brief  通过蓝牙串口发送字符串
- * @param  str 待发送字符串
- */
-void Bluetooth_Send_String(const char *str);
-
-/**
- * @brief  通过蓝牙串口发送系统测试数据
- */
-void Bluetooth_Send_TestData(void);
 
 /**
  * @brief  设置颜色模式回调接口

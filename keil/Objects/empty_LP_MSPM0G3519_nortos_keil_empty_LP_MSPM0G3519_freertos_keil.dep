@@ -1,10 +1,10 @@
 Dependencies for Project 'empty_LP_MSPM0G3519_nortos_keil', Target 'empty_LP_MSPM0G3519_freertos_keil': (DO NOT MODIFY !)
 CompilerVersion: 6240000::V6.24::ARMCLANG
-F (../empty.syscfg)(0x6A687396)()
-F (startup_mspm0g351x_uvision.s)(0x6A685F61)(--target=arm-arm-none-eabi -mcpu=cortex-m0plus -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4-Wa,armasm,--pd,"__UVISION_VERSION SETA 543" -Wa,armasm,--pd,"__MSPM0G3519__ SETA 1"-o ./objects/startup_mspm0g351x_uvision.o)
-F (../ti_msp_dl_config.h)(0x6A687396)()
-F (../ti_msp_dl_config.c)(0x6A687396)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/ti_msp_dl_config.o -MMD)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+F (../empty.syscfg)(0x6A6816A5)()
+F (startup_mspm0g351x_uvision.s)(0x6A62E20E)(--target=arm-arm-none-eabi -mcpu=cortex-m0plus -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4-Wa,armasm,--pd,"__UVISION_VERSION SETA 543" -Wa,armasm,--pd,"__MSPM0G3519__ SETA 1"-o ./objects/startup_mspm0g351x_uvision.o)
+F (../ti_msp_dl_config.h)(0x6A6816A5)()
+F (../ti_msp_dl_config.c)(0x6A6816A5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/ti_msp_dl_config.o -MMD)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -88,8 +88,8 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_vref.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
-F (..\main.c)(0x6A687424)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/main.o -MMD)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+F (..\main.c)(0x6A68232E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/main.o -MMD)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -178,10 +178,10 @@ I (..\core\inc\zf_device_imu660rc.h)(0x6A6483D2)
 I (..\core\inc\Grayscale.h)(0x6A681B74)
 I (..\core\inc\encode.h)(0x6A680D82)
 I (..\core\inc\drv8873.h)(0x6A681030)
-I (..\core\inc\blue.h)(0x6A686FB3)
+I (..\core\inc\blue.h)(0x6A681BD8)
 I (..\core\inc\follow_line.h)(0x6A682378)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -191,7 +191,7 @@ I (..\freertos\Source\include\task.h)(0x6A517394)
 I (..\freertos\Source\include\list.h)(0x6A517394)
 F (..\core\src\zf_device_tft180.c)(0x6A638827)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/zf_device_tft180.o -MMD)
 I (..\core\src\..\inc\zf_device_tft180.h)(0x6A6483CE)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -277,7 +277,7 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
 F (..\core\src\zf_device_imu660rc.c)(0x6A643729)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/zf_device_imu660rc.o -MMD)
 I (..\core\src\..\inc\zf_device_imu660rc.h)(0x6A6483D2)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -363,7 +363,7 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
 F (..\core\src\Grayscale.c)(0x6A681B2B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/grayscale.o -MMD)
 I (..\core\src\..\inc\Grayscale.h)(0x6A681B74)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -447,9 +447,9 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_vref.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
-F (..\core\src\drv8873.c)(0x6A68672F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/drv8873.o -MMD)
+F (..\core\src\drv8873.c)(0x6A68145B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/drv8873.o -MMD)
 I (..\core\inc\drv8873.h)(0x6A681030)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -535,7 +535,7 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
 F (..\core\src\encode.c)(0x6A680D85)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/encode.o -MMD)
 I (..\core\inc\encode.h)(0x6A680D82)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -619,10 +619,10 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_vref.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
-F (..\core\src\blue.c)(0x6A686FB7)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/blue.o -MMD)
-I (..\core\inc\blue.h)(0x6A686FB3)
+F (..\core\src\blue.c)(0x6A681BDF)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/blue.o -MMD)
+I (..\core\inc\blue.h)(0x6A681BD8)
 I (..\core\inc\follow_line.h)(0x6A682378)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -707,9 +707,9 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
 I (..\core\inc\Grayscale.h)(0x6A681B74)
-F (..\core\src\follow_line.c)(0x6A68689B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/follow_line.o -MMD)
+F (..\core\src\follow_line.c)(0x6A682380)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/follow_line.o -MMD)
 I (..\core\inc\follow_line.h)(0x6A682378)
-I (..\ti_msp_dl_config.h)(0x6A687396)
+I (..\ti_msp_dl_config.h)(0x6A6816A5)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h)(0x6A517394)
@@ -797,7 +797,7 @@ I (..\core\inc\Grayscale.h)(0x6A681B74)
 I (..\core\inc\drv8873.h)(0x6A681030)
 F (../freertos/Source/tasks.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/tasks.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -809,7 +809,7 @@ I (..\freertos\Source\include\timers.h)(0x6A517394)
 I (..\freertos\Source\include\stack_macros.h)(0x6A517394)
 F (../freertos/Source/queue.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/queue.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -820,7 +820,7 @@ I (..\freertos\Source\include\list.h)(0x6A517394)
 I (..\freertos\Source\include\queue.h)(0x6A517394)
 F (../freertos/Source/list.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/list.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -829,7 +829,7 @@ I (..\freertos\Source\include\mpu_wrappers.h)(0x6A517394)
 I (..\freertos\Source\include\list.h)(0x6A517394)
 F (../freertos/Source/timers.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/timers.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -841,7 +841,7 @@ I (..\freertos\Source\include\queue.h)(0x6A517394)
 I (..\freertos\Source\include\timers.h)(0x6A517394)
 F (../freertos/Source/event_groups.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/event_groups.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -853,7 +853,7 @@ I (..\freertos\Source\include\timers.h)(0x6A517394)
 I (..\freertos\Source\include\event_groups.h)(0x6A517394)
 F (../freertos/Source/stream_buffer.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/stream_buffer.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -864,7 +864,7 @@ I (..\freertos\Source\include\list.h)(0x6A517394)
 I (..\freertos\Source\include\stream_buffer.h)(0x6A517394)
 F (../freertos/Source/portable/GCC/ARM_CM0/port.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/port.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -877,7 +877,7 @@ I (..\freertos\Source\portable\GCC\ARM_CM0\portasm.h)(0x6A517394)
 F (../freertos/Source/portable/GCC/ARM_CM0/portasm.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/portasm.o -MMD)
 I (..\freertos\Source\portable\GCC\ARM_CM0\portasm.h)(0x6A517394)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -886,7 +886,7 @@ I (..\freertos\Source\include\mpu_wrappers.h)(0x6A517394)
 I (..\freertos\Source\include\mpu_syscall_numbers.h)(0x6A517394)
 F (../freertos/Source/portable/MemMang/heap_4.c)(0x6A517394)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/heap_4.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)
@@ -896,7 +896,7 @@ I (..\freertos\Source\include\task.h)(0x6A517394)
 I (..\freertos\Source\include\list.h)(0x6A517394)
 F (../freertos_hooks.c)(0x6A673F08)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/freertos_hooks.o -MMD)
 I (..\freertos\Source\include\FreeRTOS.h)(0x6A517394)
-I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A686048)
+I (..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h)(0x6A66FC11)
 I (..\freertos\Source\include\projdefs.h)(0x6A517394)
 I (..\freertos\Source\include\portable.h)(0x6A517394)
 I (..\freertos\Source\include\deprecated_definitions.h)(0x6A517394)

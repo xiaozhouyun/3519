@@ -4,15 +4,8 @@
 * 文件名称          zf_device_tft180
 * 适用平台          MSPM0G3519 (ti_msp_dl_config.h)
 ********************************************************************************************************************/
-#include "ti_msp_dl_config.h"
-#include "zf_device_tft180.h"
-// #include "zf_device_imu660rc.h"
-#include "Grayscale.h"
-#include "encode.h"
-#include "drv8873.h"
-#include "blue.h"
-#include "follow_line.h"
 
+#include "../inc/zf_device_tft180.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -964,53 +957,3 @@ void tft180_init(void)
 
     tft180_clear();
 }
-
-/**
- * @brief  TFT180 屏幕动态内容刷新函数
- */
-void tft_display(void)
-{
-    char bin_str[9];
-
-    // 1. IMU 欧拉角数据 (先注释掉)
-    /*
-    tft180_set_color(RGB565_RED, RGB565_WHITE);
-    tft180_show_float(50, 20, imu660rc_roll, 4, 2);
-
-    tft180_set_color(RGB565_GREEN, RGB565_WHITE);
-    tft180_show_float(50, 36, imu660rc_pitch, 4, 2);
-
-    tft180_set_color(RGB565_PURPLE, RGB565_WHITE);
-    tft180_show_float(50, 52, imu660rc_yaw, 4, 2);
-    */
-
-    // 2. 显示左右编码器有符号累计总脉冲数 (有符号整数 int32_t，支持正反转正负号)
-    tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-    tft180_show_int(50, 20, g_encoder_left_total, 6); // 左轮有符号总脉冲数
-
-    tft180_set_color(RGB565_PURPLE, RGB565_WHITE);
-    tft180_show_int(50, 36, g_encoder_right_total, 6); // 右轮有符号总脉冲数
-    // 注: 若需显示 16 位硬件定时器单圈有符号计数值，也可使用:
-    // (int16_t)Encode_Get_Count(ENCODE_LEFT) 和 (int16_t)Encode_Get_Count(ENCODE_RIGHT)
-
-    // 3. 格式化并显示 SensorTask 采集到的 8 位黑白开关状态字符串 (如 "11000011")
-    uint8_t dig = Grayscale_Get_Digital(&g_grayscale_sensor);
-    for (int i = 0; i < 8; i++) {
-        bin_str[i] = (dig & (1 << (7 - i))) ? '1' : '0';
-    }
-    bin_str[8] = '\0';
-
-    tft180_set_color(RGB565_RED, RGB565_WHITE);
-    tft180_show_string(45, 88, bin_str);
-
-    // 4. 显示 8 通道原始模拟量数据
-    tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-    tft180_show_uint(45, 104, g_grayscale_sensor.analog_val[0], 4);
-    tft180_show_uint(85, 104, g_grayscale_sensor.analog_val[1], 4);
-
-    tft180_show_uint(45, 120, g_grayscale_sensor.analog_val[4], 4);
-    tft180_show_uint(85, 120, g_grayscale_sensor.analog_val[5], 4);
-//    tft180_clear();
-}
-
-

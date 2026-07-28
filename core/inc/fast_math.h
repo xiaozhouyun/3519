@@ -2,7 +2,6 @@
 #define FAST_MATH_H
 
 #include <stdint.h>
-#include <math.h>
 
 #if defined(__GNUC__) || defined(__clang__)
 #define FORCE_INLINE inline __attribute__((always_inline))
@@ -76,14 +75,6 @@ FORCE_INLINE static float fast_atan2f(float y, float x)
     }
 
     return (y < 0.0f) ? -angle : angle;
-}
-
-/* 快速/安全 asinf(x)，带 [-1.0, 1.0] 边界限幅保护，防止 NaN 姿态异常 */
-FORCE_INLINE static float fast_asinf(float x)
-{
-    if (x >= 1.0f) return PI_2_F;
-    if (x <= -1.0f) return -PI_2_F;
-    return asinf(x);
 }
 
 #endif
