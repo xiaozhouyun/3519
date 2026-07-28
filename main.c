@@ -98,6 +98,9 @@ static void DisplayTask(void *pvParameters)
     tft180_show_string(0,  80, "BIN:");
     tft180_show_string(0,  94, "0-1:");
     tft180_show_string(0, 108, "4-5:");
+    tft180_show_string(0, 122, "--- MTR SPD ---");
+    tft180_show_string(0, 136, "L:");
+    tft180_show_string(0, 150, "R:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
@@ -136,6 +139,11 @@ static void DisplayTask(void *pvParameters)
         tft180_show_uint(80, 94,  g_grayscale_sensor.analog_val[1], 4);
         tft180_show_uint(35, 108, g_grayscale_sensor.analog_val[4], 4);
         tft180_show_uint(80, 108, g_grayscale_sensor.analog_val[5], 4);
+
+        /* ---- 电机速度 (pulses/10ms) ---- */
+        tft180_set_color(RGB565_BLUE, RGB565_WHITE);
+        tft180_show_float(30, 136, MG513XGMR_Get_Speed(MG513XGMR_LEFT), 5, 1);
+        tft180_show_float(30, 150, MG513XGMR_Get_Speed(MG513XGMR_RIGHT), 5, 1);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }

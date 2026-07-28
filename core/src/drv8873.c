@@ -123,6 +123,11 @@ void DRV8873_Stop_All(void)
  */
 void DRV8873_Set_Speed(DRV8873_Channel_t channel, int16_t speed)
 {
+    /* CH1 (左电机) 物理安装方向与 CH2 相反，速度取反 */
+    if (channel == DRV8873_CH1) {
+        speed = -speed;
+    }
+
     DRV8873_Control_t ctrl = DRV8873_Speed_To_Control(speed);
 
     DRV8873_Write_Hardware(channel, ctrl.dir, ctrl.compare);

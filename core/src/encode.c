@@ -75,6 +75,12 @@ int16_t Encode_Get_Delta(Encode_Channel_t channel)
     int16_t delta = Encode_Calc_Delta(now, g_encode_last[channel]);
 
     g_encode_last[channel] = now; // 更新上一次计数值记录
+
+    /* 左轮编码器物理安装方向与右轮相反，增量取反 */
+    if (channel == ENCODE_LEFT) {
+        delta = -delta;
+    }
+
     return delta;
 }
 #endif

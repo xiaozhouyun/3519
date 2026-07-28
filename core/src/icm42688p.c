@@ -121,7 +121,7 @@ static void gyro_calibrate(void)
     int32_t sum_x = 0, sum_y = 0, sum_z = 0;
     int i;
 
-    for (i = 0; i < 200; i++) {
+    for (i = 0; i < 600; i++) {
         if (reg_read_safe(ICM42688P_REG_GYRO_DATA_X1, d, 6U) == 0U) {
             sum_x += (int16_t)(((uint16_t)d[0] << 8) | d[1]);
             sum_y += (int16_t)(((uint16_t)d[2] << 8) | d[3]);
@@ -129,9 +129,9 @@ static void gyro_calibrate(void)
         }
         delay_cycles(CPUCLK_FREQ / 200U); /* ~5ms */
     }
-    g_bias_x = (float)sum_x / 200.0f;
-    g_bias_y = (float)sum_y / 200.0f;
-    g_bias_z = (float)sum_z / 200.0f;
+    g_bias_x = (float)sum_x / 600.0f;
+    g_bias_y = (float)sum_y / 600.0f;
+    g_bias_z = (float)sum_z / 600.0f;
 }
 
 /* ================================================================
