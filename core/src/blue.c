@@ -2,29 +2,17 @@
  * @file blue.c
  * @brief 蓝牙串口通信与指令解析模块实现文件
  * 
- * 基于 MSPM0G3519 UART1 硬件中断驱动 (blue_INST)，实现单字符蓝牙命令实时响应处理。
- * 
- * 指令集协议说明:
- * - 'R': 切换红色模式
- * - 'G': 切换绿色模式
- * - 'B': 切换蓝色模式
- * - '1': 设置低速档 (1)
- * - '2': 设置中速档 (2)
- * - '3': 设置高速档 (3)
- * - 'S': 启动小车/运动控制
- * - 'X': 紧急停止小车/运动控制
- * - 'P': 控制器 Kp 增加 0.5
- * - 'D': 控制器 Kp 减少 0.5
+
  */
 
 #include "blue.h"
-
+#include "Grayscale.h"
 #ifndef BLUE_HOST_TEST
 #include "ti_msp_dl_config.h"
 #endif
 
 // 全局变量定义
-LineController_t g_line_controller = { .kp = 1.0f, .ki = 0.0f, .kd = 0.0f };
+
 volatile uint8_t g_bluetooth_data   = 0;
 volatile uint8_t g_bt_speed_grade   = 1;
 volatile uint8_t g_bt_running_flag  = 0;

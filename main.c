@@ -11,6 +11,7 @@
 #include "encode.h"
 #include "drv8873.h"
 #include "blue.h"
+#include "follow_line.h"
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -39,10 +40,9 @@ static void SensorTask(void *pvParameters)
     while (1) {
         // 1. 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化)
         Grayscale_Update(&g_grayscale_sensor);
-
         g_encoder_left_delta = Encode_Get_Delta(ENCODE_LEFT);
         g_encoder_right_delta = Encode_Get_Delta(ENCODE_RIGHT);
-
+        FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100); // 基础巡航速度 100 (可根据实际需求调整)
         // 2. IMU660RC 说明: 
         // 姿态角由 PB24 (INT2) 引脚硬件中断 GROUP1_IRQHandler() 自动解算并更新；
         // 如需例行抓取原始加速度/陀螺仪，也可在此调用 imu660rc_get_acc() / imu660rc_get_gyro()。
@@ -124,7 +124,7 @@ int main(void)
     Encode_Init();
     DRV8873_Init();
     Bluetooth_Init();
-
+    FollowLine_Init(&g_line_controller, 0.5f, 0.1f, 0.05f); // 初始化循迹 PID 参数
 
     // 4. 创建传感器采集任务 (SensorTask: 优先级 2, 100Hz 采集周期)
     if (xTaskCreate(SensorTask, "SensorTask", SENSOR_TASK_STACK_SIZE, NULL,

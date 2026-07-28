@@ -10,20 +10,18 @@
  */
 
 #include <stdint.h>
-
-
+#include "follow_line.h"
 
 /**
- * @brief 循迹控制器 PID 参数结构体
+ * @brief 蓝牙指令颜色枚举
  */
-typedef struct {
-    float kp;  /**< 比例系数 P */
-    float ki;  /**< 积分系数 I */
-    float kd;  /**< 微分系数 D */
-} LineController_t;
+typedef enum {
+    COLOR_NONE_EN  = 0,  /**< 无颜色/初始状态 */
+    COLOR_RED_EN   = 1,  /**< 红色 */
+    COLOR_GREEN_EN = 2,  /**< 绿色 */
+    COLOR_BLUE_EN  = 3   /**< 蓝色 */
+} BT_Color_t;
 
-// 全局控制变量与接收数据声明
-extern LineController_t g_line_controller;
 extern volatile uint8_t g_bluetooth_data;
 extern volatile uint8_t g_bt_color_mode;
 extern volatile uint8_t g_bt_speed_grade;
