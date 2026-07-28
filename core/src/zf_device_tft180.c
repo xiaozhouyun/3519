@@ -7,6 +7,7 @@
 
 #include "../inc/zf_device_tft180.h"
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -22,6 +23,20 @@ static tft180_font_size_enum    tft180_display_font = TFT180_DEFAULT_DISPLAY_FON
 
 static uint8                    tft180_x_max        = 128;
 static uint8                    tft180_y_max        = 160;
+
+#define TFT180_PRINT_BUFFER_SIZE        64U
+#define TFT180_PRINT_SLOT_COUNT         32U
+
+typedef struct
+{
+    uint16 x;
+    uint16 y;
+    tft180_font_size_enum size;
+    uint8 length;
+    bool valid;
+} tft180_print_slot_t;
+
+static tft180_print_slot_t tft180_print_slots[TFT180_PRINT_SLOT_COUNT];
 
 // 汉字字库字典结构体定义
 typedef struct {
@@ -548,6 +563,75 @@ void tft180_show_string(uint16 x, uint16 y, const char dat[])
     }
 }
 
+static void tft180_show_fixed_string(uint16 x, uint16 y, const char dat[], uint8 length)
+{
+    uint16 char_width = (tft180_display_font == TFT180_6X8_FONT) ? 6 : 8;
+
+    for(uint8 i = 0; i < length; i++)
+    {
+        tft180_show_char(x + char_width * i, y, (dat[i] == '\0') ? ' ' : dat[i]);
+    }
+}
+
+static tft180_print_slot_t *tft180_get_print_slot(uint16 x, uint16 y, tft180_font_size_enum size)
+{
+    for(uint8 i = 0; i < TFT180_PRINT_SLOT_COUNT; i++)
+    {
+        if(tft180_print_slots[i].valid && tft180_print_slots[i].x == x &&
+           tft180_print_slots[i].y == y && tft180_print_slots[i].size == size)
+        {
+            return &tft180_print_slots[i];
+        }
+    }
+
+    for(uint8 i = 0; i < TFT180_PRINT_SLOT_COUNT; i++)
+    {
+        if(!tft180_print_slots[i].valid)
+        {
+            return &tft180_print_slots[i];
+        }
+    }
+
+    return &tft180_print_slots[0];
+}
+
+void tft_print(uint16 x, uint16 y, tft180_font_size_enum size, const char *format, ...)
+{
+    if(format == NULL || size > TFT180_8X16_FONT) return;
+
+    char buffer[TFT180_PRINT_BUFFER_SIZE];
+    memset(buffer, 0, sizeof(buffer));
+    va_list args;
+    va_start(args, format);
+    int result = vsnprintf(buffer, sizeof(buffer), format, args);
+    va_end(args);
+    if(result < 0) return;
+
+    uint8 new_length = 0;
+    while(new_length < TFT180_PRINT_BUFFER_SIZE - 1U && buffer[new_length] != '\0')
+    {
+        new_length++;
+    }
+
+    tft180_print_slot_t *slot = tft180_get_print_slot(x, y, size);
+    uint8 display_length = new_length;
+    if(slot->valid && slot->length > display_length)
+    {
+        display_length = slot->length;
+    }
+
+    tft180_font_size_enum previous_size = tft180_display_font;
+    tft180_set_font(size);
+    tft180_show_fixed_string(x, y, buffer, display_length);
+    tft180_set_font(previous_size);
+
+    slot->x = x;
+    slot->y = y;
+    slot->size = size;
+    slot->length = new_length;
+    slot->valid = true;
+}
+
 void tft180_show_int(uint16 x, uint16 y, const int32 dat, uint8 num)
 {
     if (x >= tft180_x_max || y >= tft180_y_max || num == 0 || num > 10) return;
@@ -557,18 +641,17 @@ void tft180_show_int(uint16 x, uint16 y, const int32 dat, uint8 num)
     char data_buffer[12];
 
     memset(data_buffer, 0, 12);
-    memset(data_buffer, ' ', num + 1);
 
     if(10 > num)
     {
-        for(; 0 < num; num--)
+        for(uint8 digits = num; 0 < digits; digits--)
         {
             offset *= 10;
         }
         dat_temp %= offset;
     }
     func_int_to_str(data_buffer, dat_temp);
-    tft180_show_string(x, y, (const char *)&data_buffer);
+    tft180_show_fixed_string(x, y, data_buffer, num + 1);
 }
 
 void tft180_show_uint(uint16 x, uint16 y, const uint32 dat, uint8 num)
@@ -583,14 +666,14 @@ void tft180_show_uint(uint16 x, uint16 y, const uint32 dat, uint8 num)
 
     if(10 > num)
     {
-        for(; 0 < num; num--)
+        for(uint8 digits = num; 0 < digits; digits--)
         {
             offset *= 10;
         }
         dat_temp %= offset;
     }
     func_uint_to_str(data_buffer, dat_temp);
-    tft180_show_string(x, y, data_buffer);
+    tft180_show_fixed_string(x, y, data_buffer, num);
 }
 
 void tft180_show_float(uint16 x, uint16 y, const double dat, uint8 num, uint8 pointnum)
@@ -609,7 +692,7 @@ void tft180_show_float(uint16 x, uint16 y, const double dat, uint8 num, uint8 po
     }
     dat_temp = dat_temp - ((int)dat_temp / (int)offset) * offset;
     func_double_to_str(data_buffer, dat_temp, pointnum);
-    tft180_show_string(x, y, data_buffer);
+    tft180_show_fixed_string(x, y, data_buffer, num + pointnum + 2);
 }
 
 void tft180_show_binary_image(uint16 x, uint16 y, const uint8 *image, uint16 width, uint16 height, uint16 dis_width, uint16 dis_height)
