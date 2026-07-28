@@ -7,6 +7,7 @@
 
 #include "../inc/zf_device_tft180.h"
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -22,6 +23,20 @@ static tft180_font_size_enum    tft180_display_font = TFT180_DEFAULT_DISPLAY_FON
 
 static uint8                    tft180_x_max        = 128;
 static uint8                    tft180_y_max        = 160;
+
+#define TFT180_PRINT_BUFFER_SIZE        64U
+#define TFT180_PRINT_SLOT_COUNT         32U
+
+typedef struct
+{
+    uint16 x;
+    uint16 y;
+    tft180_font_size_enum size;
+    uint8 length;
+    bool valid;
+} tft180_print_slot_t;
+
+static tft180_print_slot_t tft180_print_slots[TFT180_PRINT_SLOT_COUNT];
 
 // 汉字字库字典结构体定义
 typedef struct {
@@ -556,6 +571,65 @@ static void tft180_show_fixed_string(uint16 x, uint16 y, const char dat[], uint8
     {
         tft180_show_char(x + char_width * i, y, (dat[i] == '\0') ? ' ' : dat[i]);
     }
+}
+
+static tft180_print_slot_t *tft180_get_print_slot(uint16 x, uint16 y, tft180_font_size_enum size)
+{
+    for(uint8 i = 0; i < TFT180_PRINT_SLOT_COUNT; i++)
+    {
+        if(tft180_print_slots[i].valid && tft180_print_slots[i].x == x &&
+           tft180_print_slots[i].y == y && tft180_print_slots[i].size == size)
+        {
+            return &tft180_print_slots[i];
+        }
+    }
+
+    for(uint8 i = 0; i < TFT180_PRINT_SLOT_COUNT; i++)
+    {
+        if(!tft180_print_slots[i].valid)
+        {
+            return &tft180_print_slots[i];
+        }
+    }
+
+    return &tft180_print_slots[0];
+}
+
+void tft_print(uint16 x, uint16 y, tft180_font_size_enum size, const char *format, ...)
+{
+    if(format == NULL || size > TFT180_8X16_FONT) return;
+
+    char buffer[TFT180_PRINT_BUFFER_SIZE];
+    memset(buffer, 0, sizeof(buffer));
+    va_list args;
+    va_start(args, format);
+    int result = vsnprintf(buffer, sizeof(buffer), format, args);
+    va_end(args);
+    if(result < 0) return;
+
+    uint8 new_length = 0;
+    while(new_length < TFT180_PRINT_BUFFER_SIZE - 1U && buffer[new_length] != '\0')
+    {
+        new_length++;
+    }
+
+    tft180_print_slot_t *slot = tft180_get_print_slot(x, y, size);
+    uint8 display_length = new_length;
+    if(slot->valid && slot->length > display_length)
+    {
+        display_length = slot->length;
+    }
+
+    tft180_font_size_enum previous_size = tft180_display_font;
+    tft180_set_font(size);
+    tft180_show_fixed_string(x, y, buffer, display_length);
+    tft180_set_font(previous_size);
+
+    slot->x = x;
+    slot->y = y;
+    slot->size = size;
+    slot->length = new_length;
+    slot->valid = true;
 }
 
 void tft180_show_int(uint16 x, uint16 y, const int32 dat, uint8 num)

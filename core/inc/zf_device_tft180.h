@@ -87,6 +87,7 @@ void    tft180_draw_line                (uint16 x_start, uint16 y_start, uint16 
 
 void    tft180_show_char                (uint16 x, uint16 y, const char dat);
 void    tft180_show_string              (uint16 x, uint16 y, const char dat[]);
+void    tft_print                       (uint16 x, uint16 y, tft180_font_size_enum size, const char *format, ...);
 void    tft180_show_int                 (uint16 x, uint16 y, const int32 dat, uint8 num);
 void    tft180_show_uint                (uint16 x, uint16 y, const uint32 dat, uint8 num);
 void    tft180_show_float               (uint16 x, uint16 y, const double dat, uint8 num, uint8 pointnum);
