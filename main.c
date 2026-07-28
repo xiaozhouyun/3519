@@ -45,7 +45,7 @@ static void ChassisTask(void *pvParameters)
 
     while (1) {
         /* 电机闭环更新: 编码器 → 速度/角度 PID → DRV8873 PWM */
-        MG513XGMR_Update();
+        // MG513XGMR_Update();
 
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -63,12 +63,15 @@ static void SensorTask(void *pvParameters)
     while (1) {
         /* 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化) */
         Grayscale_Update(&g_grayscale_sensor);
-         g_encoder_left_delta = Encode_Get_Delta(ENCODE_LEFT);
-        g_encoder_right_delta = Encode_Get_Delta(ENCODE_RIGHT);
 //        MG513XGMR_Set_Angle(MG513XGMR_LEFT,0.0f);
-
+    //  FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100);
+    //     MG513XGMR_Update();
+       DRV8873_Set_Speed(DRV8873_CH1, 300);
+       DRV8873_Set_Speed(DRV8873_CH2, 300);
+       vTaskDelay(pdMS_TO_TICKS(2000U));
         /* 循迹差速控制 (使用 MG513XGMR 闭环时暂时注释) */
-//        // FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100);
+        DRV8873_Set_Speed(DRV8873_CH1, 0);
+       DRV8873_Set_Speed(DRV8873_CH2, 0);
 
         /* ICM42688P: 姿态解算更新 (10ms 周期, dt=0.01s) */
         icm42688p_update(0.01f);
@@ -91,10 +94,6 @@ static void DisplayTask(void *pvParameters)
 
     /* 静态标签 */
     tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-    tft_print(0,  14, TFT180_6X8_FONT, "R:");
-    tft_print(0,  26, TFT180_6X8_FONT, "AX:");
-    tft_print(0,  38, TFT180_6X8_FONT, "AZ:");
-    tft_print(0,  50, TFT180_6X8_FONT, "GY:");
     tft_print(0,  68, TFT180_6X8_FONT, "--- GRAY 8CH ---");
     tft_print(0,  80, TFT180_6X8_FONT, "BIN:");
     tft_print(0,  94, TFT180_6X8_FONT, "0-1:");
@@ -105,7 +104,7 @@ static void DisplayTask(void *pvParameters)
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft_print(15, 14, TFT180_6X8_FONT, "%.2f", icm42688p_roll);
+        tft_print(0, 14, TFT180_6X8_FONT, "R:%.2f", icm42688p_roll);
         tft180_set_color(RGB565_GREEN, RGB565_WHITE);
         tft_print(60, 14, TFT180_6X8_FONT, "%.2f", icm42688p_pitch);
         tft180_set_color(RGB565_PURPLE, RGB565_WHITE);
@@ -113,16 +112,13 @@ static void DisplayTask(void *pvParameters)
 
         /* ---- 第二行: Accel X / Accel Y ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-        tft_print(25, 26, TFT180_6X8_FONT, "%d", (int)icm42688p_acc_x);
-        tft_print(85, 26, TFT180_6X8_FONT, "%d", (int)icm42688p_acc_y);
+        tft_print(0, 26, TFT180_6X8_FONT, "AX:%-6d AY:%-6d", (int)icm42688p_acc_x, (int)icm42688p_acc_y);
 
         /* ---- 第三行: Accel Z / Gyro X ---- */
-        tft_print(25, 38, TFT180_6X8_FONT, "%d", (int)icm42688p_acc_z);
-        tft_print(85, 38, TFT180_6X8_FONT, "%d", (int)icm42688p_gyro_x);
+        tft_print(0, 38, TFT180_6X8_FONT, "AZ:%-6d GX:%-6d", (int)icm42688p_acc_z, (int)icm42688p_gyro_x);
 
         /* ---- 第四行: Gyro Y / Gyro Z ---- */
-        tft_print(25, 50, TFT180_6X8_FONT, "%d", (int)icm42688p_gyro_y);
-        tft_print(85, 50, TFT180_6X8_FONT, "%d", (int)icm42688p_gyro_z);
+        tft_print(0, 50, TFT180_6X8_FONT, "GY:%-6d GZ:%-6d", (int)icm42688p_gyro_y, (int)icm42688p_gyro_z);
 
         /* ---- 灰度二值化字符串 ---- */
         uint8_t dig = Grayscale_Get_Digital(&g_grayscale_sensor);

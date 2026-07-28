@@ -77,8 +77,9 @@ float FollowLine_PID_Compute(LineController_t *p_ctrl, float error);
  * @param  p_ctrl     PID 控制器句柄指针 (如 &g_line_controller)
  * @param  sensor     灰度传感器句柄指针 (如 &g_grayscale_sensor)
  * @param  base_speed 基础巡航速度/模式标示
+ * @return float 转向控制调节输出量 (turn_output)
  */
-void FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, int16_t base_speed);
+float FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, int16_t base_speed);
 
 #endif /* FOLLOW_LINE_H */
 

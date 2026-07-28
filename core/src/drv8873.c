@@ -45,7 +45,7 @@ DRV8873_Control_t DRV8873_Speed_To_Control(int16_t speed)
     if (duty >= DRV8873_PWM_PERIOD) {
         ctrl.compare = 0U;
     } else {
-        ctrl.compare = (uint16_t)(DRV8873_PWM_PERIOD - duty);
+        ctrl.compare = (uint16_t)( duty);
     }
 
 

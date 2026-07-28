@@ -142,7 +142,7 @@ float FollowLine_PID_Compute(LineController_t *p_ctrl, float error)
  * @param  base_speed 基础巡航速度/模式标示
  * @return float 转向控制调节输出量 (turn_output)
  */
-void FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, int16_t base_speed)
+float FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, int16_t base_speed)
 {
    
     if (p_ctrl == NULL) {
@@ -153,9 +153,7 @@ void FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, int
     float error = FollowLine_Calc_Error(sensor);
 
     // 2. PID 解算输出转向控制量
-    float turn_output = FollowLine_PID_Compute(p_ctrl, error);
-
-    //差速控制左右轮电机速度
-    DRV8873_Set_Speed(DRV8873_CH1, base_speed - (int16_t)turn_output);
-    DRV8873_Set_Speed(DRV8873_CH2, base_speed + (int16_t)turn_output);
+   float turn_output = FollowLine_PID_Compute(p_ctrl, error);
+   return turn_output;
+  
 }

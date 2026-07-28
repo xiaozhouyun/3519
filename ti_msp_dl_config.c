@@ -203,6 +203,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralInputFunction(
         GPIO_IMU660RC_IOMUX_POCI, GPIO_IMU660RC_IOMUX_POCI_FUNC);
 
+    DL_GPIO_initDigitalOutput(imuInt_CS_IOMUX);
+
     DL_GPIO_initDigitalOutput(buzzer_PIN_0_IOMUX);
 
     DL_GPIO_initDigitalOutput(TFT_TFT_DC_IOMUX);
@@ -228,12 +230,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initDigitalInputFeatures(key_key3_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
 		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
-
-    DL_GPIO_initDigitalInputFeatures(imuInt_int2_IOMUX,
-		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
-		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
-
-    DL_GPIO_initDigitalOutput(imuInt_CS_IOMUX);
 
     DL_GPIO_initDigitalOutput(TB6612_AIN2_IOMUX);
 
@@ -277,21 +273,16 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
 		DRV8873HPWPT_PH2_PIN);
-    DL_GPIO_setPins(GPIOB, TFT_TFT_RES_PIN |
-		imuInt_CS_PIN);
-    DL_GPIO_enableOutput(GPIOB, buzzer_PIN_0_PIN |
+    DL_GPIO_setPins(GPIOB, imuInt_CS_PIN |
+		TFT_TFT_RES_PIN);
+    DL_GPIO_enableOutput(GPIOB, imuInt_CS_PIN |
+		buzzer_PIN_0_PIN |
 		TFT_TFT_RES_PIN |
-		imuInt_CS_PIN |
 		TB6612_AIN2_PIN |
 		TB6612_AIN1_PIN |
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
 		DRV8873HPWPT_PH2_PIN);
-    DL_GPIO_setUpperPinsPolarity(GPIOB, DL_GPIO_PIN_24_EDGE_RISE);
-    DL_GPIO_clearInterruptStatus(GPIOB, imuInt_int2_PIN);
-    DL_GPIO_enableInterrupt(GPIOB, imuInt_int2_PIN);
-    DL_GPIO_setPublisherChanID(GPIOB, DL_GPIO_PUBLISHER_INDEX_1, GPIOB_EVENT_PUBLISHER_1_CHANNEL);
-    DL_GPIO_enableEvents(GPIOB, DL_GPIO_EVENT_ROUTE_2, imuInt_int2_PIN);
     DL_GPIO_setPins(GPIOC, TFT_TFT_DC_PIN |
 		TFT_TFT_CS_PIN);
     DL_GPIO_enableOutput(GPIOC, TFT_TFT_DC_PIN |
@@ -403,8 +394,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
     }
     DL_SYSCTL_setULPCLKDivider(DL_SYSCTL_ULPCLK_DIV_2);
     DL_SYSCTL_setMCLKSource(SYSOSC, HSCLK, DL_SYSCTL_HSCLK_SOURCE_SYSPLL);
-    /* INT_GROUP1 Priority */
-    NVIC_SetPriority(GPIOB_INT_IRQn, 2);
 
 }
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_CLK_init(void) {
@@ -436,7 +425,7 @@ static const DL_TimerA_ClockConfig gTB6612PWMClockConfig = {
 };
 
 static const DL_TimerA_PWMConfig gTB6612PWMConfig = {
-    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN,
+    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN_UP,
     .period = 400,
     .isTimerWithFourCC = false,
     .startTimer = DL_TIMER_STOP,
@@ -458,14 +447,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_TB6612PWM_init(void) {
 		DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(TB6612PWM_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
-    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 400, DL_TIMER_CC_0_INDEX);
+    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 0, DL_TIMER_CC_0_INDEX);
 
     DL_TimerA_setCaptureCompareOutCtl(TB6612PWM_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
 		DL_TIMERA_CAPTURE_COMPARE_1_INDEX);
 
     DL_TimerA_setCaptCompUpdateMethod(TB6612PWM_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_1_INDEX);
-    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 400, DL_TIMER_CC_1_INDEX);
+    DL_TimerA_setCaptureCompareValue(TB6612PWM_INST, 0, DL_TIMER_CC_1_INDEX);
 
     DL_TimerA_enableClock(TB6612PWM_INST);
 
@@ -682,11 +671,11 @@ SYSCONFIG_WEAK void SYSCFG_DL_blue_init(void)
     DL_UART_Main_init(blue_INST, (DL_UART_Main_Config *) &gblueConfig);
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
-     *  Target baud rate: 115200
-     *  Actual baud rate: 115190.78
+     *  Target baud rate: 9600
+     *  Actual baud rate: 9599.81
      */
     DL_UART_Main_setOversampling(blue_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(blue_INST, blue_IBRD_40_MHZ_115200_BAUD, blue_FBRD_40_MHZ_115200_BAUD);
+    DL_UART_Main_setBaudRateDivisor(blue_INST, blue_IBRD_40_MHZ_9600_BAUD, blue_FBRD_40_MHZ_9600_BAUD);
 
 
     /* Configure FIFOs */

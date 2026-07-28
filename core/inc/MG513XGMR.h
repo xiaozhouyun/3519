@@ -67,7 +67,7 @@ typedef struct {
     /* ---- 角度环 ---- */
     pid_type_def angle_pid;       /**< Q_pid 角度 PID 句柄 */
     float        target_angle;    /**< 目标角度 (deg, 无 wrap) */
-    int32_t      pulse_accum;     /**< 编码器脉冲累计总数 */
+    int32_t      pulse_total;     /**< 编码器脉冲累计总数 */
     float        current_angle;   /**< 当前实测角度 (deg = accum × 360 / 55000) */
 
     /* ---- 输出 ---- */
