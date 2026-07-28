@@ -59,7 +59,7 @@ typedef int32_t int32;
 #define TFT180_DEFAULT_DISPLAY_DIR      ( TFT180_PORTAIT   )                    // 默认的显示方向
 #define TFT180_DEFAULT_PENCOLOR         ( RGB565_RED       )                    // 默认的画笔颜色
 #define TFT180_DEFAULT_BGCOLOR          ( RGB565_WHITE     )                    // 默认的背景颜色
-#define TFT180_DEFAULT_DISPLAY_FONT     ( TFT180_8X16_FONT )                    // 默认的字体模式
+#define TFT180_DEFAULT_DISPLAY_FONT     ( TFT180_6X8_FONT )                    // 默认的字体模式
 
 typedef enum
 {
