@@ -27,6 +27,9 @@ int main(void)
     failed += expect_close("atan2 y axis", fast_atan2f(1.0f, 0.0f), 1.5707963268f, 0.02f);
     failed += expect_close("atan2 negative y", fast_atan2f(-1.0f, 0.0f), -1.5707963268f, 0.02f);
     failed += expect_close("fabs negative", fast_fabsf(-3.5f), 3.5f, 0.001f);
+    failed += expect_close("pi macro", PI_F, 3.1415926535f, 0.001f);
+    failed += expect_close("sqrt negative clamps zero", fast_sqrtf(-1.0f), 0.0f, 0.001f);
+    failed += expect_close("sqrt four", fast_sqrtf(4.0f), 2.0f, 0.001f);
 
     return failed;
 }
