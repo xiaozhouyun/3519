@@ -55,7 +55,7 @@ static void SensorTask(void *pvParameters)
         g_encoder_left_total += g_encoder_left_delta;
         g_encoder_right_total += g_encoder_right_delta;
         icm45686_update(0.010f);
-
+        //test
         // 精确保持 10ms 定时采样周期
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
