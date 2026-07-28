@@ -3,7 +3,15 @@
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\m0p\mspm0g351x.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include\core_cm0plus.h \
+  D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include\cmsis_version.h \
+  D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include\cmsis_compiler.h \
+  D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include\cmsis_armclang.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  D:\ti\mspm0_sdk_2_11_00_07\source\third_party\CMSIS\Core\Include\mpu_armv7.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\peripherals\hw_adc12.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\peripherals\hw_aesadv.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\peripherals\hw_comp.h \
@@ -33,10 +41,12 @@
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\peripherals\m0p\sysctl\hw_sysctl_mspm0gx51x.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\driverlib.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_adc12.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\math.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_common.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_factoryregion.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_core.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_aes.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\stddef.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_aesadv.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_comp.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_crc.h \
@@ -82,4 +92,7 @@
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_vref.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h \
-  D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h
+  D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\TI\ KEIL538\ARM\ARMCLANG\Bin\..\include\stdlib.h
