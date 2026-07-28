@@ -8,6 +8,7 @@
 #include "ti_msp_dl_config.h"
 #include "zf_device_tft180.h"
 #include "icm42688p.h"
+#include "icm42688p.h"
 #include "Grayscale.h"
 #include "encode.h"
 #include "drv8873.h"

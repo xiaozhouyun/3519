@@ -12,7 +12,6 @@ Section Cross References
     startup_mspm0g351x_uvision.o(RESET) refers to portasm.o(.text.SVC_Handler) for SVC_Handler
     startup_mspm0g351x_uvision.o(RESET) refers to portasm.o(.text.PendSV_Handler) for PendSV_Handler
     startup_mspm0g351x_uvision.o(RESET) refers to port.o(.text.SysTick_Handler) for SysTick_Handler
-    startup_mspm0g351x_uvision.o(RESET) refers to zf_device_imu660rc.o(.text.GROUP1_IRQHandler) for GROUP1_IRQHandler
     startup_mspm0g351x_uvision.o(RESET) refers to blue.o(.text.UART1_IRQHandler) for UART1_IRQHandler
     startup_mspm0g351x_uvision.o(.text) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
     startup_mspm0g351x_uvision.o(.text) refers to __main.o(!!!main) for __main
@@ -614,53 +613,33 @@ Section Cross References
     zf_device_tft180.o(.rodata.ascii_font_8x16) refers (Special) to _printf_f.o(.ARM.Collect$$_printf_percent$$00000003) for _printf_f
     zf_device_tft180.o(.rodata.ascii_font_8x16) refers (Special) to _printf_dec.o(.text) for _printf_int_dec
     zf_device_tft180.o(.rodata.ascii_font_8x16) refers (Special) to printf1.o(x$fpl$printf1) for _printf_fp_dec
-    zf_device_imu660rc.o(.text.imu660rc_get_acc) refers to zf_device_imu660rc.o(.text.imu660rc_read_registers) for imu660rc_read_registers
-    zf_device_imu660rc.o(.text.imu660rc_get_acc) refers to zf_device_imu660rc.o(.bss.imu660rc_quarternion_rate) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_get_acc) refers to zf_device_imu660rc.o(.bss.imu660rc_acc_x) for imu660rc_acc_x
-    zf_device_imu660rc.o(.text.imu660rc_get_acc) refers to zf_device_imu660rc.o(.bss.imu660rc_acc_y) for imu660rc_acc_y
-    zf_device_imu660rc.o(.text.imu660rc_get_acc) refers to zf_device_imu660rc.o(.bss.imu660rc_acc_z) for imu660rc_acc_z
-    zf_device_imu660rc.o(.ARM.exidx.text.imu660rc_get_acc) refers to zf_device_imu660rc.o(.text.imu660rc_get_acc) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_read_registers) refers to dl_common.o(.text.DL_Common_delayCycles) for DL_Common_delayCycles
-    zf_device_imu660rc.o(.ARM.exidx.text.imu660rc_read_registers) refers to zf_device_imu660rc.o(.text.imu660rc_read_registers) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_get_gyro) refers to zf_device_imu660rc.o(.text.imu660rc_read_registers) for imu660rc_read_registers
-    zf_device_imu660rc.o(.text.imu660rc_get_gyro) refers to zf_device_imu660rc.o(.bss.imu660rc_quarternion_rate) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_get_gyro) refers to zf_device_imu660rc.o(.bss.imu660rc_gyro_x) for imu660rc_gyro_x
-    zf_device_imu660rc.o(.text.imu660rc_get_gyro) refers to zf_device_imu660rc.o(.bss.imu660rc_gyro_y) for imu660rc_gyro_y
-    zf_device_imu660rc.o(.text.imu660rc_get_gyro) refers to zf_device_imu660rc.o(.bss.imu660rc_gyro_z) for imu660rc_gyro_z
-    zf_device_imu660rc.o(.ARM.exidx.text.imu660rc_get_gyro) refers to zf_device_imu660rc.o(.text.imu660rc_get_gyro) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.text.imu660rc_write_register) for imu660rc_write_register
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to dl_common.o(.text.DL_Common_delayCycles) for DL_Common_delayCycles
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to faddsub.o(x$fpl$fadd) for __aeabi_fadd
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to sqrtf.o(i.sqrtf) for sqrtf
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to fcmp.o(i._fgr) for __aeabi_fcmpgt
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to fcmp.o(i._fls) for __aeabi_fcmplt
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to fdiv.o(.text) for __aeabi_fdiv
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_quarternion_rate) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to faddsub.o(x$fpl$fsub) for __aeabi_fsub
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to atan2f.o(i.atan2f) for atan2f
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to asinf.o(i.asinf) for asinf
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.text.imu660rc_read_registers) for imu660rc_read_registers
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_quarternion) for imu660rc_quarternion
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_roll) for imu660rc_roll
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_pitch) for imu660rc_pitch
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_yaw) for imu660rc_yaw
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_acc_x) for imu660rc_acc_x
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_acc_y) for imu660rc_acc_y
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_acc_z) for imu660rc_acc_z
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_gyro_x) for imu660rc_gyro_x
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_gyro_y) for imu660rc_gyro_y
-    zf_device_imu660rc.o(.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.bss.imu660rc_gyro_z) for imu660rc_gyro_z
-    zf_device_imu660rc.o(.ARM.exidx.text.imu660rc_get_quarternion) refers to zf_device_imu660rc.o(.text.imu660rc_get_quarternion) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_write_register) refers to dl_common.o(.text.DL_Common_delayCycles) for DL_Common_delayCycles
-    zf_device_imu660rc.o(.ARM.exidx.text.imu660rc_write_register) refers to zf_device_imu660rc.o(.text.imu660rc_write_register) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.GROUP1_IRQHandler) refers to zf_device_imu660rc.o(.text.imu660rc_get_quarternion) for imu660rc_get_quarternion
-    zf_device_imu660rc.o(.ARM.exidx.text.GROUP1_IRQHandler) refers to zf_device_imu660rc.o(.text.GROUP1_IRQHandler) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_init) refers to dl_common.o(.text.DL_Common_delayCycles) for DL_Common_delayCycles
-    zf_device_imu660rc.o(.text.imu660rc_init) refers to zf_device_imu660rc.o(.text.imu660rc_write_register) for imu660rc_write_register
-    zf_device_imu660rc.o(.text.imu660rc_init) refers to zf_device_imu660rc.o(.bss.imu660rc_quarternion_rate) for [Anonymous Symbol]
-    zf_device_imu660rc.o(.text.imu660rc_init) refers to zf_device_imu660rc.o(.bss.imu660rc_transition_factor) for imu660rc_transition_factor
-    zf_device_imu660rc.o(.ARM.exidx.text.imu660rc_init) refers to zf_device_imu660rc.o(.text.imu660rc_init) for [Anonymous Symbol]
+    icm42688p.o(.ARM.exidx.text.icm42688p_read_id) refers to icm42688p.o(.text.icm42688p_read_id) for [Anonymous Symbol]
+    icm42688p.o(.text.icm42688p_init) refers to dl_common.o(.text.DL_Common_delayCycles) for DL_Common_delayCycles
+    icm42688p.o(.ARM.exidx.text.icm42688p_init) refers to icm42688p.o(.text.icm42688p_init) for [Anonymous Symbol]
+    icm42688p.o(.text.icm42688p_update) refers to fcmp.o(i._fleq) for __aeabi_fcmple
+    icm42688p.o(.text.icm42688p_update) refers to fflti.o(.text) for __aeabi_i2f
+    icm42688p.o(.text.icm42688p_update) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
+    icm42688p.o(.text.icm42688p_update) refers to faddsub.o(x$fpl$fadd) for __aeabi_fadd
+    icm42688p.o(.text.icm42688p_update) refers to fcmp.o(i._fgr) for __aeabi_fcmpgt
+    icm42688p.o(.text.icm42688p_update) refers to fdiv.o(.text) for __aeabi_fdiv
+    icm42688p.o(.text.icm42688p_update) refers to faddsub.o(x$fpl$fsub) for __aeabi_fsub
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_acc_x) for icm42688p_acc_x
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_acc_y) for icm42688p_acc_y
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_acc_z) for icm42688p_acc_z
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_gyro_x) for icm42688p_gyro_x
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_gyro_y) for icm42688p_gyro_y
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_gyro_z) for icm42688p_gyro_z
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.q3) for [Anonymous Symbol]
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.q2) for [Anonymous Symbol]
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.q1) for [Anonymous Symbol]
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.data.q0) for [Anonymous Symbol]
+    icm42688p.o(.text.icm42688p_update) refers to fcmp.o(i._feq) for __aeabi_fcmpeq
+    icm42688p.o(.text.icm42688p_update) refers to fcmp.o(i._fls) for __aeabi_fcmplt
+    icm42688p.o(.text.icm42688p_update) refers to fcmp.o(i._fgeq) for __aeabi_fcmpge
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_roll) for icm42688p_roll
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_pitch) for icm42688p_pitch
+    icm42688p.o(.text.icm42688p_update) refers to icm42688p.o(.bss.icm42688p_yaw) for icm42688p_yaw
+    icm42688p.o(.ARM.exidx.text.icm42688p_update) refers to icm42688p.o(.text.icm42688p_update) for [Anonymous Symbol]
     grayscale.o(.text.Grayscale_Init_First) refers to grayscale.o(.text.Grayscale_Init) for Grayscale_Init
     grayscale.o(.ARM.exidx.text.Grayscale_Init_First) refers to grayscale.o(.text.Grayscale_Init_First) for [Anonymous Symbol]
     grayscale.o(.text.Grayscale_Init) refers to rt_memclr.o(.text) for __aeabi_memclr8
@@ -1945,37 +1924,6 @@ Section Cross References
     fflti.o(.text) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     fmul.o(x$fpl$fmul) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     printf1.o(x$fpl$printf1) refers to _printf_fp_dec.o(.text) for _printf_fp_dec_real
-    asinf.o(i.__softfp_asinf) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    asinf.o(i.__softfp_asinf) refers to asinf.o(i.asinf) for asinf
-    asinf.o(i.asinf) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    asinf.o(i.asinf) refers to faddsub.o(x$fpl$frsb) for __aeabi_frsub
-    asinf.o(i.asinf) refers to fscalbn.o(.text) for __ARM_scalbnf
-    asinf.o(i.asinf) refers to sqrtf.o(i.sqrtf) for sqrtf
-    asinf.o(i.asinf) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
-    asinf.o(i.asinf) refers to faddsub.o(x$fpl$fadd) for __aeabi_fadd
-    asinf.o(i.asinf) refers to fpclassifyf.o(i.__ARM_fpclassifyf) for __ARM_fpclassifyf
-    asinf.o(i.asinf) refers to funder.o(i.__mathlib_flt_underflow) for __mathlib_flt_underflow
-    asinf.o(i.asinf) refers to funder.o(i.__mathlib_flt_infnan) for __mathlib_flt_infnan
-    asinf.o(i.asinf) refers to _rserrno.o(.text) for __set_errno
-    asinf.o(i.asinf) refers to funder.o(i.__mathlib_flt_invalid) for __mathlib_flt_invalid
-    atan2f.o(i.__softfp_atan2f) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    atan2f.o(i.__softfp_atan2f) refers to atan2f.o(i.atan2f) for atan2f
-    atan2f.o(i.atan2f) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    atan2f.o(i.atan2f) refers to fdiv.o(.text) for __aeabi_fdiv
-    atan2f.o(i.atan2f) refers to fpclassifyf.o(i.__ARM_fpclassifyf) for __ARM_fpclassifyf
-    atan2f.o(i.atan2f) refers to funder.o(i.__mathlib_flt_underflow) for __mathlib_flt_underflow
-    atan2f.o(i.atan2f) refers to _rserrno.o(.text) for __set_errno
-    atan2f.o(i.atan2f) refers to faddsub.o(x$fpl$fsub) for __aeabi_fsub
-    atan2f.o(i.atan2f) refers to faddsub.o(x$fpl$fadd) for __aeabi_fadd
-    atan2f.o(i.atan2f) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
-    atan2f.o(i.atan2f) refers to faddsub.o(x$fpl$frsb) for __aeabi_frsub
-    atan2f.o(i.atan2f) refers to funder.o(i.__mathlib_flt_infnan2) for __mathlib_flt_infnan2
-    sqrtf.o(i.__softfp_sqrtf) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    sqrtf.o(i.__softfp_sqrtf) refers to fsqrt.o(.text) for _fsqrt
-    sqrtf.o(i.__softfp_sqrtf) refers to _rserrno.o(.text) for __set_errno
-    sqrtf.o(i.sqrtf) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    sqrtf.o(i.sqrtf) refers to fsqrt.o(.text) for _fsqrt
-    sqrtf.o(i.sqrtf) refers to _rserrno.o(.text) for __set_errno
     __rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to __rtentry2.o(.ARM.Collect$$rtentry$$0000000A) for __rt_entry_li
     __rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to __rtentry2.o(.ARM.Collect$$rtentry$$0000000D) for __rt_entry_main
     __rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to __rtentry2.o(.ARM.Collect$$rtentry$$0000000C) for __rt_entry_postli_1
@@ -1984,7 +1932,6 @@ Section Cross References
     __rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to __rtentry4.o(.ARM.Collect$$rtentry$$00000004) for __rt_entry_sh
     aeabi_idiv0_sigfpe.o(.text) refers to rt_div0.o(.text) for __rt_div0
     aeabi_ldiv0_sigfpe.o(.text) refers to rt_div0.o(.text) for __rt_div0
-    _rserrno.o(.text) refers to rt_errno_addr_intlibspace.o(.text) for __aeabi_errno_addr
     _printf_fp_dec.o(.text) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     _printf_fp_dec.o(.text) refers (Special) to lc_numeric_c.o(locale$$code) for _get_lc_numeric
     _printf_fp_dec.o(.text) refers to bigflt0.o(.text) for _btod_etento
@@ -2014,16 +1961,6 @@ Section Cross References
     fgef.o(x$fpl$fgeqf) refers to fcmpin.o(.text) for __fpl_fcmp_InfNaN
     flef.o(x$fpl$fleqf) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     flef.o(x$fpl$fleqf) refers to fcmpin.o(.text) for __fpl_fcmp_InfNaN
-    fscalbn.o(.text) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    fsqrt.o(.text) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    fpclassifyf.o(i.__ARM_fpclassifyf) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
-    funder.o(i.__mathlib_flt_divzero) refers to fdiv.o(.text) for __aeabi_fdiv
-    funder.o(i.__mathlib_flt_infnan) refers to fscalbn.o(.text) for __ARM_scalbnf
-    funder.o(i.__mathlib_flt_infnan2) refers to faddsub.o(x$fpl$fadd) for __aeabi_fadd
-    funder.o(i.__mathlib_flt_invalid) refers to fdiv.o(.text) for __aeabi_fdiv
-    funder.o(i.__mathlib_flt_overflow) refers to fscalbn.o(.text) for __ARM_scalbnf
-    funder.o(i.__mathlib_flt_posinfnan) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
-    funder.o(i.__mathlib_flt_underflow) refers to fscalbn.o(.text) for __ARM_scalbnf
     __rtentry2.o(.ARM.Collect$$rtentry$$00000008) refers to boardinit2.o(.text) for _platform_post_stackheap_init
     __rtentry2.o(.ARM.Collect$$rtentry$$0000000A) refers to libinit.o(.ARM.Collect$$libinit$$00000000) for __rt_lib_init
     __rtentry2.o(.ARM.Collect$$rtentry$$0000000B) refers to boardinit3.o(.text) for _platform_post_lib_init
@@ -2039,8 +1976,6 @@ Section Cross References
     rt_div0.o(.text) refers to defsig_fpe_outer.o(.text) for __rt_SIGFPE
     rt_locale.o(.text) refers to rt_locale.o(.bss) for __rt_locale_data
     rt_locale_intlibspace.o(.text) refers to libspace.o(.bss) for __libspace_start
-    rt_errno_addr.o(.text) refers to rt_errno_addr.o(.bss) for __aeabi_errno_addr_data
-    rt_errno_addr_intlibspace.o(.text) refers to libspace.o(.bss) for __libspace_start
     bigflt0.o(.text) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     bigflt0.o(.text) refers to aeabi_sdivfast.o(.text) for __aeabi_idivmod
     bigflt0.o(.text) refers to btod.o(.text) for _btod_emul
@@ -2940,8 +2875,6 @@ Image Symbol Table
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_div0.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_locale.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_locale_intlibspace.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr_intlibspace.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_raise.o ABSOLUTE
     ../clib/angel/scatterp.s                 0x00000000   Number         0  __scatter.o ABSOLUTE
     ../clib/angel/startup.s                  0x00000000   Number         0  __main.o ABSOLUTE
@@ -2968,7 +2901,6 @@ Image Symbol Table
     ../clib/division.c                       0x00000000   Number         0  lludiv10.o ABSOLUTE
     ../clib/division.s                       0x00000000   Number         0  aeabi_sdivfast.o ABSOLUTE
     ../clib/division.s                       0x00000000   Number         0  aeabi_sdivfast_div0.o ABSOLUTE
-    ../clib/fenv.c                           0x00000000   Number         0  _rserrno.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hrguard.o ABSOLUTE
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
@@ -3041,12 +2973,10 @@ Image Symbol Table
     ../fplib/cfplib/fflt.c                   0x00000000   Number         0  dflti.o ABSOLUTE
     ../fplib/cfplib/fflt.c                   0x00000000   Number         0  fflti.o ABSOLUTE
     ../fplib/cfplib/fpinit.c                 0x00000000   Number         0  fpinit.o ABSOLUTE
-    ../fplib/cfplib/fsqrt.c                  0x00000000   Number         0  fsqrt.o ABSOLUTE
     ../fplib/cfplib/ieee_status.c            0x00000000   Number         0  ieee_status.o ABSOLUTE
     ../fplib/cfplib/nan2.c                   0x00000000   Number         0  dnan2.o ABSOLUTE
     ../fplib/cfplib/nan2.c                   0x00000000   Number         0  fnan2.o ABSOLUTE
     ../fplib/cfplib/retnan.c                 0x00000000   Number         0  retnan.o ABSOLUTE
-    ../fplib/cfplib/scalbn.c                 0x00000000   Number         0  fscalbn.o ABSOLUTE
     ../fplib/deqf6m.s                        0x00000000   Number         0  deqf.o ABSOLUTE
     ../fplib/dgeqf6m.s                       0x00000000   Number         0  dgef.o ABSOLUTE
     ../fplib/dleqf6m.s                       0x00000000   Number         0  dlef.o ABSOLUTE
@@ -3057,12 +2987,7 @@ Image Symbol Table
     ../fplib/fmul6m.s                        0x00000000   Number         0  fmul.o ABSOLUTE
     ../fplib/printf1.s                       0x00000000   Number         0  printf1.o ABSOLUTE
     ../fplib/usenofp.s                       0x00000000   Number         0  usenofp.o ABSOLUTE
-    ../mathlib/asinf.c                       0x00000000   Number         0  asinf.o ABSOLUTE
-    ../mathlib/atan2f.c                      0x00000000   Number         0  atan2f.o ABSOLUTE
     ../mathlib/fpclassify.c                  0x00000000   Number         0  fpclassify.o ABSOLUTE
-    ../mathlib/fpclassifyf.c                 0x00000000   Number         0  fpclassifyf.o ABSOLUTE
-    ../mathlib/funder.c                      0x00000000   Number         0  funder.o ABSOLUTE
-    ../mathlib/sqrtf.c                       0x00000000   Number         0  sqrtf.o ABSOLUTE
     Grayscale.c                              0x00000000   Number         0  grayscale.o ABSOLUTE
     MG513XGMR.c                              0x00000000   Number         0  mg513xgmr.o ABSOLUTE
     Q_pid.c                                  0x00000000   Number         0  q_pid.o ABSOLUTE
@@ -3093,7 +3018,6 @@ Image Symbol Table
     tasks.c                                  0x00000000   Number         0  tasks.o ABSOLUTE
     ti_msp_dl_config.c                       0x00000000   Number         0  ti_msp_dl_config.o ABSOLUTE
     timers.c                                 0x00000000   Number         0  timers.o ABSOLUTE
-    zf_device_imu660rc.c                     0x00000000   Number         0  zf_device_imu660rc.o ABSOLUTE
     zf_device_tft180.c                       0x00000000   Number         0  zf_device_tft180.o ABSOLUTE
     RESET                                    0x00000000   Section      192  startup_mspm0g351x_uvision.o(RESET)
     !!!main                                  0x000000c0   Section        8  __main.o(!!!main)
@@ -4002,7 +3926,7 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    BuildAttributes$$THM_ISAv3M$S$PE$A:L22$X:L11$S22$IEEE1$IW$~IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$ROPI$IEEEX$EBA8$UX$STANDARDLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
+    BuildAttributes$$THM_ISAv3M$S$PE$A:L22$X:L11$S22$IEEE1$IW$~IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$ROPI$IEEEJ$EBA8$UX$STANDARDLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
     __Vectors                                0x00000000   Data           4  startup_mspm0g351x_uvision.o(RESET)
     _printf_flags                            0x00000000   Number         0  printf_stubs.o ABSOLUTE
     _printf_return_value                     0x00000000   Number         0  printf_stubs.o ABSOLUTE
@@ -4936,7 +4860,6 @@ Image component sizes
          2          0          0          0          0          0   _printf_percent.o
          4          0          0          0          0          0   _printf_percent_end.o
         10          0          0          0          0          0   _printf_u.o
-        22          0          0          0          0         92   _rserrno.o
         10          0          0          0          0         60   _sputc.o
         18          0          0          0          0         68   aeabi_memset4.o
       1006          4          0          0          0        184   aeabi_sdivfast.o
@@ -4954,7 +4877,6 @@ Image component sizes
         48          0          0          0          0         72   llmul.o
        122          0          0          0          0         72   lludiv10.o
         40          4          0          0          0         84   noretval__2sprintf.o
-         8          4          0          0          0         68   rt_errno_addr_intlibspace.o
          8          4          0          0          0         68   rt_locale_intlibspace.o
         64          0          0          0          0        108   rt_memclr.o
        186          0          0          0          0        144   rt_memcpy.o
@@ -4988,23 +4910,18 @@ Image component sizes
        100          4          0          0          0         68   fcmpin.o
        352         10         64          0          0         92   fdiv.o
         84          4          0          0          0         76   feqf.o
+        84          4          0          0          0         76   feqf.o
         76          0          0          0          0         68   ffixi.o
+        94          0          0          0          0         92   fflti.o
         94          0          0          0          0         92   fflti.o
         84          4          0          0          0         76   fgef.o
         84          4          0          0          0         76   flef.o
        176          4          0          0          0         80   fmul.o
         16          6          0          0          0         68   fnan2.o
-        68          4          0          0          0         68   fscalbn.o
-       144          4          0          0          0         72   fsqrt.o
         16          4          0          0          0         76   printf1.o
         94          0          0          0          0         68   retnan.o
          0          0          0          0          0          0   usenofp.o
-       280         38          0          0          0         76   asinf.o
-       668         76          0          0          0        120   atan2f.o
         44          4          0          0          0         60   fpclassify.o
-        34          0          0          0          0         60   fpclassifyf.o
-        44          0          0          0          0        272   funder.o
-        44          0          0          0          0         72   sqrtf.o
 
     ----------------------------------------------------------------------
      12764        510        368          0         96     105005   Library Totals
