@@ -450,11 +450,6 @@
               <FilePath>..\core\src\follow_line.c</FilePath>
             </File>
             <File>
-              <FileName>icm45686.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\core\src\icm45686.c</FilePath>
-            </File>
-            <File>
               <FileName>fast_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\core\inc\fast_math.h</FilePath>
@@ -468,11 +463,6 @@
               <FileName>MG513XGMR.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\core\src\MG513XGMR.c</FilePath>
-            </File>
-            <File>
-              <FileName>icm42688p.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\core\src\icm42688p.c</FilePath>
             </File>
           </Files>
         </Group>
