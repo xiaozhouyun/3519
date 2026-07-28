@@ -10,6 +10,7 @@
 
 #include "follow_line.h"
 #include "drv8873.h"
+#include "MG513XGMR.h"
 // 默认全局循迹 PID 控制器实例
 LineController_t g_line_controller = {
     .kp           = 0.5f,
@@ -144,7 +145,6 @@ float FollowLine_PID_Compute(LineController_t *p_ctrl, float error)
  */
 float FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, int16_t base_speed)
 {
-   
     if (p_ctrl == NULL) {
         p_ctrl = &g_line_controller;
     }
@@ -153,7 +153,9 @@ float FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, in
     float error = FollowLine_Calc_Error(sensor);
 
     // 2. PID 解算输出转向控制量
-   float turn_output = FollowLine_PID_Compute(p_ctrl, error);
-   return turn_output;
-  
+    float turn_output = FollowLine_PID_Compute(p_ctrl, error);
+    g_motor_left.target_speed  = base_speed - turn_output;
+    g_motor_right.target_speed = base_speed + turn_output;
+    
+    return turn_output;
 }

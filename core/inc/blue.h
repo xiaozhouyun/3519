@@ -11,6 +11,7 @@
 
 #include <stdint.h>
 #include "follow_line.h"
+#include "encode.h"
 
 /**
  * @brief 蓝牙指令颜色枚举
@@ -37,6 +38,23 @@ void Bluetooth_Init(void);
  * @param  data 接收到的字符字节
  */
 void Bluetooth_Process_Byte(uint8_t data);
+
+/**
+ * @brief  通过蓝牙串口发送单字节数据
+ * @param  ch 待发送字节
+ */
+void Bluetooth_Send_Byte(uint8_t ch);
+
+/**
+ * @brief  通过蓝牙串口发送字符串
+ * @param  str 待发送字符串
+ */
+void Bluetooth_Send_String(const char *str);
+
+/**
+ * @brief  通过蓝牙串口发送系统测试数据
+ */
+void Bluetooth_Send_TestData(void);
 
 /**
  * @brief  设置颜色模式回调接口

@@ -81,9 +81,9 @@ static void DRV8873_Write_Hardware(DRV8873_Channel_t channel, DRV8873_Direction_
         DL_TimerG_setCaptureCompareValue(DRV8873_INST, compare, GPIO_DRV8873_C1_IDX);
     } else {
         if (dir == DRV8873_DIR_FORWARD) {
-            DL_GPIO_setPins(DRV8873HPWPT_PH1_PORT, DRV8873HPWPT_PH1_PIN);
-        } else {
             DL_GPIO_clearPins(DRV8873HPWPT_PH1_PORT, DRV8873HPWPT_PH1_PIN);
+        } else {
+            DL_GPIO_setPins(DRV8873HPWPT_PH1_PORT, DRV8873HPWPT_PH1_PIN);
         }
         DL_TimerG_setCaptureCompareValue(DRV8873_INST, compare, GPIO_DRV8873_C0_IDX);
     }

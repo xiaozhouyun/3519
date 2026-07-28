@@ -45,7 +45,16 @@ static void ChassisTask(void *pvParameters)
 
     while (1) {
         /* 电机闭环更新: 编码器 → 速度/角度 PID → DRV8873 PWM */
-        // MG513XGMR_Update();
+         Grayscale_Update(&g_grayscale_sensor);
+        if(g_bt_running_flag==1)
+        {     
+                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 500);
+                MG513XGMR_Update();
+        }
+        else
+        {
+            MG513XGMR_Stop_All();
+        }
 
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -62,17 +71,7 @@ static void SensorTask(void *pvParameters)
 
     while (1) {
         /* 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化) */
-        Grayscale_Update(&g_grayscale_sensor);
-//        MG513XGMR_Set_Angle(MG513XGMR_LEFT,0.0f);
-    //  FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100);
-    //     MG513XGMR_Update();
-       DRV8873_Set_Speed(DRV8873_CH1, 300);
-       DRV8873_Set_Speed(DRV8873_CH2, 300);
-       vTaskDelay(pdMS_TO_TICKS(2000U));
-        /* 循迹差速控制 (使用 MG513XGMR 闭环时暂时注释) */
-        DRV8873_Set_Speed(DRV8873_CH1, 0);
-       DRV8873_Set_Speed(DRV8873_CH2, 0);
-
+ 
         /* ICM42688P: 姿态解算更新 (10ms 周期, dt=0.01s) */
         icm42688p_update(0.01f);
 
@@ -98,8 +97,8 @@ static void DisplayTask(void *pvParameters)
     tft_print(0,  80, TFT180_6X8_FONT, "BIN:");
     tft_print(0,  94, TFT180_6X8_FONT, "0-1:");
     tft_print(0, 108, TFT180_6X8_FONT, "4-5:");
-    tft_print(0, 122, TFT180_6X8_FONT, "L_TOT:");
-    tft_print(0, 134, TFT180_6X8_FONT, "R_TOT:");
+    tft_print(0, 122, TFT180_6X8_FONT, "L_SPD:");
+    tft_print(0, 134, TFT180_6X8_FONT, "R_SPD:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
@@ -136,10 +135,10 @@ static void DisplayTask(void *pvParameters)
         tft_print(35, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[4]);
         tft_print(80, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[5]);
 
-        /* ---- 编码器总计数值 ---- */
+        /* ---- 左右电机目标速度与实测速度 ---- */
         tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-        tft_print(45, 122, TFT180_6X8_FONT, "%d", (int)g_encoder_left_total);
-        tft_print(45, 134, TFT180_6X8_FONT, "%d", (int)g_encoder_right_total);
+        tft_print(40, 122, TFT180_6X8_FONT, "T:%-4d R:%-4d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed);
+        tft_print(40, 134, TFT180_6X8_FONT, "T:%-4d R:%-4d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
