@@ -214,9 +214,9 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define GPIO_blue_IOMUX_TX                                       (IOMUX_PINCM17)
 #define GPIO_blue_IOMUX_RX_FUNC                        IOMUX_PINCM18_PF_UART1_RX
 #define GPIO_blue_IOMUX_TX_FUNC                        IOMUX_PINCM17_PF_UART1_TX
-#define blue_BAUD_RATE                                                  (115200)
-#define blue_IBRD_40_MHZ_115200_BAUD                                        (21)
-#define blue_FBRD_40_MHZ_115200_BAUD                                        (45)
+#define blue_BAUD_RATE                                                    (9600)
+#define blue_IBRD_40_MHZ_9600_BAUD                                         (260)
+#define blue_FBRD_40_MHZ_9600_BAUD                                          (27)
 /* Defines for UART_4 */
 #define UART_4_INST                                                        UART4
 #define UART_4_INST_FREQUENCY                                           80000000

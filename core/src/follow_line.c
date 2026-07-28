@@ -23,8 +23,8 @@ LineController_t g_line_controller = {
 
 // 8 通道线序权重数组 (-3500 ~ 3500)
 static const float s_channel_weights[8] = {
-    -3500.0f, -2500.0f, -1500.0f, -500.0f,
-      500.0f,  1500.0f,  2500.0f, 3500.0f
+    -300.0f, -250.0f, -200.0f, -150.0f,
+      150.0f,  200.0f,  250.0f, 300.0f
 };
 
 /**

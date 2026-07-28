@@ -221,6 +221,7 @@ I2C1.sclPinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric4";
 PWM1.clockPrescale                      = 8;
 PWM1.timerCount                         = 400;
 PWM1.$name                              = "TB6612PWM";
+PWM1.pwmMode                            = "EDGE_ALIGN_UP";
 PWM1.peripheral.$assign                 = "TIMA1";
 PWM1.peripheral.ccp0Pin.$assign         = "PA28";
 PWM1.peripheral.ccp1Pin.$assign         = "PA16";
@@ -351,7 +352,6 @@ SYSCTL.MCLKSource                     = "HSCLK";
 SYSCTL.enableWorkaround_SYSPLL_ERR_01 = false;
 SYSCTL.clockTreeEn                    = true;
 
-UART1.targetBaudRate                   = 115200;
 UART1.enableFIFO                       = true;
 UART1.rxFifoThreshold                  = "DL_UART_RX_FIFO_LEVEL_ONE_ENTRY";
 UART1.enableDMARX                      = false;

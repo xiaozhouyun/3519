@@ -33,6 +33,43 @@ void Bluetooth_Init(void)
 }
 
 
+#include <stdio.h>
+#include <string.h>
+
+/**
+ * @brief  通过蓝牙串口发送单字节
+ */
+void Bluetooth_Send_Byte(uint8_t ch)
+{
+#ifndef BLUE_HOST_TEST
+    DL_UART_Main_transmitDataBlocking(blue_INST, ch);
+#endif
+}
+
+/**
+ * @brief  通过蓝牙串口发送字符串
+ */
+void Bluetooth_Send_String(const char *str)
+{
+    if (str == NULL) return;
+    while (*str != '\0') {
+        Bluetooth_Send_Byte((uint8_t)*str);
+        str++;
+    }
+}
+
+/**
+ * @brief  通过蓝牙串口发送系统测试数据
+ */
+void Bluetooth_Send_TestData(void)
+{
+    char buf[80];
+    snprintf(buf, sizeof(buf), "[TEST] Run:%d, Speed:%d, EncL:%ld, EncR:%ld\r\n",
+             (int)g_bt_running_flag, (int)g_bt_speed_grade,
+             (long)g_encoder_left_total, (long)g_encoder_right_total);
+    Bluetooth_Send_String(buf);
+}
+
 /**
  * @brief  解析接收到的单个蓝牙字节指令
  * @param  data 接收到的字符 ASCII 码
@@ -54,18 +91,29 @@ void Bluetooth_Process_Byte(uint8_t data)
             break;
         case '1':  // 低速档
             BT_SetSpeed(1);
+            Bluetooth_Send_String("Speed Grade set to 1\r\n");
             break;
         case '2':  // 中速档
             BT_SetSpeed(2);
+            Bluetooth_Send_String("Speed Grade set to 2\r\n");
             break;
         case '3':  // 高速档
             BT_SetSpeed(3);
+            Bluetooth_Send_String("Speed Grade set to 3\r\n");
             break;
         case 'S':  // 启动小车
+        case 's':
             BT_Start();
+            Bluetooth_Send_String("System Started!\r\n");
             break;
         case 'X':  // 停止小车
+        case 'x':
             BT_Stop();
+            Bluetooth_Send_String("System Stopped!\r\n");
+            break;
+        case 'T':  // 测试数据回传
+        case 't':
+            Bluetooth_Send_TestData();
             break;
         case 'P':  // 调整 PID 参数: Kp + 0.5
             g_line_controller.kp += 0.5f;
@@ -111,7 +159,7 @@ void BT_Stop(void)
 #ifndef BLUE_HOST_TEST
 /**
  * @brief  MSPM0G3519 UART1 硬件接收中断服务函数
- * @note   替代 STM32 HAL 库中的 HAL_UART_RxCpltCallback，每次 FIFO 收到字节时自动响应
+ * @note  每次 FIFO 收到字节时自动响应
  */
 void blue_INST_IRQHandler(void)
 {
