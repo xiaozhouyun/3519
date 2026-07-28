@@ -5,10 +5,11 @@
 */
 
 #include "ti_msp_dl_config.h"
-#include "core/inc/zf_device_tft180.h"
-#include "core/inc/zf_device_imu660rc.h"
-#include "core/inc/Grayscale.h"
+#include "zf_device_tft180.h"
+#include "zf_device_imu660rc.h"
+#include "Grayscale.h"
 #include "encode.h"
+#include "drv8873.h"
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -118,8 +119,8 @@ int main(void)
 
     // 3. 初始化灰度循迹传感器 (使用预设默认阈值)
     Grayscale_Init_First(&g_grayscale_sensor);
-
     Encode_Init();
+    DRV8873_Init();
 
     // 4. 创建传感器采集任务 (SensorTask: 优先级 2, 100Hz 采集周期)
     if (xTaskCreate(SensorTask, "SensorTask", SENSOR_TASK_STACK_SIZE, NULL,

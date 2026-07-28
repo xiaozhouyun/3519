@@ -238,7 +238,7 @@ PWM1.ccp1PinConfig.passedPeripheralType = scripting.forceWrite("Digital");
 PWM1.ccp1PinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric22";
 
 PWM2.$name                              = "DRV8873";
-PWM2.timerCount                         = 400;
+PWM2.pwmMode                            = "EDGE_ALIGN_UP";
 PWM2.peripheral.ccp0Pin.$assign         = "PB20";
 PWM2.peripheral.ccp1Pin.$assign         = "PA25";
 PWM2.PWM_CHANNEL_0.$name                = "ti_driverlib_pwm_PWMTimerCC6";

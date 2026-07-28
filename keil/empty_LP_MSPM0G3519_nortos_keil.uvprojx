@@ -409,11 +409,6 @@
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
             </File>
-            <File>
-              <FileName>encode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\encode.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -433,6 +428,16 @@
               <FileName>Grayscale.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\core\src\Grayscale.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv8873.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\core\src\drv8873.c</FilePath>
+            </File>
+            <File>
+              <FileName>encode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\core\src\encode.c</FilePath>
             </File>
           </Files>
         </Group>

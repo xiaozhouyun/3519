@@ -487,8 +487,8 @@ static const DL_TimerG_ClockConfig gDRV8873ClockConfig = {
 };
 
 static const DL_TimerG_PWMConfig gDRV8873Config = {
-    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN,
-    .period = 400,
+    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN_UP,
+    .period = 1000,
     .isTimerWithFourCC = true,
     .startTimer = DL_TIMER_STOP,
 };
@@ -509,14 +509,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_DRV8873_init(void) {
 		DL_TIMERG_CAPTURE_COMPARE_0_INDEX);
 
     DL_TimerG_setCaptCompUpdateMethod(DRV8873_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERG_CAPTURE_COMPARE_0_INDEX);
-    DL_TimerG_setCaptureCompareValue(DRV8873_INST, 400, DL_TIMER_CC_0_INDEX);
+    DL_TimerG_setCaptureCompareValue(DRV8873_INST, 0, DL_TIMER_CC_0_INDEX);
 
     DL_TimerG_setCaptureCompareOutCtl(DRV8873_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
 		DL_TIMERG_CAPTURE_COMPARE_1_INDEX);
 
     DL_TimerG_setCaptCompUpdateMethod(DRV8873_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERG_CAPTURE_COMPARE_1_INDEX);
-    DL_TimerG_setCaptureCompareValue(DRV8873_INST, 400, DL_TIMER_CC_1_INDEX);
+    DL_TimerG_setCaptureCompareValue(DRV8873_INST, 0, DL_TIMER_CC_1_INDEX);
 
     DL_TimerG_enableClock(DRV8873_INST);
 
