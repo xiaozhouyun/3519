@@ -8,7 +8,6 @@
 #include "ti_msp_dl_config.h"
 #include "zf_device_tft180.h"
 #include "icm42688p.h"
-#include "icm42688p.h"
 #include "Grayscale.h"
 #include "encode.h"
 #include "drv8873.h"
@@ -64,6 +63,8 @@ static void SensorTask(void *pvParameters)
     while (1) {
         /* 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化) */
         Grayscale_Update(&g_grayscale_sensor);
+         g_encoder_left_delta = Encode_Get_Delta(ENCODE_LEFT);
+        g_encoder_right_delta = Encode_Get_Delta(ENCODE_RIGHT);
 //        MG513XGMR_Set_Angle(MG513XGMR_LEFT,0.0f);
 
         /* 循迹差速控制 (使用 MG513XGMR 闭环时暂时注释) */
@@ -98,6 +99,8 @@ static void DisplayTask(void *pvParameters)
     tft180_show_string(0,  80, "BIN:");
     tft180_show_string(0,  94, "0-1:");
     tft180_show_string(0, 108, "4-5:");
+    tft180_show_string(0, 122, "L_TOT:");
+    tft180_show_string(0, 134, "R_TOT:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
@@ -137,10 +140,14 @@ static void DisplayTask(void *pvParameters)
         tft180_show_uint(35, 108, g_grayscale_sensor.analog_val[4], 4);
         tft180_show_uint(80, 108, g_grayscale_sensor.analog_val[5], 4);
 
+        /* ---- 编码器总计数值 ---- */
+        tft180_set_color(RGB565_BLUE, RGB565_WHITE);
+        tft180_show_int(45, 122, g_encoder_left_total, 7);
+        tft180_show_int(45, 134, g_encoder_right_total, 7);
+
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
 }
-uint8_t a;
 int main(void)
 {
     // 1. 系统底层外设与屏驱动初始化
@@ -155,9 +162,6 @@ int main(void)
         tft180_show_uint(120, 136, icm42688p_read_id(), 4);
         while (1) {}
     }
-
-    // 2. 初始化 ICM-42688-P 六轴传感器。
-    a=icm42688p_init();
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);

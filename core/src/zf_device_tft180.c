@@ -548,6 +548,16 @@ void tft180_show_string(uint16 x, uint16 y, const char dat[])
     }
 }
 
+static void tft180_show_fixed_string(uint16 x, uint16 y, const char dat[], uint8 length)
+{
+    uint16 char_width = (tft180_display_font == TFT180_6X8_FONT) ? 6 : 8;
+
+    for(uint8 i = 0; i < length; i++)
+    {
+        tft180_show_char(x + char_width * i, y, (dat[i] == '\0') ? ' ' : dat[i]);
+    }
+}
+
 void tft180_show_int(uint16 x, uint16 y, const int32 dat, uint8 num)
 {
     if (x >= tft180_x_max || y >= tft180_y_max || num == 0 || num > 10) return;
@@ -557,18 +567,17 @@ void tft180_show_int(uint16 x, uint16 y, const int32 dat, uint8 num)
     char data_buffer[12];
 
     memset(data_buffer, 0, 12);
-    memset(data_buffer, ' ', num + 1);
 
     if(10 > num)
     {
-        for(; 0 < num; num--)
+        for(uint8 digits = num; 0 < digits; digits--)
         {
             offset *= 10;
         }
         dat_temp %= offset;
     }
     func_int_to_str(data_buffer, dat_temp);
-    tft180_show_string(x, y, (const char *)&data_buffer);
+    tft180_show_fixed_string(x, y, data_buffer, num + 1);
 }
 
 void tft180_show_uint(uint16 x, uint16 y, const uint32 dat, uint8 num)
@@ -590,7 +599,7 @@ void tft180_show_uint(uint16 x, uint16 y, const uint32 dat, uint8 num)
         dat_temp %= offset;
     }
     func_uint_to_str(data_buffer, dat_temp);
-    tft180_show_string(x, y, data_buffer);
+    tft180_show_fixed_string(x, y, data_buffer, num);
 }
 
 void tft180_show_float(uint16 x, uint16 y, const double dat, uint8 num, uint8 pointnum)
@@ -609,7 +618,7 @@ void tft180_show_float(uint16 x, uint16 y, const double dat, uint8 num, uint8 po
     }
     dat_temp = dat_temp - ((int)dat_temp / (int)offset) * offset;
     func_double_to_str(data_buffer, dat_temp, pointnum);
-    tft180_show_string(x, y, data_buffer);
+    tft180_show_fixed_string(x, y, data_buffer, num + pointnum + 2);
 }
 
 void tft180_show_binary_image(uint16 x, uint16 y, const uint8 *image, uint16 width, uint16 height, uint16 dis_width, uint16 dis_height)

@@ -10,7 +10,7 @@
       <TargetName>empty_LP_MSPM0G3519_freertos_keil</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -450,11 +450,6 @@
               <FilePath>..\core\src\follow_line.c</FilePath>
             </File>
             <File>
-              <FileName>icm45686.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\core\src\icm45686.c</FilePath>
-            </File>
-            <File>
               <FileName>fast_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\core\inc\fast_math.h</FilePath>
@@ -468,11 +463,6 @@
               <FileName>MG513XGMR.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\core\src\MG513XGMR.c</FilePath>
-            </File>
-            <File>
-              <FileName>icm42688p.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\core\src\icm42688p.c</FilePath>
             </File>
           </Files>
         </Group>

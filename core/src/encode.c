@@ -12,7 +12,16 @@
 /** 16位定时器最大计数值掩码 */
 #define ENCODE_COUNTER_MAX (65535U)
 
+/** 全局左右轮编码器增量值 */
+int16_t g_encoder_left_delta = 0;
+int16_t g_encoder_right_delta = 0;
+
+/** 全局左右轮编码器总脉冲累计值 */
+int32_t g_encoder_left_total = 0;
+int32_t g_encoder_right_total = 0;
+
 #ifndef ENCODE_HOST_TEST
+
 /** 记录左右通道上一次读取时的编码器计数值 */
 static uint16_t g_encode_last[2];
 
@@ -55,6 +64,13 @@ void Encode_Clear(Encode_Channel_t channel)
     DL_TimerG_stopCounter(timer);       // 暂停计数器
     DL_TimerG_setTimerCount(timer, 0U);  // 计数值清零
     g_encode_last[channel] = 0U;        // 重置上次采样记录
+
+    if (channel == ENCODE_LEFT) {
+        g_encoder_left_total = 0;
+    } else {
+        g_encoder_right_total = 0;
+    }
+
     DL_TimerG_startCounter(timer);      // 重新启动计数器
 }
 
@@ -75,6 +91,13 @@ int16_t Encode_Get_Delta(Encode_Channel_t channel)
     int16_t delta = Encode_Calc_Delta(now, g_encode_last[channel]);
 
     g_encode_last[channel] = now; // 更新上一次计数值记录
+
+    if (channel == ENCODE_LEFT) {
+        g_encoder_left_total -= delta;
+    } else {
+        g_encoder_right_total += delta;
+    }
+
     return delta;
 }
 #endif
