@@ -1,11 +1,12 @@
-﻿/*********************************************************************************************************************
-* MSPM0G3519 八通道灰度循迹传感器驱动 (TI Official DriverLib 移植版)
-* 
-* 文件          Grayscale.c
-* 平台          MSPM0G3519 (ti_msp_dl_config.h)
-* 说明          本文件整合了底层 ADC0 (PA27) 采样、PA7/PA8/PA9 多路开关地址选通、
-*               黑白阈值比较二值化及模拟量归一化算法。
-********************************************************************************************************************/
+/**
+ * @file Grayscale.c
+ * @brief MSPM0G3519 八通道灰度循迹传感器驱动实现文件 (基于 TI DriverLib)
+ * 
+ * 主要功能:
+ * 1. 控制 CD4051 多路开关 3 位地址引脚 (A0:PA7, A1:PA8, A2:PA9) 实现 8 通道选通
+ * 2. 单次触发 ADC0 (PA27) 进行模拟量采样，每通道多次采样求均值滤波
+ * 3. 基于黑白矫定阈值实现多通道二值化 (Bit0~Bit7) 与 0~4095 范围的模拟量归一化计算
+ */
 
 #include "../inc/Grayscale.h"
 
@@ -13,7 +14,7 @@
 
 /**
  * @brief  切换 CD4051 多路开关 3 位地址引脚 (A0:PA7, A1:PA8, A2:PA9)
- * @param  ch  通道索引 (0 ~ 7)
+ * @param  ch 通道索引 (0 ~ 7)
  */
 static inline void Grayscale_Set_Address(uint8_t ch)
 {
@@ -41,7 +42,7 @@ static inline void Grayscale_Set_Address(uint8_t ch)
 
 /**
  * @brief  单次触发 ADC0 (PA27) 采样并获取最新 12 位转换结果
- * @return uint16_t ADC 转换数字量 (0 ~ 4095)
+ * @return 12位 ADC 转换数字量 (0 ~ 4095)
  */
 static uint16_t Grayscale_ADC_Read_Single(void)
 {
@@ -61,8 +62,8 @@ static uint16_t Grayscale_ADC_Read_Single(void)
 }
 
 /**
- * @brief  采集 8 个通道的原始模拟量 (每通道采样 8 次求均值)
- * @param  result  8通道模拟量接收数组
+ * @brief  轮询采集 8 个通道的原始模拟量 (每通道采样 8 次求均值滤波)
+ * @param  result 长度为 8 的 16 位模拟量接收数组指针
  */
 static void Grayscale_Read_All_Analog(uint16_t *result)
 {
@@ -82,7 +83,7 @@ static void Grayscale_Read_All_Analog(uint16_t *result)
             sum += Grayscale_ADC_Read_Single();
         }
 
-        // 3. 通道线序反转映射 (使通道0对应左侧，通道7对应右侧)
+        // 3. 通道线序反转映射 (使通道 0 对应小车左侧，通道 7 对应右侧)
         result[7 - i] = (uint16_t)(sum / 8);
     }
 }
@@ -90,7 +91,11 @@ static void Grayscale_Read_All_Analog(uint16_t *result)
 // --------------------------- 核心算法: 二值化与归一化 ---------------------------
 
 /**
- * @brief  模拟量转换为黑白开关二值化数字信号
+ * @brief  模拟量转换为黑白开关二值化数字信号 (双门限滞后比较防抖)
+ * @param  adc_val    8通道原始模拟量数组
+ * @param  gray_white 8通道白色判定门限阈值数组
+ * @param  gray_black 8通道黑色判定门限阈值数组
+ * @param  digital    二值化结果输出指针 (按 Bit0~Bit7 存放)
  */
 static void convertAnalogToDigital(const uint16_t *adc_val, const uint16_t *gray_white, const uint16_t *gray_black, uint8_t *digital)
 {
@@ -108,7 +113,11 @@ static void convertAnalogToDigital(const uint16_t *adc_val, const uint16_t *gray
 }
 
 /**
- * @brief  模拟量归一化计算 (映射至 0 ~ 4095)
+ * @brief  模拟量归一化计算 (依据矫定的黑白边界线性映射至 0 ~ 4095)
+ * @param  adc_val       8通道原始模拟量数组
+ * @param  normal_factor 8通道归一化放大因子系数数组
+ * @param  cali_black    8通道黑界矫定基准值数组
+ * @param  result        归一化结果输出数组指针
  */
 static void normalizeAnalogValues(const uint16_t *adc_val, const double *normal_factor, const uint16_t *cali_black, uint16_t *result)
 {
@@ -132,6 +141,10 @@ static void normalizeAnalogValues(const uint16_t *adc_val, const double *normal_
 
 // --------------------------- API 函数实现 ---------------------------
 
+/**
+ * @brief  使用默认预设阈值快速初始化灰度循迹传感器
+ * @param  sensor 灰度传感器句柄结构体指针
+ */
 void Grayscale_Init_First(Grayscale_Sensor_t *sensor)
 {
     uint16_t default_white[8];
@@ -146,6 +159,12 @@ void Grayscale_Init_First(Grayscale_Sensor_t *sensor)
     Grayscale_Init(sensor, default_white, default_black);
 }
 
+/**
+ * @brief  使用校准后的黑白边界阈值完整初始化传感器对象
+ * @param  sensor           灰度传感器句柄结构体指针
+ * @param  calibrated_white 8通道白色校准基准数组指针
+ * @param  calibrated_black 8通道黑色校准基准数组指针
+ */
 void Grayscale_Init(Grayscale_Sensor_t *sensor, const uint16_t *calibrated_white, const uint16_t *calibrated_black)
 {
     memset(sensor, 0, sizeof(Grayscale_Sensor_t));
@@ -158,6 +177,7 @@ void Grayscale_Init(Grayscale_Sensor_t *sensor, const uint16_t *calibrated_white
         uint16_t white = calibrated_white[i];
         uint16_t black = calibrated_black[i];
 
+        // 保障 white > black 的大小关系
         if (black >= white)
         {
             uint16_t tmp = white;
@@ -168,10 +188,11 @@ void Grayscale_Init(Grayscale_Sensor_t *sensor, const uint16_t *calibrated_white
         sensor->calibrated_white[i] = white;
         sensor->calibrated_black[i] = black;
 
-        // 计算阈值界限: 灰度白为2/3处，灰度黑为1/3处
+        // 计算滞后比较阈值界限: 灰度白门限为 2/3 处，灰度黑门限为 1/3 处
         sensor->gray_white[i] = (white * 2 + black) / 3;
         sensor->gray_black[i] = (white + black * 2) / 3;
 
+        // 计算归一化缩放因子: Factor = 4095.0 / (White - Black)
         double diff = (double)white - (double)black;
         if (diff > 0.0)
         {
@@ -186,6 +207,12 @@ void Grayscale_Init(Grayscale_Sensor_t *sensor, const uint16_t *calibrated_white
     sensor->is_ok = 1;
 }
 
+/**
+ * @brief  批量统一设置全通道的全局黑白基础阈值
+ * @param  sensor 灰度传感器句柄结构体指针
+ * @param  white  统一的白色边界基准值
+ * @param  black  统一的黑色边界基准值
+ */
 void Grayscale_Set_Global_Thresholds(Grayscale_Sensor_t *sensor, uint16_t white, uint16_t black)
 {
     uint16_t white_arr[8];
@@ -200,6 +227,10 @@ void Grayscale_Set_Global_Thresholds(Grayscale_Sensor_t *sensor, uint16_t white,
     Grayscale_Init(sensor, white_arr, black_arr);
 }
 
+/**
+ * @brief  刷新传感器采集并更新二值化与归一化数据 (轮询采集周期调用)
+ * @param  sensor 灰度传感器句柄结构体指针
+ */
 void Grayscale_Update(Grayscale_Sensor_t *sensor)
 {
     // 1. 采集 8 通道原始模拟量
@@ -212,11 +243,22 @@ void Grayscale_Update(Grayscale_Sensor_t *sensor)
     normalizeAnalogValues(sensor->analog_val, sensor->normal_factor, sensor->calibrated_black, sensor->normal_val);
 }
 
+/**
+ * @brief  获取 8 通道黑白二值化数字状态字节 (按位存储，1:白，0:黑)
+ * @param  sensor 灰度传感器句柄结构体指针
+ * @return 8 位二值化状态掩码字节
+ */
 uint8_t Grayscale_Get_Digital(Grayscale_Sensor_t *sensor)
 {
     return sensor->digital;
 }
 
+/**
+ * @brief  获取 8 通道归一化后的模拟量数值数组 (0 ~ 4095)
+ * @param  sensor 灰度传感器句柄结构体指针
+ * @param  result 接收 8 通道归一化数据的 16 位数组指针
+ * @return 1 表示成功获取，0 表示传感器未处于正常初始化状态
+ */
 uint8_t Grayscale_Get_Normalized(Grayscale_Sensor_t *sensor, uint16_t *result)
 {
     if (!sensor->is_ok) return 0;
@@ -224,6 +266,12 @@ uint8_t Grayscale_Get_Normalized(Grayscale_Sensor_t *sensor, uint16_t *result)
     return 1;
 }
 
+/**
+ * @brief  获取 8 通道原始 ADC 模拟量数值数组 (0 ~ 4095)
+ * @param  sensor 灰度传感器句柄结构体指针
+ * @param  result 接收 8 通道原始模拟量的 16 位数组指针
+ * @return 1 表示成功获取，0 表示传感器未正常初始化
+ */
 uint8_t Grayscale_Get_Analog(Grayscale_Sensor_t *sensor, uint16_t *result)
 {
     memcpy(result, sensor->analog_val, sizeof(uint16_t) * 8);

@@ -201,22 +201,22 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define GPIO_OLED_IOMUX_SCL_FUNC                        IOMUX_PINCM2_PF_I2C0_SCL
 
 
-/* Defines for UART_1 */
-#define UART_1_INST                                                        UART1
-#define UART_1_INST_FREQUENCY                                           40000000
-#define UART_1_INST_IRQHandler                                  UART1_IRQHandler
-#define UART_1_INST_INT_IRQN                                      UART1_INT_IRQn
-#define GPIO_UART_1_RX_PORT                                                GPIOB
-#define GPIO_UART_1_TX_PORT                                                GPIOB
-#define GPIO_UART_1_RX_PIN                                         DL_GPIO_PIN_5
-#define GPIO_UART_1_TX_PIN                                         DL_GPIO_PIN_4
-#define GPIO_UART_1_IOMUX_RX                                     (IOMUX_PINCM18)
-#define GPIO_UART_1_IOMUX_TX                                     (IOMUX_PINCM17)
-#define GPIO_UART_1_IOMUX_RX_FUNC                      IOMUX_PINCM18_PF_UART1_RX
-#define GPIO_UART_1_IOMUX_TX_FUNC                      IOMUX_PINCM17_PF_UART1_TX
-#define UART_1_BAUD_RATE                                                (115200)
-#define UART_1_IBRD_40_MHZ_115200_BAUD                                      (21)
-#define UART_1_FBRD_40_MHZ_115200_BAUD                                      (45)
+/* Defines for blue */
+#define blue_INST                                                          UART1
+#define blue_INST_FREQUENCY                                             40000000
+#define blue_INST_IRQHandler                                    UART1_IRQHandler
+#define blue_INST_INT_IRQN                                        UART1_INT_IRQn
+#define GPIO_blue_RX_PORT                                                  GPIOB
+#define GPIO_blue_TX_PORT                                                  GPIOB
+#define GPIO_blue_RX_PIN                                           DL_GPIO_PIN_5
+#define GPIO_blue_TX_PIN                                           DL_GPIO_PIN_4
+#define GPIO_blue_IOMUX_RX                                       (IOMUX_PINCM18)
+#define GPIO_blue_IOMUX_TX                                       (IOMUX_PINCM17)
+#define GPIO_blue_IOMUX_RX_FUNC                        IOMUX_PINCM18_PF_UART1_RX
+#define GPIO_blue_IOMUX_TX_FUNC                        IOMUX_PINCM17_PF_UART1_TX
+#define blue_BAUD_RATE                                                  (115200)
+#define blue_IBRD_40_MHZ_115200_BAUD                                        (21)
+#define blue_FBRD_40_MHZ_115200_BAUD                                        (45)
 /* Defines for UART_4 */
 #define UART_4_INST                                                        UART4
 #define UART_4_INST_FREQUENCY                                           80000000
@@ -418,7 +418,7 @@ void SYSCFG_DL_servo_init(void);
 void SYSCFG_DL_AB1_init(void);
 void SYSCFG_DL_AB2_init(void);
 void SYSCFG_DL_OLED_init(void);
-void SYSCFG_DL_UART_1_init(void);
+void SYSCFG_DL_blue_init(void);
 void SYSCFG_DL_UART_4_init(void);
 void SYSCFG_DL_TFT_SPI0_init(void);
 void SYSCFG_DL_IMU660RC_init(void);

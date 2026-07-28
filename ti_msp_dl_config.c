@@ -62,7 +62,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_AB1_init();
     SYSCFG_DL_AB2_init();
     SYSCFG_DL_OLED_init();
-    SYSCFG_DL_UART_1_init();
+    SYSCFG_DL_blue_init();
     SYSCFG_DL_UART_4_init();
     SYSCFG_DL_TFT_SPI0_init();
     SYSCFG_DL_IMU660RC_init();
@@ -120,7 +120,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerG_reset(AB1_INST);
     DL_TimerG_reset(AB2_INST);
     DL_I2C_reset(OLED_INST);
-    DL_UART_Main_reset(UART_1_INST);
+    DL_UART_Main_reset(blue_INST);
     DL_UART_Main_reset(UART_4_INST);
     DL_SPI_reset(TFT_SPI0_INST);
     DL_SPI_reset(IMU660RC_INST);
@@ -136,7 +136,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerG_enablePower(AB1_INST);
     DL_TimerG_enablePower(AB2_INST);
     DL_I2C_enablePower(OLED_INST);
-    DL_UART_Main_enablePower(UART_1_INST);
+    DL_UART_Main_enablePower(blue_INST);
     DL_UART_Main_enablePower(UART_4_INST);
     DL_SPI_enablePower(TFT_SPI0_INST);
     DL_SPI_enablePower(IMU660RC_INST);
@@ -182,9 +182,9 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_enableHiZ(GPIO_OLED_IOMUX_SCL);
 
     DL_GPIO_initPeripheralOutputFunction(
-        GPIO_UART_1_IOMUX_TX, GPIO_UART_1_IOMUX_TX_FUNC);
+        GPIO_blue_IOMUX_TX, GPIO_blue_IOMUX_TX_FUNC);
     DL_GPIO_initPeripheralInputFunction(
-        GPIO_UART_1_IOMUX_RX, GPIO_UART_1_IOMUX_RX_FUNC);
+        GPIO_blue_IOMUX_RX, GPIO_blue_IOMUX_RX_FUNC);
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_UART_4_IOMUX_TX, GPIO_UART_4_IOMUX_TX_FUNC);
     DL_GPIO_initPeripheralInputFunction(
@@ -661,12 +661,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_OLED_init(void) {
 
 }
 
-static const DL_UART_Main_ClockConfig gUART_1ClockConfig = {
+static const DL_UART_Main_ClockConfig gblueClockConfig = {
     .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,
     .divideRatio = DL_UART_MAIN_CLOCK_DIVIDE_RATIO_1
 };
 
-static const DL_UART_Main_Config gUART_1Config = {
+static const DL_UART_Main_Config gblueConfig = {
     .mode        = DL_UART_MAIN_MODE_NORMAL,
     .direction   = DL_UART_MAIN_DIRECTION_TX_RX,
     .flowControl = DL_UART_MAIN_FLOW_CONTROL_NONE,
@@ -675,26 +675,26 @@ static const DL_UART_Main_Config gUART_1Config = {
     .stopBits    = DL_UART_MAIN_STOP_BITS_ONE
 };
 
-SYSCONFIG_WEAK void SYSCFG_DL_UART_1_init(void)
+SYSCONFIG_WEAK void SYSCFG_DL_blue_init(void)
 {
-    DL_UART_Main_setClockConfig(UART_1_INST, (DL_UART_Main_ClockConfig *) &gUART_1ClockConfig);
+    DL_UART_Main_setClockConfig(blue_INST, (DL_UART_Main_ClockConfig *) &gblueClockConfig);
 
-    DL_UART_Main_init(UART_1_INST, (DL_UART_Main_Config *) &gUART_1Config);
+    DL_UART_Main_init(blue_INST, (DL_UART_Main_Config *) &gblueConfig);
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
      *  Target baud rate: 115200
      *  Actual baud rate: 115190.78
      */
-    DL_UART_Main_setOversampling(UART_1_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(UART_1_INST, UART_1_IBRD_40_MHZ_115200_BAUD, UART_1_FBRD_40_MHZ_115200_BAUD);
+    DL_UART_Main_setOversampling(blue_INST, DL_UART_OVERSAMPLING_RATE_16X);
+    DL_UART_Main_setBaudRateDivisor(blue_INST, blue_IBRD_40_MHZ_115200_BAUD, blue_FBRD_40_MHZ_115200_BAUD);
 
 
     /* Configure FIFOs */
-    DL_UART_Main_enableFIFOs(UART_1_INST);
-    DL_UART_Main_setRXFIFOThreshold(UART_1_INST, DL_UART_RX_FIFO_LEVEL_ONE_ENTRY);
-    DL_UART_Main_setTXFIFOThreshold(UART_1_INST, DL_UART_TX_FIFO_LEVEL_1_2_EMPTY);
+    DL_UART_Main_enableFIFOs(blue_INST);
+    DL_UART_Main_setRXFIFOThreshold(blue_INST, DL_UART_RX_FIFO_LEVEL_ONE_ENTRY);
+    DL_UART_Main_setTXFIFOThreshold(blue_INST, DL_UART_TX_FIFO_LEVEL_1_2_EMPTY);
 
-    DL_UART_Main_enable(UART_1_INST);
+    DL_UART_Main_enable(blue_INST);
 }
 static const DL_UART_Main_ClockConfig gUART_4ClockConfig = {
     .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,

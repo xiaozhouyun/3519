@@ -10,8 +10,10 @@
 #include "Grayscale.h"
 #include "encode.h"
 #include "drv8873.h"
+#include "blue.h"
 #include "FreeRTOS.h"
 #include "task.h"
+
 
 // 任务优先级与堆栈大小定义
 #define SENSOR_TASK_STACK_SIZE     (configMINIMAL_STACK_SIZE * 2U)
@@ -117,10 +119,12 @@ int main(void)
     // 2. 初始化 IMU660RC 六轴传感器 (120Hz 姿态解算，硬件 INT2 自动触发中断更新)
     (void)imu660rc_init(IMU660RC_QUARTERNION_120HZ);
 
-    // 3. 初始化灰度循迹传感器 (使用预设默认阈值)
+    // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);
     Encode_Init();
     DRV8873_Init();
+    Bluetooth_Init();
+
 
     // 4. 创建传感器采集任务 (SensorTask: 优先级 2, 100Hz 采集周期)
     if (xTaskCreate(SensorTask, "SensorTask", SENSOR_TASK_STACK_SIZE, NULL,
