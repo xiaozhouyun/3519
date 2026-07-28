@@ -8,6 +8,7 @@
 #include "core/inc/zf_device_tft180.h"
 #include "core/inc/zf_device_imu660rc.h"
 #include "core/inc/Grayscale.h"
+#include "encode.h"
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -20,6 +21,8 @@
 
 // 全局传感器数据对象
 Grayscale_Sensor_t g_grayscale_sensor;
+volatile int16_t g_encoder_left_delta;
+volatile int16_t g_encoder_right_delta;
 
 /**
  * @brief  传感器数据采集任务 (高优先级任务, 10ms 周期 / 100Hz 刷新率)
@@ -33,6 +36,9 @@ static void SensorTask(void *pvParameters)
     while (1) {
         // 1. 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化)
         Grayscale_Update(&g_grayscale_sensor);
+
+        g_encoder_left_delta = Encode_Get_Delta(ENCODE_LEFT);
+        g_encoder_right_delta = Encode_Get_Delta(ENCODE_RIGHT);
 
         // 2. IMU660RC 说明: 
         // 姿态角由 PB24 (INT2) 引脚硬件中断 GROUP1_IRQHandler() 自动解算并更新；
@@ -112,6 +118,8 @@ int main(void)
 
     // 3. 初始化灰度循迹传感器 (使用预设默认阈值)
     Grayscale_Init_First(&g_grayscale_sensor);
+
+    Encode_Init();
 
     // 4. 创建传感器采集任务 (SensorTask: 优先级 2, 100Hz 采集周期)
     if (xTaskCreate(SensorTask, "SensorTask", SENSOR_TASK_STACK_SIZE, NULL,
