@@ -77,4 +77,14 @@ FORCE_INLINE static float fast_atan2f(float y, float x)
     return (y < 0.0f) ? -angle : angle;
 }
 
+/* 快速 asin(x) = atan2(x, sqrt(1 - x²))，基于 fast_atan2f 实现 */
+FORCE_INLINE static float fast_asinf(float x)
+{
+    /* 钳位到 [-1, 1] */
+    if (x > 1.0f)  x = 1.0f;
+    if (x < -1.0f) x = -1.0f;
+    float denom = fast_sqrtf(1.0f - x * x);
+    return fast_atan2f(x, denom);
+}
+
 #endif
