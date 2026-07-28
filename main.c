@@ -8,7 +8,6 @@
 #include "ti_msp_dl_config.h"
 #include "zf_device_tft180.h"
 #include "icm42688p.h"
-#include "icm42688p.h"
 #include "Grayscale.h"
 #include "encode.h"
 #include "drv8873.h"
@@ -64,10 +63,12 @@ static void SensorTask(void *pvParameters)
     while (1) {
         /* 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化) */
         Grayscale_Update(&g_grayscale_sensor);
+         g_encoder_left_delta = Encode_Get_Delta(ENCODE_LEFT);
+        g_encoder_right_delta = Encode_Get_Delta(ENCODE_RIGHT);
 //        MG513XGMR_Set_Angle(MG513XGMR_LEFT,0.0f);
 
         /* 循迹差速控制 (使用 MG513XGMR 闭环时暂时注释) */
-        // FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100);
+//        // FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100);
 
         /* ICM42688P: 姿态解算更新 (10ms 周期, dt=0.01s) */
         icm42688p_update(0.01f);
@@ -96,11 +97,14 @@ static void DisplayTask(void *pvParameters)
     tft180_show_string(0,  50, "GY:");
     tft180_show_string(0,  68, "--- GRAY 8CH ---");
     tft180_show_string(0,  80, "BIN:");
-    tft180_show_string(0,  94, "0-1:");
-    tft180_show_string(0, 108, "4-5:");
-    tft180_show_string(0, 122, "--- MTR SPD ---");
-    tft180_show_string(0, 136, "L:");
-    tft180_show_string(0, 150, "R:");
+    tft180_show_string(0,  94, "0:");
+    tft180_show_string(50, 94, "1:");
+    tft180_show_string(0, 106, "2:");
+    tft180_show_string(50, 106, "3:");
+    tft180_show_string(0, 118, "4:");
+    tft180_show_string(50, 118, "5:");
+    tft180_show_string(0, 130, "6:");
+    tft180_show_string(50, 130, "7:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
@@ -135,20 +139,18 @@ static void DisplayTask(void *pvParameters)
 
         /* ---- 灰度模拟量 ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-        tft180_show_uint(35, 94,  g_grayscale_sensor.analog_val[0], 4);
-        tft180_show_uint(80, 94,  g_grayscale_sensor.analog_val[1], 4);
-        tft180_show_uint(35, 108, g_grayscale_sensor.analog_val[4], 4);
-        tft180_show_uint(80, 108, g_grayscale_sensor.analog_val[5], 4);
-
-        /* ---- 电机速度 (pulses/10ms) ---- */
-        tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-        tft180_show_float(30, 136, MG513XGMR_Get_Speed(MG513XGMR_LEFT), 5, 1);
-        tft180_show_float(30, 150, MG513XGMR_Get_Speed(MG513XGMR_RIGHT), 5, 1);
+        tft180_show_uint(15, 94,  g_grayscale_sensor.analog_val[0], 4);
+        tft180_show_uint(65, 94,  g_grayscale_sensor.analog_val[1], 4);
+        tft180_show_uint(15, 106, g_grayscale_sensor.analog_val[2], 4);
+        tft180_show_uint(65, 106, g_grayscale_sensor.analog_val[3], 4);
+        tft180_show_uint(15, 118, g_grayscale_sensor.analog_val[4], 4);
+        tft180_show_uint(65, 118, g_grayscale_sensor.analog_val[5], 4);
+        tft180_show_uint(15, 130, g_grayscale_sensor.analog_val[6], 4);
+        tft180_show_uint(65, 130, g_grayscale_sensor.analog_val[7], 4);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
 }
-
 int main(void)
 {
     // 1. 系统底层外设与屏驱动初始化
@@ -163,7 +165,6 @@ int main(void)
         tft180_show_uint(120, 136, icm42688p_read_id(), 4);
         while (1) {}
     }
-
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);
