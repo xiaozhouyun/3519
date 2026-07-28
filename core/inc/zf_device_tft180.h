@@ -100,5 +100,5 @@ void    tft180_show_chinese             (uint16 x, uint16 y, uint8 size, const u
 
 // 新增：直接传递中文字符串字面量接口 (支持中英混排，例如: tft180_show_chinese_str(0, 0, "中文显示", RGB565_RED);)
 void    tft180_show_chinese_str         (uint16 x, uint16 y, const char *str, uint16 color);
-
+void tft_display(void);
 #endif

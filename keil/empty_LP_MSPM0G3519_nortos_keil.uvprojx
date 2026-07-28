@@ -420,9 +420,9 @@
               <FilePath>..\core\src\zf_device_tft180.c</FilePath>
             </File>
             <File>
-              <FileName>zf_device_imu660rc.c</FileName>
+              <FileName>zf_device_icm45686.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\core\src\zf_device_imu660rc.c</FilePath>
+              <FilePath>..\core\src\zf_device_icm45686.c</FilePath>
             </File>
             <File>
               <FileName>Grayscale.c</FileName>
