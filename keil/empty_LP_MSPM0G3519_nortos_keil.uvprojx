@@ -439,6 +439,16 @@
               <FileType>1</FileType>
               <FilePath>..\core\src\encode.c</FilePath>
             </File>
+            <File>
+              <FileName>blue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\core\src\blue.c</FilePath>
+            </File>
+            <File>
+              <FileName>follow_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\core\src\follow_line.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

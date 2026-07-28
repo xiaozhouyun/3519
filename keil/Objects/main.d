@@ -84,6 +84,7 @@
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h \
   ..\core\inc\zf_device_tft180.h ..\core\inc\zf_device_imu660rc.h \
   ..\core\inc\Grayscale.h ..\core\inc\encode.h ..\core\inc\drv8873.h \
+  ..\core\inc\blue.h ..\core\inc\follow_line.h \
   ..\freertos\Source\include\FreeRTOS.h \
   ..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h \
   ..\freertos\Source\include\projdefs.h \

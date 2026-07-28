@@ -7,6 +7,8 @@
 ".\objects\grayscale.o"
 ".\objects\drv8873.o"
 ".\objects\encode.o"
+".\objects\blue.o"
+".\objects\follow_line.o"
 ".\objects\tasks.o"
 ".\objects\queue.o"
 ".\objects\list.o"
