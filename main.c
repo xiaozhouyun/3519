@@ -42,7 +42,7 @@ static void SensorTask(void *pvParameters)
         Grayscale_Update(&g_grayscale_sensor);
         g_encoder_left_delta = Encode_Get_Delta(ENCODE_LEFT);
         g_encoder_right_delta = Encode_Get_Delta(ENCODE_RIGHT);
-        FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100); // 基础巡航速度 100 (可根据实际需求调整)
+//        FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100); // 基础巡航速度 100 (可根据实际需求调整)
         // 2. 更新 ICM-42688-P 六轴数据并完成姿态解算。
         icm42688p_update(0.010f);
         // 精确保持 10ms 定时采样周期
@@ -107,7 +107,7 @@ static void DisplayTask(void *pvParameters)
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
 }
-
+uint8_t a;
 int main(void)
 {
     // 1. 系统底层外设与屏驱动初始化
@@ -115,7 +115,7 @@ int main(void)
     tft180_init();
 
     // 2. 初始化 ICM-42688-P 六轴传感器。
-    (void)icm42688p_init();
+    a=icm42688p_init();
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);

@@ -88,7 +88,7 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_vref.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
-F (..\main.c)(0x6A68ACF5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/main.o -MMD)
+F (..\main.c)(0x6A68BD51)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/main.o -MMD)
 I (..\ti_msp_dl_config.h)(0x6A68A73B)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
@@ -174,7 +174,7 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
 I (..\core\inc\zf_device_tft180.h)(0x6A68A73B)
-I (..\core\inc\icm42688p.h)(0x6A68ACF2)
+I (..\core\inc\icm42688p.h)(0x6A68AF80)
 I (..\core\inc\fast_math.h)(0x6A68A73B)
 I (..\core\inc\Grayscale.h)(0x6A681B74)
 I (..\core\inc\encode.h)(0x6A680D82)
@@ -276,8 +276,8 @@ I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_vref.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\dl_wwdt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h)(0x6A517394)
-F (..\core\src\icm42688p.c)(0x6A68AD92)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/icm42688p.o -MMD)
-I (..\core\inc\icm42688p.h)(0x6A68ACF2)
+F (..\core\src\icm42688p.c)(0x6A68B9CD)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O2 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I ../ -I ../../../../../../source/third_party/CMSIS/Core/Include -I ../../../../../../source -I D:/ti/mspm0_sdk_2_11_00_07/source -I D:/ti/mspm0_sdk_2_11_00_07/source/third_party/CMSIS/Core/Include -I ../freertos/Source/include -I ../freertos/Source/portable/GCC/ARM_CM0 -I ../freertos/builds/LP_MSPM0G3507/release -I ../core/src -I ../core/inc-D__UVISION_VERSION="543" -D__MSPM0G3519__ -D__MSPM0G3519__-o ./objects/icm42688p.o -MMD)
+I (..\core\inc\icm42688p.h)(0x6A68AF80)
 I (..\ti_msp_dl_config.h)(0x6A68A73B)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\msp\msp.h)(0x6A517394)
 I (D:\ti\mspm0_sdk_2_11_00_07\source\ti\devices\DeviceFamily.h)(0x6A517394)
