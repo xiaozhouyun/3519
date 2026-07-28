@@ -87,46 +87,42 @@ static void DisplayTask(void *pvParameters)
 
     tft180_clear();
     tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-    tft180_show_string(0, 0, "=== ICM42686 ===");
+    tft_print(0, 0, TFT180_6X8_FONT, "=== ICM42686 ===");
 
     /* 静态标签 */
     tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-    tft180_show_string(0,  14, "R:");
-    tft180_show_string(0,  26, "AX:");
-    tft180_show_string(0,  38, "AZ:");
-    tft180_show_string(0,  50, "GY:");
-    tft180_show_string(0,  68, "--- GRAY 8CH ---");
-    tft180_show_string(0,  80, "BIN:");
-    tft180_show_string(0,  94, "0:");
-    tft180_show_string(50, 94, "1:");
-    tft180_show_string(0, 106, "2:");
-    tft180_show_string(50, 106, "3:");
-    tft180_show_string(0, 118, "4:");
-    tft180_show_string(50, 118, "5:");
-    tft180_show_string(0, 130, "6:");
-    tft180_show_string(50, 130, "7:");
+    tft_print(0,  14, TFT180_6X8_FONT, "R:");
+    tft_print(0,  26, TFT180_6X8_FONT, "AX:");
+    tft_print(0,  38, TFT180_6X8_FONT, "AZ:");
+    tft_print(0,  50, TFT180_6X8_FONT, "GY:");
+    tft_print(0,  68, TFT180_6X8_FONT, "--- GRAY 8CH ---");
+    tft_print(0,  80, TFT180_6X8_FONT, "BIN:");
+    tft_print(0,  94, TFT180_6X8_FONT, "0-1:");
+    tft_print(0, 108, TFT180_6X8_FONT, "4-5:");
+    tft_print(0, 122, TFT180_6X8_FONT, "L_TOT:");
+    tft_print(0, 134, TFT180_6X8_FONT, "R_TOT:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft180_show_float(15, 14, icm42688p_roll, 4, 2);
+        tft_print(15, 14, TFT180_6X8_FONT, "%.2f", icm42688p_roll);
         tft180_set_color(RGB565_GREEN, RGB565_WHITE);
-        tft180_show_float(60, 14, icm42688p_pitch, 4, 2);
+        tft_print(60, 14, TFT180_6X8_FONT, "%.2f", icm42688p_pitch);
         tft180_set_color(RGB565_PURPLE, RGB565_WHITE);
-        tft180_show_float(105, 14, icm42688p_yaw, 4, 2);
+        tft_print(105, 14, TFT180_6X8_FONT, "%.2f", icm42688p_yaw);
 
         /* ---- 第二行: Accel X / Accel Y ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-        tft180_show_int(25, 26, icm42688p_acc_x, 5);
-        tft180_show_int(85, 26, icm42688p_acc_y, 5);
+        tft_print(25, 26, TFT180_6X8_FONT, "%d", (int)icm42688p_acc_x);
+        tft_print(85, 26, TFT180_6X8_FONT, "%d", (int)icm42688p_acc_y);
 
         /* ---- 第三行: Accel Z / Gyro X ---- */
-        tft180_show_int(25, 38, icm42688p_acc_z, 5);
-        tft180_show_int(85, 38, icm42688p_gyro_x, 5);
+        tft_print(25, 38, TFT180_6X8_FONT, "%d", (int)icm42688p_acc_z);
+        tft_print(85, 38, TFT180_6X8_FONT, "%d", (int)icm42688p_gyro_x);
 
         /* ---- 第四行: Gyro Y / Gyro Z ---- */
-        tft180_show_int(25, 50, icm42688p_gyro_y, 5);
-        tft180_show_int(85, 50, icm42688p_gyro_z, 5);
+        tft_print(25, 50, TFT180_6X8_FONT, "%d", (int)icm42688p_gyro_y);
+        tft_print(85, 50, TFT180_6X8_FONT, "%d", (int)icm42688p_gyro_z);
 
         /* ---- 灰度二值化字符串 ---- */
         uint8_t dig = Grayscale_Get_Digital(&g_grayscale_sensor);
@@ -135,18 +131,19 @@ static void DisplayTask(void *pvParameters)
         }
         bin_str[8] = '\0';
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft180_show_string(35, 80, bin_str);
+        tft_print(35, 80, TFT180_6X8_FONT, "%s", bin_str);
 
         /* ---- 灰度模拟量 ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-        tft180_show_uint(15, 94,  g_grayscale_sensor.analog_val[0], 4);
-        tft180_show_uint(65, 94,  g_grayscale_sensor.analog_val[1], 4);
-        tft180_show_uint(15, 106, g_grayscale_sensor.analog_val[2], 4);
-        tft180_show_uint(65, 106, g_grayscale_sensor.analog_val[3], 4);
-        tft180_show_uint(15, 118, g_grayscale_sensor.analog_val[4], 4);
-        tft180_show_uint(65, 118, g_grayscale_sensor.analog_val[5], 4);
-        tft180_show_uint(15, 130, g_grayscale_sensor.analog_val[6], 4);
-        tft180_show_uint(65, 130, g_grayscale_sensor.analog_val[7], 4);
+        tft_print(35, 94,  TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[0]);
+        tft_print(80, 94,  TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[1]);
+        tft_print(35, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[4]);
+        tft_print(80, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[5]);
+
+        /* ---- 编码器总计数值 ---- */
+        tft180_set_color(RGB565_BLUE, RGB565_WHITE);
+        tft_print(45, 122, TFT180_6X8_FONT, "%d", (int)g_encoder_left_total);
+        tft_print(45, 134, TFT180_6X8_FONT, "%d", (int)g_encoder_right_total);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
@@ -161,8 +158,8 @@ int main(void)
     if (icm42688p_init() != 0U) {
         /* 初始化失败 —— 打印实际读到的 ID 便于排查，然后挂起 */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft180_show_string(0, 136, "IMU init FAIL!");
-        tft180_show_uint(120, 136, icm42688p_read_id(), 4);
+        tft_print(0, 136, TFT180_6X8_FONT, "IMU init FAIL!");
+        tft_print(120, 136, TFT180_6X8_FONT, "%u", (unsigned int)icm42688p_read_id());
         while (1) {}
     }
 
