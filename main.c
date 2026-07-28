@@ -6,7 +6,7 @@
 
 #include "ti_msp_dl_config.h"
 #include "zf_device_tft180.h"
-#include "zf_device_imu660rc.h"
+#include "icm42688p.h"
 #include "Grayscale.h"
 #include "encode.h"
 #include "drv8873.h"
@@ -43,10 +43,8 @@ static void SensorTask(void *pvParameters)
         g_encoder_left_delta = Encode_Get_Delta(ENCODE_LEFT);
         g_encoder_right_delta = Encode_Get_Delta(ENCODE_RIGHT);
         FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 100); // 基础巡航速度 100 (可根据实际需求调整)
-        // 2. IMU660RC 说明: 
-        // 姿态角由 PB24 (INT2) 引脚硬件中断 GROUP1_IRQHandler() 自动解算并更新；
-        // 如需例行抓取原始加速度/陀螺仪，也可在此调用 imu660rc_get_acc() / imu660rc_get_gyro()。
-        //test
+        // 2. 更新 ICM-42688-P 六轴数据并完成姿态解算。
+        icm42688p_update(0.010f);
         // 精确保持 10ms 定时采样周期
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -77,15 +75,15 @@ static void DisplayTask(void *pvParameters)
     tft180_show_string(0, 120, "A4-5:");
 
     while (1) {
-        // 1. 显示 IMU 实时欧拉角 (由 PB24 INT2 中断自动实时更新)
+        // 1. 显示 ICM-42688-P 实时欧拉角
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft180_show_float(50, 20, imu660rc_roll, 4, 2);
+        tft180_show_float(50, 20, icm42688p_roll, 4, 2);
 
         tft180_set_color(RGB565_GREEN, RGB565_WHITE);
-        tft180_show_float(50, 36, imu660rc_pitch, 4, 2);
+        tft180_show_float(50, 36, icm42688p_pitch, 4, 2);
 
         tft180_set_color(RGB565_PURPLE, RGB565_WHITE);
-        tft180_show_float(50, 52, imu660rc_yaw, 4, 2);
+        tft180_show_float(50, 52, icm42688p_yaw, 4, 2);
 
         // 2. 格式化并显示 SensorTask 采集到的 8 位黑白开关状态字符串 (如 "11000011")
         uint8_t dig = Grayscale_Get_Digital(&g_grayscale_sensor);
@@ -116,8 +114,8 @@ int main(void)
     SYSCFG_DL_init();
     tft180_init();
 
-    // 2. 初始化 IMU660RC 六轴传感器 (120Hz 姿态解算，硬件 INT2 自动触发中断更新)
-    (void)imu660rc_init(IMU660RC_QUARTERNION_120HZ);
+    // 2. 初始化 ICM-42688-P 六轴传感器。
+    (void)icm42688p_init();
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);

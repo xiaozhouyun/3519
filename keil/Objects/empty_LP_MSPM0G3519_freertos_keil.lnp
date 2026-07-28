@@ -3,7 +3,7 @@
 ".\objects\ti_msp_dl_config.o"
 ".\objects\main.o"
 ".\objects\zf_device_tft180.o"
-".\objects\zf_device_imu660rc.o"
+".\objects\icm42688p.o"
 ".\objects\grayscale.o"
 ".\objects\drv8873.o"
 ".\objects\encode.o"
