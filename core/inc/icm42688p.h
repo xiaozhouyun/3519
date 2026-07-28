@@ -2,7 +2,7 @@
 #define ICM42688P_H
 
 #include "ti_msp_dl_config.h"
-#include <fast_math.h>
+#include "fast_math.h"
 #include <stdint.h>
 
 /* ICM-42686-P 的 WHO_AM_I 固定返回值。 */
