@@ -1,14 +1,8 @@
 ﻿/*********************************************************************************************************************
-* MSPM0G3519 八通道灰度循迹传感器驱动 (TI Official DriverLib 移植版)
-* 
-* 硬件引脚连接说明 (基于 ti_msp_dl_config.h / empty.syscfg 配置):
-* -------------------------------------------------------------------------------------------------------------------
-* 信号线               单片机引脚 (MSPM0G3519)                      说明
-* 通道切换 A0 (Bit0)    PA7 (xunjiGPIO_PIN_1_PIN, GPIOA)             多路开关地址0
-* 通道切换 A1 (Bit1)    PA8 (xunjiGPIO_PIN_2_PIN, GPIOA)             多路开关地址1
-* 通道切换 A2 (Bit2)    PA9 (xunjiGPIO_PIN_3_PIN, GPIOA)             多路开关地址2
-* 模拟量 ADC 输入       PA27 (ADC0_xunji_INST, ADC0 MemIdx0)         灰度传感器模拟信号采样
-* -------------------------------------------------------------------------------------------------------------------
+* MSPM0G3519 八通道灰度循迹传感器驱动 (感为 I2C 版)
+*
+* 硬件连接：PA0 接 SDA，PA1 接 SCL，5V 供电并与主控共地。
+ * 当前试用默认 7 位从机地址 0x4B，用于确认 AD1 跳帽是否被模块识别。
 ********************************************************************************************************************/
 
 #ifndef _GRAYSCALE_H_
@@ -29,13 +23,13 @@ typedef int16_t int16;
 typedef int32_t int32;
 #endif
 
-// 默认黑白校准预设阈值 (预设白底约3500, 黑线约500)
+// 兼容原上层接口：I2C 的 8 位模拟值扩展为 0~4080
 #define GRAYSCALE_DEFAULT_WHITE     3500
 #define GRAYSCALE_DEFAULT_BLACK     500
 
 // 8通道灰度传感器数据结构体
 typedef struct {
-    uint16_t analog_val[8];         // 8 通道原始 ADC 模拟值 (0 ~ 4095)
+    uint16_t analog_val[8];         // 8 通道 I2C 模拟值扩展量 (0 ~ 4080)
     uint16_t normal_val[8];         // 8 通道归一化模拟值 (0 ~ 4095)
     uint16_t calibrated_white[8];   // 白地面校准门限值
     uint16_t calibrated_black[8];   // 黑线校准门限值
@@ -67,13 +61,13 @@ void Grayscale_Init(Grayscale_Sensor_t *sensor, const uint16_t *calibrated_white
 /**
  * @brief  快捷统一设置所有 8 个通道的白地面与黑线目标阈值
  * @param  sensor  灰度传感器结构体指针
- * @param  white   白地面目标 ADC 门限 (如 3200)
- * @param  black   黑线目标 ADC 门限 (如 600)
+ * @param  white   白地面目标值 (如 3200)
+ * @param  black   黑线目标值 (如 600)
  */
 void Grayscale_Set_Global_Thresholds(Grayscale_Sensor_t *sensor, uint16_t white, uint16_t black);
 
 /**
- * @brief  轮询采样 8 通道模拟量并更新二值化数字状态与归一化数据
+ * @brief  轮询读取 8 通道 I2C 数字量与模拟量并更新数据
  * @param  sensor  灰度传感器结构体指针
  */
 void Grayscale_Update(Grayscale_Sensor_t *sensor);
@@ -94,7 +88,7 @@ uint8_t Grayscale_Get_Digital(Grayscale_Sensor_t *sensor);
 uint8_t Grayscale_Get_Normalized(Grayscale_Sensor_t *sensor, uint16_t *result);
 
 /**
- * @brief  获取 8 通道原始 ADC 模拟数据 (0 ~ 4095)
+ * @brief  获取 8 通道 I2C 模拟数据扩展量 (0 ~ 4080)
  * @param  sensor  灰度传感器结构体指针
  * @param  result  目标接收缓冲区 (uint16_t 数组，长度 8)
  * @return uint8_t 1:成功, 0:未就绪

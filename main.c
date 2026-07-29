@@ -168,7 +168,7 @@ int main(void)
     // }
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
-    Grayscale_Init_First(&g_grayscale_sensor);
+    // Grayscale_Init_First(&g_grayscale_sensor);
     FollowLine_Init(&g_line_controller, 5.0f, 0.10f, 0.01f); // 初始化循迹 PID 参数
     Encode_Init();
     DRV8873_Init();

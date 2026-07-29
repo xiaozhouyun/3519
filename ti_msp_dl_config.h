@@ -186,19 +186,19 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 
 
 
-/* Defines for OLED */
-#define OLED_INST                                                           I2C0
-#define OLED_INST_IRQHandler                                     I2C0_IRQHandler
-#define OLED_INST_INT_IRQN                                         I2C0_INT_IRQn
-#define OLED_BUS_SPEED_HZ                                                 100000
-#define GPIO_OLED_SDA_PORT                                                 GPIOA
-#define GPIO_OLED_SDA_PIN                                          DL_GPIO_PIN_0
-#define GPIO_OLED_IOMUX_SDA                                       (IOMUX_PINCM1)
-#define GPIO_OLED_IOMUX_SDA_FUNC                        IOMUX_PINCM1_PF_I2C0_SDA
-#define GPIO_OLED_SCL_PORT                                                 GPIOA
-#define GPIO_OLED_SCL_PIN                                          DL_GPIO_PIN_1
-#define GPIO_OLED_IOMUX_SCL                                       (IOMUX_PINCM2)
-#define GPIO_OLED_IOMUX_SCL_FUNC                        IOMUX_PINCM2_PF_I2C0_SCL
+/* Defines for GRAYSCALE */
+#define GRAYSCALE_INST                                                      I2C0
+#define GRAYSCALE_INST_IRQHandler                                I2C0_IRQHandler
+#define GRAYSCALE_INST_INT_IRQN                                    I2C0_INT_IRQn
+#define GRAYSCALE_BUS_SPEED_HZ                                            100000
+#define GPIO_GRAYSCALE_SDA_PORT                                            GPIOA
+#define GPIO_GRAYSCALE_SDA_PIN                                     DL_GPIO_PIN_0
+#define GPIO_GRAYSCALE_IOMUX_SDA                                  (IOMUX_PINCM1)
+#define GPIO_GRAYSCALE_IOMUX_SDA_FUNC                   IOMUX_PINCM1_PF_I2C0_SDA
+#define GPIO_GRAYSCALE_SCL_PORT                                            GPIOA
+#define GPIO_GRAYSCALE_SCL_PIN                                     DL_GPIO_PIN_1
+#define GPIO_GRAYSCALE_IOMUX_SCL                                  (IOMUX_PINCM2)
+#define GPIO_GRAYSCALE_IOMUX_SCL_FUNC                   IOMUX_PINCM2_PF_I2C0_SCL
 
 
 /* Defines for blue */
@@ -291,17 +291,6 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define GPIO_ADC1_IOMUX_C4                                       (IOMUX_PINCM43)
 #define GPIO_ADC1_IOMUX_C4_FUNC                   (IOMUX_PINCM43_PF_UNCONNECTED)
 
-/* Defines for ADC0_xunji */
-#define ADC0_xunji_INST                                                     ADC0
-#define ADC0_xunji_INST_IRQHandler                               ADC0_IRQHandler
-#define ADC0_xunji_INST_INT_IRQN                                 (ADC0_INT_IRQn)
-#define ADC0_xunji_ADCMEM_0                                   DL_ADC12_MEM_IDX_0
-#define ADC0_xunji_ADCMEM_0_REF             DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA
-#define GPIO_ADC0_xunji_C0_PORT                                            GPIOA
-#define GPIO_ADC0_xunji_C0_PIN                                    DL_GPIO_PIN_27
-#define GPIO_ADC0_xunji_IOMUX_C0                                 (IOMUX_PINCM60)
-#define GPIO_ADC0_xunji_IOMUX_C0_FUNC             (IOMUX_PINCM60_PF_UNCONNECTED)
-
 
 
 /* Port definition for Pin Group imuInt */
@@ -381,18 +370,6 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define DRV8873HPWPT_PH2_PORT                                            (GPIOB)
 #define DRV8873HPWPT_PH2_PIN                                    (DL_GPIO_PIN_18)
 #define DRV8873HPWPT_PH2_IOMUX                                   (IOMUX_PINCM44)
-/* Port definition for Pin Group xunjiGPIO */
-#define xunjiGPIO_PORT                                                   (GPIOA)
-
-/* Defines for PIN_1: GPIOA.7 with pinCMx 14 on package pin 17 */
-#define xunjiGPIO_PIN_1_PIN                                      (DL_GPIO_PIN_7)
-#define xunjiGPIO_PIN_1_IOMUX                                    (IOMUX_PINCM14)
-/* Defines for PIN_2: GPIOA.8 with pinCMx 19 on package pin 22 */
-#define xunjiGPIO_PIN_2_PIN                                      (DL_GPIO_PIN_8)
-#define xunjiGPIO_PIN_2_IOMUX                                    (IOMUX_PINCM19)
-/* Defines for PIN_3: GPIOA.9 with pinCMx 20 on package pin 23 */
-#define xunjiGPIO_PIN_3_PIN                                      (DL_GPIO_PIN_9)
-#define xunjiGPIO_PIN_3_IOMUX                                    (IOMUX_PINCM20)
 
 
 /* clang-format on */
@@ -409,13 +386,12 @@ void SYSCFG_DL_DRV8873_init(void);
 void SYSCFG_DL_servo_init(void);
 void SYSCFG_DL_AB1_init(void);
 void SYSCFG_DL_AB2_init(void);
-void SYSCFG_DL_OLED_init(void);
+void SYSCFG_DL_GRAYSCALE_init(void);
 void SYSCFG_DL_blue_init(void);
 void SYSCFG_DL_UART_4_init(void);
 void SYSCFG_DL_TFT_SPI0_init(void);
 void SYSCFG_DL_IMU660RC_init(void);
 void SYSCFG_DL_ADC1_init(void);
-void SYSCFG_DL_ADC0_xunji_init(void);
 
 
 bool SYSCFG_DL_saveConfiguration(void);

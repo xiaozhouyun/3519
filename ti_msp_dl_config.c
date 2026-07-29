@@ -61,13 +61,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_servo_init();
     SYSCFG_DL_AB1_init();
     SYSCFG_DL_AB2_init();
-    SYSCFG_DL_OLED_init();
+    SYSCFG_DL_GRAYSCALE_init();
     SYSCFG_DL_blue_init();
     SYSCFG_DL_UART_4_init();
     SYSCFG_DL_TFT_SPI0_init();
     SYSCFG_DL_IMU660RC_init();
     SYSCFG_DL_ADC1_init();
-    SYSCFG_DL_ADC0_xunji_init();
     SYSCFG_DL_SYSCTL_CLK_init();
     /* Ensure backup structures have no valid state */
 	gTB6612PWMBackup.backupRdy 	= false;
@@ -119,13 +118,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_reset(servo_INST);
     DL_TimerG_reset(AB1_INST);
     DL_TimerG_reset(AB2_INST);
-    DL_I2C_reset(OLED_INST);
+    DL_I2C_reset(GRAYSCALE_INST);
     DL_UART_Main_reset(blue_INST);
     DL_UART_Main_reset(UART_4_INST);
     DL_SPI_reset(TFT_SPI0_INST);
     DL_SPI_reset(IMU660RC_INST);
     DL_ADC12_reset(ADC1_INST);
-    DL_ADC12_reset(ADC0_xunji_INST);
 
     DL_GPIO_enablePower(GPIOA);
     DL_GPIO_enablePower(GPIOB);
@@ -135,13 +133,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_enablePower(servo_INST);
     DL_TimerG_enablePower(AB1_INST);
     DL_TimerG_enablePower(AB2_INST);
-    DL_I2C_enablePower(OLED_INST);
+    DL_I2C_enablePower(GRAYSCALE_INST);
     DL_UART_Main_enablePower(blue_INST);
     DL_UART_Main_enablePower(UART_4_INST);
     DL_SPI_enablePower(TFT_SPI0_INST);
     DL_SPI_enablePower(IMU660RC_INST);
     DL_ADC12_enablePower(ADC1_INST);
-    DL_ADC12_enablePower(ADC0_xunji_INST);
     delay_cycles(POWER_STARTUP_DELAY);
 }
 
@@ -170,16 +167,16 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralInputFunction(GPIO_AB2_PHA_IOMUX,GPIO_AB2_PHA_IOMUX_FUNC);
     DL_GPIO_initPeripheralInputFunction(GPIO_AB2_PHB_IOMUX,GPIO_AB2_PHB_IOMUX_FUNC);
 
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_OLED_IOMUX_SDA,
-        GPIO_OLED_IOMUX_SDA_FUNC, DL_GPIO_INVERSION_DISABLE,
+    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_GRAYSCALE_IOMUX_SDA,
+        GPIO_GRAYSCALE_IOMUX_SDA_FUNC, DL_GPIO_INVERSION_DISABLE,
         DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
         DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_OLED_IOMUX_SCL,
-        GPIO_OLED_IOMUX_SCL_FUNC, DL_GPIO_INVERSION_DISABLE,
+    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_GRAYSCALE_IOMUX_SCL,
+        GPIO_GRAYSCALE_IOMUX_SCL_FUNC, DL_GPIO_INVERSION_DISABLE,
         DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
         DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_enableHiZ(GPIO_OLED_IOMUX_SDA);
-    DL_GPIO_enableHiZ(GPIO_OLED_IOMUX_SCL);
+    DL_GPIO_enableHiZ(GPIO_GRAYSCALE_IOMUX_SDA);
+    DL_GPIO_enableHiZ(GPIO_GRAYSCALE_IOMUX_SCL);
 
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_blue_IOMUX_TX, GPIO_blue_IOMUX_TX_FUNC);
@@ -247,26 +244,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalOutput(DRV8873HPWPT_PH2_IOMUX);
 
-    DL_GPIO_initDigitalOutput(xunjiGPIO_PIN_1_IOMUX);
-
-    DL_GPIO_initDigitalOutput(xunjiGPIO_PIN_2_IOMUX);
-
-    DL_GPIO_initDigitalOutput(xunjiGPIO_PIN_3_IOMUX);
-
     DL_GPIO_clearPins(GPIOA, TB6612_BIN1_PIN |
 		TB6612_BIN2_PIN |
-		DRV8873HPWPT_PH1_PIN |
-		xunjiGPIO_PIN_1_PIN |
-		xunjiGPIO_PIN_2_PIN |
-		xunjiGPIO_PIN_3_PIN);
+		DRV8873HPWPT_PH1_PIN);
     DL_GPIO_setPins(GPIOA, TFT_TFT_BLK_PIN);
     DL_GPIO_enableOutput(GPIOA, TFT_TFT_BLK_PIN |
 		TB6612_BIN1_PIN |
 		TB6612_BIN2_PIN |
-		DRV8873HPWPT_PH1_PIN |
-		xunjiGPIO_PIN_1_PIN |
-		xunjiGPIO_PIN_2_PIN |
-		xunjiGPIO_PIN_3_PIN);
+		DRV8873HPWPT_PH1_PIN);
     DL_GPIO_clearPins(GPIOB, buzzer_PIN_0_PIN |
 		TB6612_AIN2_PIN |
 		TB6612_AIN1_PIN |
@@ -622,30 +607,30 @@ SYSCONFIG_WEAK void SYSCFG_DL_AB2_init(void) {
 }
 
 
-static const DL_I2C_ClockConfig gOLEDClockConfig = {
+static const DL_I2C_ClockConfig gGRAYSCALEClockConfig = {
     .clockSel = DL_I2C_CLOCK_BUSCLK,
     .divideRatio = DL_I2C_CLOCK_DIVIDE_1,
 };
 
-SYSCONFIG_WEAK void SYSCFG_DL_OLED_init(void) {
+SYSCONFIG_WEAK void SYSCFG_DL_GRAYSCALE_init(void) {
 
-    DL_I2C_setClockConfig(OLED_INST,
-        (DL_I2C_ClockConfig *) &gOLEDClockConfig);
-    DL_I2C_setAnalogGlitchFilterPulseWidth(OLED_INST,
+    DL_I2C_setClockConfig(GRAYSCALE_INST,
+        (DL_I2C_ClockConfig *) &gGRAYSCALEClockConfig);
+    DL_I2C_setAnalogGlitchFilterPulseWidth(GRAYSCALE_INST,
         DL_I2C_ANALOG_GLITCH_FILTER_WIDTH_50NS);
-    DL_I2C_enableAnalogGlitchFilter(OLED_INST);
+    DL_I2C_enableAnalogGlitchFilter(GRAYSCALE_INST);
 
     /* Configure Controller Mode */
-    DL_I2C_resetControllerTransfer(OLED_INST);
+    DL_I2C_resetControllerTransfer(GRAYSCALE_INST);
     /* Set frequency to 100000 Hz*/
-    DL_I2C_setTimerPeriod(OLED_INST, 39);
-    DL_I2C_setControllerTXFIFOThreshold(OLED_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
-    DL_I2C_setControllerRXFIFOThreshold(OLED_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
-    DL_I2C_enableControllerClockStretching(OLED_INST);
+    DL_I2C_setTimerPeriod(GRAYSCALE_INST, 39);
+    DL_I2C_setControllerTXFIFOThreshold(GRAYSCALE_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
+    DL_I2C_setControllerRXFIFOThreshold(GRAYSCALE_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
+    DL_I2C_enableControllerClockStretching(GRAYSCALE_INST);
 
 
     /* Enable module */
-    DL_I2C_enableController(OLED_INST);
+    DL_I2C_enableController(GRAYSCALE_INST);
 
 
 }
@@ -805,19 +790,5 @@ SYSCONFIG_WEAK void SYSCFG_DL_ADC1_init(void)
         DL_ADC12_INPUT_CHAN_4, DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA, DL_ADC12_SAMPLE_TIMER_SOURCE_SCOMP0, DL_ADC12_AVERAGING_MODE_DISABLED,
         DL_ADC12_BURN_OUT_SOURCE_DISABLED, DL_ADC12_TRIGGER_MODE_AUTO_NEXT, DL_ADC12_WINDOWS_COMP_MODE_DISABLED);
     DL_ADC12_enableConversions(ADC1_INST);
-}
-/* ADC0_xunji Initialization */
-static const DL_ADC12_ClockConfig gADC0_xunjiClockConfig = {
-    .clockSel       = DL_ADC12_CLOCK_SYSOSC,
-    .divideRatio    = DL_ADC12_CLOCK_DIVIDE_1,
-    .freqRange      = DL_ADC12_CLOCK_FREQ_RANGE_24_TO_32,
-};
-SYSCONFIG_WEAK void SYSCFG_DL_ADC0_xunji_init(void)
-{
-    DL_ADC12_setClockConfig(ADC0_xunji_INST, (DL_ADC12_ClockConfig *) &gADC0_xunjiClockConfig);
-    DL_ADC12_configConversionMem(ADC0_xunji_INST, ADC0_xunji_ADCMEM_0,
-        DL_ADC12_INPUT_CHAN_0, DL_ADC12_REFERENCE_VOLTAGE_VDDA_VSSA, DL_ADC12_SAMPLE_TIMER_SOURCE_SCOMP0, DL_ADC12_AVERAGING_MODE_DISABLED,
-        DL_ADC12_BURN_OUT_SOURCE_DISABLED, DL_ADC12_TRIGGER_MODE_AUTO_NEXT, DL_ADC12_WINDOWS_COMP_MODE_DISABLED);
-    DL_ADC12_enableConversions(ADC0_xunji_INST);
 }
 
