@@ -11,24 +11,16 @@
 #include "follow_line.h"
 #include "drv8873.h"
 #include "MG513XGMR.h"
-// 默认全局循迹 PID 控制器实例
-LineController_t g_line_controller = {
-    .kp           = 0.5f,
-    .ki           = 0.0f,
-    .kd           = 0.2f,
-    .integral     = 0.0f,
-    .integral_max = 500.0f,
-    .last_error   = 0.0f,
-    .max_output   = 800.0f
-};
+/* 循迹 PID 参数由 FollowLine_Init() 统一设置。 */
+LineController_t g_line_controller;
 
 // 全局循迹转向 PID 控制输出量
 float g_turn_output = 0.0f;
 
-// 8 通道线序权重数组 (-3500 ~ 3500)
+// 8 通道线序权重数组 (-35.0f ~ 35.0f)
 static const float s_channel_weights[8] = {
-    -350.0f, -250.0f, -150.0f, -50.0f,
-      50.0f,  150.0f,  250.0f, 350.0f
+    -35.0f, -25.0f, -15.0f, -5.0f,
+      5.0f,  15.0f,  25.0f, 35.0f
 };
 
 /**
@@ -44,7 +36,7 @@ void FollowLine_Init(LineController_t *p_ctrl, float kp, float ki, float kd)
     p_ctrl->integral     = 0.0f;
     p_ctrl->integral_max = 500.0f;
     p_ctrl->last_error   = 0.0f;
-    p_ctrl->max_output   = 100.0f;
+    p_ctrl->max_output   = 300.0f;
 }
 
 /**
@@ -157,8 +149,8 @@ float FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, in
 
     // 2. PID 解算输出转向控制量
     g_turn_output = FollowLine_PID_Compute(p_ctrl, error);
-    MG513XGMR_Set_Speed(MG513XGMR_LEFT, base_speed - g_turn_output);
-    MG513XGMR_Set_Speed(MG513XGMR_RIGHT, base_speed + g_turn_output);
+    MG513XGMR_Set_Speed(MG513XGMR_LEFT, base_speed + g_turn_output);
+    MG513XGMR_Set_Speed(MG513XGMR_RIGHT, base_speed - g_turn_output);
     
     return g_turn_output;
 }

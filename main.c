@@ -89,22 +89,37 @@ static void DisplayTask(void *pvParameters)
 
     tft180_clear();
     tft180_set_color(RGB565_BLUE, RGB565_WHITE);
+    tft_print(0, 0, TFT180_6X8_FONT, "=== MOTOR & SYSTEM ===");
 
     /* 静态标签 */
     tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-    tft_print(0,  68, TFT180_6X8_FONT, "--- GRAY 8CH ---");
-    tft_print(0,  80, TFT180_6X8_FONT, "BIN:");
-    tft_print(0,  94, TFT180_6X8_FONT, "0-1:");
-    tft_print(0, 108, TFT180_6X8_FONT, "4-5:");
-    tft_print(0, 122, TFT180_6X8_FONT, "L_MOT:");
-    tft_print(0, 134, TFT180_6X8_FONT, "R_MOT:");
+    tft_print(0,  14, TFT180_6X8_FONT, "L_PWM:");
+    tft_print(0,  26, TFT180_6X8_FONT, "R_PWM:");
+    tft_print(0,  38, TFT180_6X8_FONT, "L_SPD:");
+    tft_print(0,  50, TFT180_6X8_FONT, "R_SPD:");
+    tft_print(0,  62, TFT180_6X8_FONT, "L_TOT:");
+    tft_print(0,  74, TFT180_6X8_FONT, "R_TOT:");
+    tft_print(0,  88, TFT180_6X8_FONT, "--- GRAY 8CH ---");
+    tft_print(0, 100, TFT180_6X8_FONT, "BIN:");
+    tft_print(0, 112, TFT180_6X8_FONT, "0-1:");
+    tft_print(0, 124, TFT180_6X8_FONT, "4-5:");
+    tft_print(0, 138, TFT180_6X8_FONT, "TURN:");
 
     while (1) {
-        /* ---- 第一行: Roll / Pitch / Yaw ---- */
+        /* ---- 左右电机 PWM 输出 ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
+        tft_print(45, 14, TFT180_6X8_FONT, "%d", (int)g_motor_left.pwm_output);
+        tft_print(45, 26, TFT180_6X8_FONT, "%d", (int)g_motor_right.pwm_output);
 
-        /* ---- 第二行: Accel X / Accel Y ---- */
+        /* ---- 左右电机 目标速度(T) / 实测速度(R) ---- */
+        tft180_set_color(RGB565_BLUE, RGB565_WHITE);
+        tft_print(45, 38, TFT180_6X8_FONT, "T:%-5d R:%-5d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed);
+        tft_print(45, 50, TFT180_6X8_FONT, "T:%-5d R:%-5d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed);
+
+        /* ---- 编码器累计总脉冲数 (pulse_total) ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
+        tft_print(45, 62, TFT180_6X8_FONT, "%d", (int)g_motor_left.pulse_total);
+        tft_print(45, 74, TFT180_6X8_FONT, "%d", (int)g_motor_right.pulse_total);
 
         /* ---- 灰度二值化字符串 ---- */
         uint8_t dig = Grayscale_Get_Digital(&g_grayscale_sensor);
@@ -113,23 +128,18 @@ static void DisplayTask(void *pvParameters)
         }
         bin_str[8] = '\0';
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft_print(35, 80, TFT180_6X8_FONT, "%s", bin_str);
+        tft_print(35, 100, TFT180_6X8_FONT, "%s", bin_str);
 
         /* ---- 灰度模拟量 ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-        tft_print(35, 94,  TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[0]);
-        tft_print(80, 94,  TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[1]);
-        tft_print(35, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[4]);
-        tft_print(80, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[5]);
-
-        /* ---- 左右电机: 目标速度(T) / 实测速度(R) / PWM输出(P) ---- */
-        tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-        tft_print(36, 122, TFT180_6X8_FONT, "T%-4dR%-4dPout%-4d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed, (int)g_motor_left.pwm_output);
-        tft_print(36, 134, TFT180_6X8_FONT, "T%-4dR%-4dPout%-4d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed, (int)g_motor_right.pwm_output);
+        tft_print(35, 112, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[0]);
+        tft_print(80, 112, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[1]);
+        tft_print(35, 124, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[4]);
+        tft_print(80, 124, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[5]);
 
         /* ---- 循迹 PID 转向输出量 ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft_print(40, 146, TFT180_6X8_FONT, "TURN:%.2f", g_turn_output);
+        tft_print(40, 138, TFT180_6X8_FONT, "%.2f", g_turn_output);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
@@ -151,15 +161,12 @@ int main(void)
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);
+    FollowLine_Init(&g_line_controller, 2.0f, 0.0f, 0.0f); // 初始化循迹 PID 参数
     Encode_Init();
-    PID_init(&g_motor_left.speed_pid, PID_POSITION, (fp32[]){0.5f, 0.15f, 0.0f},
-             (fp32)MG513XGMR_MAX_PWM, (fp32)(MG513XGMR_MAX_PWM / 2));
-    PID_init(&g_motor_right.speed_pid, PID_POSITION, (fp32[]){0.5f, 0.15f, 0.0f},
-             (fp32)MG513XGMR_MAX_PWM, (fp32)(MG513XGMR_MAX_PWM / 2));
     DRV8873_Init();
     MG513XGMR_Init();    // 初始化左右电机速度/角度双闭环 PID
     Bluetooth_Init();
-    FollowLine_Init(&g_line_controller, 0.5f, 0.1f, 0.05f); // 初始化循迹 PID 参数
+ 
 
     // 4. 创建底盘电机控制任务 (ChassisTask: 优先级 3, 100Hz 闭环控制)
     if (xTaskCreate(ChassisTask, "ChassisTask", CHASSIS_TASK_STACK_SIZE, NULL,

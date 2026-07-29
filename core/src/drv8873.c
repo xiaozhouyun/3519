@@ -10,9 +10,9 @@
 
 #include "drv8873.h"
 
-
+#ifndef DRV8873_HOST_TEST
 #include "ti_msp_dl_config.h"
-
+#endif
 
 
 /** ADC 转换等待超时循环计数阈值 */
@@ -74,16 +74,16 @@ static void DRV8873_Write_Hardware(DRV8873_Channel_t channel, DRV8873_Direction_
 {
     if (channel == DRV8873_CH2) {
         if (dir == DRV8873_DIR_FORWARD) {
-            DL_GPIO_setPins(DRV8873HPWPT_PH2_PORT, DRV8873HPWPT_PH2_PIN);
-        } else {
             DL_GPIO_clearPins(DRV8873HPWPT_PH2_PORT, DRV8873HPWPT_PH2_PIN);
+        } else {
+            DL_GPIO_setPins(DRV8873HPWPT_PH2_PORT, DRV8873HPWPT_PH2_PIN);
         }
         DL_TimerG_setCaptureCompareValue(DRV8873_INST, compare, GPIO_DRV8873_C1_IDX);
     } else {
         if (dir == DRV8873_DIR_FORWARD) {
-            DL_GPIO_clearPins(DRV8873HPWPT_PH1_PORT, DRV8873HPWPT_PH1_PIN);
-        } else {
             DL_GPIO_setPins(DRV8873HPWPT_PH1_PORT, DRV8873HPWPT_PH1_PIN);
+        } else {
+            DL_GPIO_clearPins(DRV8873HPWPT_PH1_PORT, DRV8873HPWPT_PH1_PIN);
         }
         DL_TimerG_setCaptureCompareValue(DRV8873_INST, compare, GPIO_DRV8873_C0_IDX);
     }
@@ -123,11 +123,6 @@ void DRV8873_Stop_All(void)
  */
 void DRV8873_Set_Speed(DRV8873_Channel_t channel, int16_t speed)
 {
-    /* CH1 (左电机) 物理安装方向与 CH2 相反，速度取反 */
-    if (channel == DRV8873_CH1) {
-        speed = -speed;
-    }
-
     DRV8873_Control_t ctrl = DRV8873_Speed_To_Control(speed);
 
     DRV8873_Write_Hardware(channel, ctrl.dir, ctrl.compare);

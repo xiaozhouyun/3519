@@ -114,12 +114,12 @@ void MG513XGMR_Init(void)
     motor->pwm_output    = 0;
 
     /*  速度环 PID: Kp=0.5, Ki=0.15, Kd=0.0, out∈[-1000,1000], iout∈[-500,500] */
-    params[0] = 0.5f;  params[1] = 0.15f; params[2] = 0.0f;
+    params[0] = 0.5f;  params[1] = 0.15f; params[2] = 0.1f;
     PID_init(&motor->speed_pid, PID_POSITION, params,
              (fp32)MG513XGMR_MAX_PWM, (fp32)(MG513XGMR_MAX_PWM / 2));
 
     /*  角度环 PID: Kp=8.0, Ki=0.05, Kd=0.0, out∈[-3000,3000], iout∈[-1500,1500] */
-    params[0] = 8.0f;  params[1] = 0.05f; params[2] = 0.0f;
+    params[0] = 8.0f;  params[1] = 0.05f; params[2] = 0.1f;
     PID_init(&motor->angle_pid, PID_POSITION, params,
              MG513XGMR_MAX_SPEED, MG513XGMR_MAX_SPEED / 2.0f);
 
