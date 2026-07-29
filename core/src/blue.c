@@ -68,7 +68,7 @@ void Bluetooth_Send_TestData(void)
              (int)g_bt_running_flag, (int)g_bt_speed_grade,
              (long)g_motor_left.pulse_total, (long)g_motor_right.pulse_total);
     Bluetooth_Send_String(buf);
-
+    
 }
 
 /**
@@ -116,20 +116,20 @@ void Bluetooth_Process_Byte(uint8_t data)
         case 't':
             Bluetooth_Send_TestData();
             break;
-        case 'P':  // 调整 PID 参数: Kp + 0.5
-            g_line_controller.ki += 0.5f;
+        case 'P':  // 调整 PID 参数: Ki + 0.05
+            g_line_controller.ki += 0.05f;
             {
-                char kp_buf[32];
-                snprintf(kp_buf, sizeof(kp_buf), "Ki: %.2f\r\n", g_line_controller.ki);
-                Bluetooth_Send_String(kp_buf);
+                char ki_buf[32];
+                snprintf(ki_buf, sizeof(ki_buf), "Ki: %.2f\r\n", g_line_controller.ki);
+                Bluetooth_Send_String(ki_buf);
             }
             break;
-        case 'D':  // 调整 PID 参数: Kp - 0.5
-            g_line_controller.ki -= 0.5f;
+        case 'D':  // 调整 PID 参数: Ki - 0.05
+            g_line_controller.ki -= 0.05f;
             {
-                char kp_buf[32];
-                snprintf(kp_buf, sizeof(kp_buf), "Ki: %.2f\r\n", g_line_controller.ki);
-                Bluetooth_Send_String(kp_buf);
+                char ki_buf[32];
+                snprintf(ki_buf, sizeof(ki_buf), "Ki: %.2f\r\n", g_line_controller.ki);
+                Bluetooth_Send_String(ki_buf);
             }
             break;
         default:

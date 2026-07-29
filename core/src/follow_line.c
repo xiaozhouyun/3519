@@ -72,23 +72,44 @@ float FollowLine_Calc_Error(Grayscale_Sensor_t *sensor)
 
     // 获取 8 通道黑白开关二值化状态掩码字节 (Bit0 ~ Bit7)
     uint8_t dig = Grayscale_Get_Digital(sensor);
-    float weighted_sum = 0.0f;
-    float count        = 0.0f;
+    float cluster_sum = 0.0f;
+    float best_error = g_line_controller.last_error;
+    float best_distance = 1000.0f;
+    uint8_t cluster_count = 0U;
+    uint8_t has_cluster = 0U;
 
-    // 统计检测到黑线的通道加权位置 (假设 Bit 位为 1 时代表踩在黑线上，若实际为 0 表示黑线则用 !(dig & (1<<i)))
-    for (int i = 0; i < 8; i++) {
-        if (dig & (1 << (7 - i))) {
-            weighted_sum += s_channel_weights[i];
-            count        += 1.0f;
+    // 连续黑线视为同一段；多段时选择最接近上一帧位置的一段。
+    for (int i = 0; i <= 8; i++) {
+        uint8_t is_black = (i < 8) && (dig & (1U << (7 - i)));
+
+        if (is_black) {
+            cluster_sum += s_channel_weights[i];
+            cluster_count++;
+        } else if (cluster_count > 0U) {
+            float cluster_error = cluster_sum / (float)cluster_count;
+            float distance = cluster_error - g_line_controller.last_error;
+
+            if (distance < 0.0f) {
+                distance = -distance;
+            }
+
+            if (!has_cluster || distance < best_distance) {
+                best_error = cluster_error;
+                best_distance = distance;
+                has_cluster = 1U;
+            }
+
+            cluster_sum = 0.0f;
+            cluster_count = 0U;
         }
     }
 
-    // 防零除保护：若 8 个通道均未触发（全白/脱轨），维持上一次记录的历史偏差
-    if (count < 0.1f) {
+    // 若 8 个通道均未触发，维持上一次记录的历史偏差。
+    if (!has_cluster) {
         return g_line_controller.last_error;
     }
 
-    return (weighted_sum / count);
+    return best_error;
 }
 
 /**

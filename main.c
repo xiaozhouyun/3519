@@ -28,8 +28,9 @@
 #define DISPLAY_TASK_STACK_SIZE    (configMINIMAL_STACK_SIZE * 2U)
 #define DISPLAY_TASK_PRIORITY      (tskIDLE_PRIORITY + 1U) // 较低优先级，用于界面显示渲染
 
-// 全局传感器数据对象
+// 全局传感器数据对象与系统时间计数
 Grayscale_Sensor_t g_grayscale_sensor;
+volatile uint32_t  g_system_timer_sec = 0; // 全局系统计时器 (秒)
 
 /**
  * @brief  底盘电机控制任务 (最高优先级, 10ms 周期 / 100Hz)
@@ -48,7 +49,7 @@ static void ChassisTask(void *pvParameters)
          Grayscale_Update(&g_grayscale_sensor);
         if(g_bt_running_flag==1)
         {     
-                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 300);
+                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 550);
                 MG513XGMR_Update();
         }
         else
@@ -68,12 +69,15 @@ static void SensorTask(void *pvParameters)
     (void)pvParameters;
     TickType_t xLastWakeTime = xTaskGetTickCount();
     const TickType_t xFrequency = pdMS_TO_TICKS(10U); // 10ms (100Hz)
+    static uint32_t s_tick_counter = 0;
 
     while (1) {
-        /* 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化) */
- 
-        /* ICM42688P: 姿态解算更新 (10ms 周期, dt=0.01s) */
-        // icm42688p_update(0.01f);
+        /* 100Hz 采样计数：每 100 次循环 (1 秒) 递增 1 次系统秒数 */
+        s_tick_counter++;
+        if (s_tick_counter >= 100U) {
+            s_tick_counter = 0U;
+            g_system_timer_sec++;
+        }
 
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -89,7 +93,7 @@ static void DisplayTask(void *pvParameters)
 
     tft180_clear();
     tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-    tft_print(0, 0, TFT180_6X8_FONT, "=== MOTOR & SYSTEM ===");
+    tft_print(0, 0, TFT180_6X8_FONT, "=== SYSTEM ===");
 
     /* 静态标签 */
     tft180_set_color(RGB565_BLACK, RGB565_WHITE);
@@ -106,6 +110,10 @@ static void DisplayTask(void *pvParameters)
     tft_print(0, 138, TFT180_6X8_FONT, "TURN:");
 
     while (1) {
+        /* ---- 右上角显示系统运行秒数时间 (红色, 格式分:秒 mm:ss) ---- */
+        tft180_set_color(RGB565_RED, RGB565_WHITE);
+        tft_print(96, 0, TFT180_6X8_FONT, "%02u:%02u", (unsigned int)(g_system_timer_sec / 60U), (unsigned int)(g_system_timer_sec % 60U));
+
         /* ---- 左右电机 PWM 输出 ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(45, 14, TFT180_6X8_FONT, "%d", (int)g_motor_left.pwm_output);
@@ -161,7 +169,7 @@ int main(void)
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);
-    FollowLine_Init(&g_line_controller, 2.0f, 0.0f, 0.0f); // 初始化循迹 PID 参数
+    FollowLine_Init(&g_line_controller, 5.0f, 0.10f, 0.01f); // 初始化循迹 PID 参数
     Encode_Init();
     DRV8873_Init();
     MG513XGMR_Init();    // 初始化左右电机速度/角度双闭环 PID
