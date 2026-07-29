@@ -185,22 +185,6 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define GPIO_AB2_PHB_IOMUX_FUNC                      IOMUX_PINCM26_PF_TIMG9_CCP1
 
 
-
-/* Defines for GRAYSCALE */
-#define GRAYSCALE_INST                                                      I2C0
-#define GRAYSCALE_INST_IRQHandler                                I2C0_IRQHandler
-#define GRAYSCALE_INST_INT_IRQN                                    I2C0_INT_IRQn
-#define GRAYSCALE_BUS_SPEED_HZ                                            100000
-#define GPIO_GRAYSCALE_SDA_PORT                                            GPIOA
-#define GPIO_GRAYSCALE_SDA_PIN                                     DL_GPIO_PIN_0
-#define GPIO_GRAYSCALE_IOMUX_SDA                                  (IOMUX_PINCM1)
-#define GPIO_GRAYSCALE_IOMUX_SDA_FUNC                   IOMUX_PINCM1_PF_I2C0_SDA
-#define GPIO_GRAYSCALE_SCL_PORT                                            GPIOA
-#define GPIO_GRAYSCALE_SCL_PIN                                     DL_GPIO_PIN_1
-#define GPIO_GRAYSCALE_IOMUX_SCL                                  (IOMUX_PINCM2)
-#define GPIO_GRAYSCALE_IOMUX_SCL_FUNC                   IOMUX_PINCM2_PF_I2C0_SCL
-
-
 /* Defines for blue */
 #define blue_INST                                                          UART1
 #define blue_INST_FREQUENCY                                             40000000
@@ -217,22 +201,6 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define blue_BAUD_RATE                                                    (9600)
 #define blue_IBRD_40_MHZ_9600_BAUD                                         (260)
 #define blue_FBRD_40_MHZ_9600_BAUD                                          (27)
-/* Defines for UART_4 */
-#define UART_4_INST                                                        UART4
-#define UART_4_INST_FREQUENCY                                           80000000
-#define UART_4_INST_IRQHandler                                  UART4_IRQHandler
-#define UART_4_INST_INT_IRQN                                      UART4_INT_IRQn
-#define GPIO_UART_4_RX_PORT                                                GPIOB
-#define GPIO_UART_4_TX_PORT                                                GPIOB
-#define GPIO_UART_4_RX_PIN                                        DL_GPIO_PIN_11
-#define GPIO_UART_4_TX_PIN                                        DL_GPIO_PIN_10
-#define GPIO_UART_4_IOMUX_RX                                     (IOMUX_PINCM28)
-#define GPIO_UART_4_IOMUX_TX                                     (IOMUX_PINCM27)
-#define GPIO_UART_4_IOMUX_RX_FUNC                      IOMUX_PINCM28_PF_UART4_RX
-#define GPIO_UART_4_IOMUX_TX_FUNC                      IOMUX_PINCM27_PF_UART4_TX
-#define UART_4_BAUD_RATE                                                (115200)
-#define UART_4_IBRD_80_MHZ_115200_BAUD                                      (43)
-#define UART_4_FBRD_80_MHZ_115200_BAUD                                      (26)
 
 
 
@@ -370,6 +338,15 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define DRV8873HPWPT_PH2_PORT                                            (GPIOB)
 #define DRV8873HPWPT_PH2_PIN                                    (DL_GPIO_PIN_18)
 #define DRV8873HPWPT_PH2_IOMUX                                   (IOMUX_PINCM44)
+/* Port definition for Pin Group graySerial */
+#define graySerial_PORT                                                  (GPIOA)
+
+/* Defines for CLK: GPIOA.1 with pinCMx 2 on package pin 2 */
+#define graySerial_CLK_PIN                                       (DL_GPIO_PIN_1)
+#define graySerial_CLK_IOMUX                                      (IOMUX_PINCM2)
+/* Defines for DAT: GPIOA.0 with pinCMx 1 on package pin 1 */
+#define graySerial_DAT_PIN                                       (DL_GPIO_PIN_0)
+#define graySerial_DAT_IOMUX                                      (IOMUX_PINCM1)
 
 
 /* clang-format on */
@@ -386,9 +363,7 @@ void SYSCFG_DL_DRV8873_init(void);
 void SYSCFG_DL_servo_init(void);
 void SYSCFG_DL_AB1_init(void);
 void SYSCFG_DL_AB2_init(void);
-void SYSCFG_DL_GRAYSCALE_init(void);
 void SYSCFG_DL_blue_init(void);
-void SYSCFG_DL_UART_4_init(void);
 void SYSCFG_DL_TFT_SPI0_init(void);
 void SYSCFG_DL_IMU660RC_init(void);
 void SYSCFG_DL_ADC1_init(void);

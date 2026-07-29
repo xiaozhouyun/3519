@@ -80,7 +80,7 @@ float FollowLine_Calc_Error(Grayscale_Sensor_t *sensor)
 
     // 连续黑线视为同一段；多段时选择最接近上一帧位置的一段。
     for (int i = 0; i <= 8; i++) {
-        uint8_t is_black = (i < 8) && (dig & (1U << (7 - i)));
+        uint8_t is_black = (i < 8) && ((dig & (1U << (7 - i))) == 0U);
 
         if (is_black) {
             cluster_sum += s_channel_weights[i];

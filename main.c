@@ -49,7 +49,7 @@ static void ChassisTask(void *pvParameters)
          Grayscale_Update(&g_grayscale_sensor);
         if(g_bt_running_flag==1)
         {     
-                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 550);
+                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 700);
                 MG513XGMR_Update();
         }
         else
@@ -73,12 +73,14 @@ static void SensorTask(void *pvParameters)
 
     while (1) {
         /* 100Hz 采样计数：每 100 次循环 (1 秒) 递增 1 次系统秒数 */
+         if(g_bt_running_flag==1)
+         {
         s_tick_counter++;
         if (s_tick_counter >= 100U) {
             s_tick_counter = 0U;
             g_system_timer_sec++;
         }
-
+            }
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
 }
@@ -110,6 +112,7 @@ static void DisplayTask(void *pvParameters)
     tft_print(0, 138, TFT180_6X8_FONT, "TURN:");
 
     while (1) {
+        
         /* ---- 右上角显示系统运行秒数时间 (红色, 格式分:秒 mm:ss) ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(96, 0, TFT180_6X8_FONT, "%02u:%02u", (unsigned int)(g_system_timer_sec / 60U), (unsigned int)(g_system_timer_sec % 60U));
@@ -169,7 +172,7 @@ int main(void)
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     // Grayscale_Init_First(&g_grayscale_sensor);
-    FollowLine_Init(&g_line_controller, 5.0f, 0.10f, 0.01f); // 初始化循迹 PID 参数
+    FollowLine_Init(&g_line_controller, 4.80f, 0.0f, 0.002f); // 初始化循迹 PID 参数
     Encode_Init();
     DRV8873_Init();
     MG513XGMR_Init();    // 初始化左右电机速度/角度双闭环 PID

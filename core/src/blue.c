@@ -91,12 +91,10 @@ void Bluetooth_Process_Byte(uint8_t data)
            
             break;
         case '1':  // 低速档
-            BT_SetSpeed(1);
-            Bluetooth_Send_String("Speed Grade set to 1\r\n");
+         
             break;
         case '2':  // 中速档
-            BT_SetSpeed(2);
-            Bluetooth_Send_String("Speed Grade set to 2\r\n");
+
             break;
         case '3':  // 高速档
             BT_SetSpeed(3);
@@ -116,20 +114,57 @@ void Bluetooth_Process_Byte(uint8_t data)
         case 't':
             Bluetooth_Send_TestData();
             break;
-        case 'P':  // 调整 PID 参数: Ki + 0.05
-            g_line_controller.ki += 0.05f;
+        case 'P':  // 调整 PID 参数: Kp + 0.1
+            g_line_controller.kp += 0.1f;
             {
-                char ki_buf[32];
-                snprintf(ki_buf, sizeof(ki_buf), "Ki: %.2f\r\n", g_line_controller.ki);
-                Bluetooth_Send_String(ki_buf);
+                char buf[32];
+                snprintf(buf, sizeof(buf), "kp: %.2f\r\n", g_line_controller.kp);
+                Bluetooth_Send_String(buf);
             }
             break;
-        case 'D':  // 调整 PID 参数: Ki - 0.05
-            g_line_controller.ki -= 0.05f;
+        case 'p':  // 调整 PID 参数: Kp - 0.1
+            g_line_controller.kp -= 0.1f;
             {
-                char ki_buf[32];
-                snprintf(ki_buf, sizeof(ki_buf), "Ki: %.2f\r\n", g_line_controller.ki);
-                Bluetooth_Send_String(ki_buf);
+                char buf[32];
+                snprintf(buf, sizeof(buf), "kp: %.2f\r\n", g_line_controller.kp);
+                Bluetooth_Send_String(buf);
+            }
+            break;
+        case 'I':  // 调整 PID 参数: Ki + 0.01
+            g_line_controller.ki += 0.01f;
+            {
+                char buf[32];
+                snprintf(buf, sizeof(buf), "ki: %.3f\r\n", g_line_controller.ki);
+                Bluetooth_Send_String(buf);
+            }
+            break;
+        case 'i':  // 调整 PID 参数: Ki - 0.01
+            g_line_controller.ki -= 0.01f;
+            {
+                char buf[32];
+                snprintf(buf, sizeof(buf), "ki: %.3f\r\n", g_line_controller.ki);
+                Bluetooth_Send_String(buf);
+            }
+            break;
+        case 'K':  
+            break;
+         case 'k':  
+            break;
+        case 'D':
+            g_line_controller.kd += 0.001f;
+            {
+                char buf[32];
+                snprintf(buf, sizeof(buf), "kd: %.2f\r\n", g_line_controller.kd);
+                Bluetooth_Send_String(buf);
+            }
+            break;
+       
+        case 'd':
+            g_line_controller.kd -= 0.001f;
+            {
+                char buf[32];
+                snprintf(buf, sizeof(buf), "kd: %.3f\r\n", g_line_controller.kd);
+                Bluetooth_Send_String(buf);
             }
             break;
         default:

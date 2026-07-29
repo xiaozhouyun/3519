@@ -1,101 +1,29 @@
 /**
  * @file Grayscale.c
- * @brief MSPM0G3519 感为八通道灰度循迹传感器 I2C 驱动实现
+ * @brief MSPM0G3519 感为八通道灰度循迹传感器串行输出驱动实现
  */
 
 #include "../inc/Grayscale.h"
+#include "blue.h"
 
-#define GRAYSCALE_I2C_ADDR             0x4EU
-#define GRAYSCALE_CMD_DIGITAL          0xDDU
-#define GRAYSCALE_CMD_ANALOG_ALL       0xB0U
-#define GRAYSCALE_I2C_TIMEOUT          100000U
-uint32_t status;
-/* 保持旧上层接口约定：物理 1 路映射到索引 7，物理 8 路映射到索引 0。 */
-static uint8_t Grayscale_Map_Channel(uint8_t channel)
+#define GRAYSCALE_SERIAL_DELAY_CYCLES   (CPUCLK_FREQ / 200000U)
+
+static uint8_t Grayscale_Serial_Read(void)
 {
-    return (uint8_t)(7U - channel);
-}
-
-static uint8_t Grayscale_I2C_Wait_Idle(void)
-{
-    uint32_t timeout = GRAYSCALE_I2C_TIMEOUT;
-
-    while (timeout-- > 0U) {
-         status = DL_I2C_getControllerStatus(GRAYSCALE_INST);
-        if ((status & DL_I2C_CONTROLLER_STATUS_ERROR) != 0U) {
-            DL_I2C_resetControllerTransfer(GRAYSCALE_INST);
-            return 0U;
-        }
-        if ((status & DL_I2C_CONTROLLER_STATUS_IDLE) != 0U) {
-            return 1U;
-        }
-    }
-    return 0U;
-}
-
-static uint8_t Grayscale_I2C_Write(const uint8_t *data, uint8_t length)
-{
-    uint32_t timeout = GRAYSCALE_I2C_TIMEOUT;
-
-    if ((length == 0U) || (Grayscale_I2C_Wait_Idle() == 0U)) {
-        return 0U;
-    }
-
-    DL_I2C_flushControllerTXFIFO(GRAYSCALE_INST);
-    if (DL_I2C_fillControllerTXFIFO(GRAYSCALE_INST, data, length) != (uint32_t)length) {
-        return 0U;
-    }
-
-    DL_I2C_startControllerTransfer(GRAYSCALE_INST, GRAYSCALE_I2C_ADDR,
-        DL_I2C_CONTROLLER_DIRECTION_TX, length);
-
-    while (timeout-- > 0U) {
-        uint32_t status = DL_I2C_getControllerStatus(GRAYSCALE_INST);
-        if ((status & DL_I2C_CONTROLLER_STATUS_ERROR) != 0U) {
-            DL_I2C_resetControllerTransfer(GRAYSCALE_INST);
-            return 0U;
-        }
-        if ((status & DL_I2C_CONTROLLER_STATUS_BUSY) == 0U) {
-            return 1U;
-        }
-    }
-    return 0U; /* 超时，返回失败 */
-}
-
-static uint8_t Grayscale_I2C_Read(uint8_t *data, uint8_t length)
-{
+    uint8_t data = 0U;
     uint8_t i;
 
-    if ((length == 0U) || (Grayscale_I2C_Wait_Idle() == 0U)) {
-        return 0U;
-    }
-
-    DL_I2C_flushControllerRXFIFO(GRAYSCALE_INST);
-    DL_I2C_startControllerTransfer(GRAYSCALE_INST, GRAYSCALE_I2C_ADDR,
-        DL_I2C_CONTROLLER_DIRECTION_RX, length);
-
-    for (i = 0U; i < length; i++) {
-        uint32_t timeout = GRAYSCALE_I2C_TIMEOUT;
-        while (DL_I2C_isControllerRXFIFOEmpty(GRAYSCALE_INST)) {
-            uint32_t status = DL_I2C_getControllerStatus(GRAYSCALE_INST);
-            if ((status & DL_I2C_CONTROLLER_STATUS_ERROR) != 0U) {
-                DL_I2C_resetControllerTransfer(GRAYSCALE_INST);
-                return 0U;
-            }
-            if (--timeout == 0U) {
-                return 0U;
-            }
+    for (i = 0U; i < 8U; i++) {
+        DL_GPIO_clearPins(graySerial_PORT, graySerial_CLK_PIN);
+        DL_Common_delayCycles(GRAYSCALE_SERIAL_DELAY_CYCLES);
+        if (DL_GPIO_readPins(graySerial_PORT, graySerial_DAT_PIN) != 0U) {
+            data |= (uint8_t)(1U << i);
         }
-        data[i] = DL_I2C_receiveControllerData(GRAYSCALE_INST);
+        DL_GPIO_setPins(graySerial_PORT, graySerial_CLK_PIN);
+        DL_Common_delayCycles(GRAYSCALE_SERIAL_DELAY_CYCLES);
     }
 
-    return Grayscale_I2C_Wait_Idle();
-}
-
-static uint8_t Grayscale_I2C_Read_Command(uint8_t command, uint8_t *data, uint8_t length)
-{
-    return (uint8_t)((Grayscale_I2C_Write(&command, 1U) != 0U) &&
-        (Grayscale_I2C_Read(data, length) != 0U));
+    return data;
 }
 
 void Grayscale_Init_First(Grayscale_Sensor_t *sensor)
@@ -154,25 +82,31 @@ void Grayscale_Set_Global_Thresholds(Grayscale_Sensor_t *sensor, uint16_t white,
 void Grayscale_Update(Grayscale_Sensor_t *sensor)
 {
     uint8_t digital;
-    uint8_t analog[8];
     uint8_t i;
+    uint8_t black_count = 0U;
 
-    if ((Grayscale_I2C_Read_Command(GRAYSCALE_CMD_DIGITAL, &digital, 1U) == 0U) ||
-        (Grayscale_I2C_Read_Command(GRAYSCALE_CMD_ANALOG_ALL, analog, 8U) == 0U)) {
-        sensor->is_ok = 0U;
-        return;
-    }
+    digital = Grayscale_Serial_Read();
 
     sensor->digital = 0U;
     for (i = 0U; i < 8U; i++) {
-        uint8_t mapped = Grayscale_Map_Channel(i);
-         sensor->analog_val[mapped] = (uint16_t)analog[i] << 4;
-         sensor->normal_val[mapped] = sensor->analog_val[mapped];
         if ((digital & (1U << i)) != 0U) {
-            sensor->digital |= (uint8_t)(1U << mapped);
+            sensor->digital |= (uint8_t)(1U << (7U - i));
         }
     }
     sensor->is_ok = 1U;
+
+    // 统计扫描到黑线 (位值为 0) 的通道数量
+    for (i = 0U; i < 8U; i++) {
+        if ((sensor->digital & (1U << i)) == 0U) {
+            black_count++;
+        }
+    }
+
+    // 当扫到超过 6 条黑线 (≥ 7 条) 时，清零运行标志位并停止小车
+    if (black_count > 6U) {
+        g_bt_running_flag = 0U;
+        BT_Stop();
+    }
 }
 
 uint8_t Grayscale_Get_Digital(Grayscale_Sensor_t *sensor)

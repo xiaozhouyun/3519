@@ -61,9 +61,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_servo_init();
     SYSCFG_DL_AB1_init();
     SYSCFG_DL_AB2_init();
-    SYSCFG_DL_GRAYSCALE_init();
     SYSCFG_DL_blue_init();
-    SYSCFG_DL_UART_4_init();
     SYSCFG_DL_TFT_SPI0_init();
     SYSCFG_DL_IMU660RC_init();
     SYSCFG_DL_ADC1_init();
@@ -118,9 +116,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_reset(servo_INST);
     DL_TimerG_reset(AB1_INST);
     DL_TimerG_reset(AB2_INST);
-    DL_I2C_reset(GRAYSCALE_INST);
     DL_UART_Main_reset(blue_INST);
-    DL_UART_Main_reset(UART_4_INST);
     DL_SPI_reset(TFT_SPI0_INST);
     DL_SPI_reset(IMU660RC_INST);
     DL_ADC12_reset(ADC1_INST);
@@ -133,9 +129,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_enablePower(servo_INST);
     DL_TimerG_enablePower(AB1_INST);
     DL_TimerG_enablePower(AB2_INST);
-    DL_I2C_enablePower(GRAYSCALE_INST);
     DL_UART_Main_enablePower(blue_INST);
-    DL_UART_Main_enablePower(UART_4_INST);
     DL_SPI_enablePower(TFT_SPI0_INST);
     DL_SPI_enablePower(IMU660RC_INST);
     DL_ADC12_enablePower(ADC1_INST);
@@ -167,25 +161,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralInputFunction(GPIO_AB2_PHA_IOMUX,GPIO_AB2_PHA_IOMUX_FUNC);
     DL_GPIO_initPeripheralInputFunction(GPIO_AB2_PHB_IOMUX,GPIO_AB2_PHB_IOMUX_FUNC);
 
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_GRAYSCALE_IOMUX_SDA,
-        GPIO_GRAYSCALE_IOMUX_SDA_FUNC, DL_GPIO_INVERSION_DISABLE,
-        DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
-        DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_GRAYSCALE_IOMUX_SCL,
-        GPIO_GRAYSCALE_IOMUX_SCL_FUNC, DL_GPIO_INVERSION_DISABLE,
-        DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
-        DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_enableHiZ(GPIO_GRAYSCALE_IOMUX_SDA);
-    DL_GPIO_enableHiZ(GPIO_GRAYSCALE_IOMUX_SCL);
-
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_blue_IOMUX_TX, GPIO_blue_IOMUX_TX_FUNC);
     DL_GPIO_initPeripheralInputFunction(
         GPIO_blue_IOMUX_RX, GPIO_blue_IOMUX_RX_FUNC);
-    DL_GPIO_initPeripheralOutputFunction(
-        GPIO_UART_4_IOMUX_TX, GPIO_UART_4_IOMUX_TX_FUNC);
-    DL_GPIO_initPeripheralInputFunction(
-        GPIO_UART_4_IOMUX_RX, GPIO_UART_4_IOMUX_RX_FUNC);
 
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_TFT_SPI0_IOMUX_SCLK, GPIO_TFT_SPI0_IOMUX_SCLK_FUNC);
@@ -244,14 +223,20 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalOutput(DRV8873HPWPT_PH2_IOMUX);
 
+    DL_GPIO_initDigitalOutput(graySerial_CLK_IOMUX);
+
+    DL_GPIO_initDigitalInput(graySerial_DAT_IOMUX);
+
     DL_GPIO_clearPins(GPIOA, TB6612_BIN1_PIN |
 		TB6612_BIN2_PIN |
 		DRV8873HPWPT_PH1_PIN);
-    DL_GPIO_setPins(GPIOA, TFT_TFT_BLK_PIN);
+    DL_GPIO_setPins(GPIOA, TFT_TFT_BLK_PIN |
+		graySerial_CLK_PIN);
     DL_GPIO_enableOutput(GPIOA, TFT_TFT_BLK_PIN |
 		TB6612_BIN1_PIN |
 		TB6612_BIN2_PIN |
-		DRV8873HPWPT_PH1_PIN);
+		DRV8873HPWPT_PH1_PIN |
+		graySerial_CLK_PIN);
     DL_GPIO_clearPins(GPIOB, buzzer_PIN_0_PIN |
 		TB6612_AIN2_PIN |
 		TB6612_AIN1_PIN |
@@ -607,34 +592,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_AB2_init(void) {
 }
 
 
-static const DL_I2C_ClockConfig gGRAYSCALEClockConfig = {
-    .clockSel = DL_I2C_CLOCK_BUSCLK,
-    .divideRatio = DL_I2C_CLOCK_DIVIDE_1,
-};
-
-SYSCONFIG_WEAK void SYSCFG_DL_GRAYSCALE_init(void) {
-
-    DL_I2C_setClockConfig(GRAYSCALE_INST,
-        (DL_I2C_ClockConfig *) &gGRAYSCALEClockConfig);
-    DL_I2C_setAnalogGlitchFilterPulseWidth(GRAYSCALE_INST,
-        DL_I2C_ANALOG_GLITCH_FILTER_WIDTH_50NS);
-    DL_I2C_enableAnalogGlitchFilter(GRAYSCALE_INST);
-
-    /* Configure Controller Mode */
-    DL_I2C_resetControllerTransfer(GRAYSCALE_INST);
-    /* Set frequency to 100000 Hz*/
-    DL_I2C_setTimerPeriod(GRAYSCALE_INST, 39);
-    DL_I2C_setControllerTXFIFOThreshold(GRAYSCALE_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
-    DL_I2C_setControllerRXFIFOThreshold(GRAYSCALE_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
-    DL_I2C_enableControllerClockStretching(GRAYSCALE_INST);
-
-
-    /* Enable module */
-    DL_I2C_enableController(GRAYSCALE_INST);
-
-
-}
-
 static const DL_UART_Main_ClockConfig gblueClockConfig = {
     .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,
     .divideRatio = DL_UART_MAIN_CLOCK_DIVIDE_RATIO_1
@@ -669,41 +626,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_blue_init(void)
     DL_UART_Main_setTXFIFOThreshold(blue_INST, DL_UART_TX_FIFO_LEVEL_1_2_EMPTY);
 
     DL_UART_Main_enable(blue_INST);
-}
-static const DL_UART_Main_ClockConfig gUART_4ClockConfig = {
-    .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,
-    .divideRatio = DL_UART_MAIN_CLOCK_DIVIDE_RATIO_1
-};
-
-static const DL_UART_Main_Config gUART_4Config = {
-    .mode        = DL_UART_MAIN_MODE_NORMAL,
-    .direction   = DL_UART_MAIN_DIRECTION_TX_RX,
-    .flowControl = DL_UART_MAIN_FLOW_CONTROL_NONE,
-    .parity      = DL_UART_MAIN_PARITY_NONE,
-    .wordLength  = DL_UART_MAIN_WORD_LENGTH_8_BITS,
-    .stopBits    = DL_UART_MAIN_STOP_BITS_ONE
-};
-
-SYSCONFIG_WEAK void SYSCFG_DL_UART_4_init(void)
-{
-    DL_UART_Main_setClockConfig(UART_4_INST, (DL_UART_Main_ClockConfig *) &gUART_4ClockConfig);
-
-    DL_UART_Main_init(UART_4_INST, (DL_UART_Main_Config *) &gUART_4Config);
-    /*
-     * Configure baud rate by setting oversampling and baud rate divisors.
-     *  Target baud rate: 115200
-     *  Actual baud rate: 115190.78
-     */
-    DL_UART_Main_setOversampling(UART_4_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(UART_4_INST, UART_4_IBRD_80_MHZ_115200_BAUD, UART_4_FBRD_80_MHZ_115200_BAUD);
-
-
-    /* Configure FIFOs */
-    DL_UART_Main_enableFIFOs(UART_4_INST);
-    DL_UART_Main_setRXFIFOThreshold(UART_4_INST, DL_UART_RX_FIFO_LEVEL_ONE_ENTRY);
-    DL_UART_Main_setTXFIFOThreshold(UART_4_INST, DL_UART_TX_FIFO_LEVEL_1_2_EMPTY);
-
-    DL_UART_Main_enable(UART_4_INST);
 }
 
 static const DL_SPI_Config gTFT_SPI0_config = {
