@@ -73,7 +73,7 @@ static void SensorTask(void *pvParameters)
         /* 更新 8 通道灰度循迹传感器 (选通多路开关、ADC0采样、二值化及归一化) */
  
         /* ICM42688P: 姿态解算更新 (10ms 周期, dt=0.01s) */
-        icm42688p_update(0.01f);
+        // icm42688p_update(0.01f);
 
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -89,7 +89,6 @@ static void DisplayTask(void *pvParameters)
 
     tft180_clear();
     tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-    tft_print(0, 0, TFT180_6X8_FONT, "=== ICM42686 ===");
 
     /* 静态标签 */
     tft180_set_color(RGB565_BLACK, RGB565_WHITE);
@@ -99,26 +98,13 @@ static void DisplayTask(void *pvParameters)
     tft_print(0, 108, TFT180_6X8_FONT, "4-5:");
     tft_print(0, 122, TFT180_6X8_FONT, "L_SPD:");
     tft_print(0, 134, TFT180_6X8_FONT, "R_SPD:");
-    tft_print(0, 146, TFT180_6X8_FONT, "TURN:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft_print(0, 14, TFT180_6X8_FONT, "R:%.2f", icm42688p_roll);
-        tft180_set_color(RGB565_GREEN, RGB565_WHITE);
-        tft_print(60, 14, TFT180_6X8_FONT, "%.2f", icm42688p_pitch);
-        tft180_set_color(RGB565_PURPLE, RGB565_WHITE);
-        tft_print(105, 14, TFT180_6X8_FONT, "%.2f", icm42688p_yaw);
 
         /* ---- 第二行: Accel X / Accel Y ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-        tft_print(0, 26, TFT180_6X8_FONT, "AX:%-6d AY:%-6d", (int)icm42688p_acc_x, (int)icm42688p_acc_y);
-
-        /* ---- 第三行: Accel Z / Gyro X ---- */
-        tft_print(0, 38, TFT180_6X8_FONT, "AZ:%-6d GX:%-6d", (int)icm42688p_acc_z, (int)icm42688p_gyro_x);
-
-        /* ---- 第四行: Gyro Y / Gyro Z ---- */
-        tft_print(0, 50, TFT180_6X8_FONT, "GY:%-6d GZ:%-6d", (int)icm42688p_gyro_y, (int)icm42688p_gyro_z);
 
         /* ---- 灰度二值化字符串 ---- */
         uint8_t dig = Grayscale_Get_Digital(&g_grayscale_sensor);
@@ -138,12 +124,8 @@ static void DisplayTask(void *pvParameters)
 
         /* ---- 左右电机目标速度与实测速度 ---- */
         tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-        tft_print(40, 122, TFT180_6X8_FONT, "T:%-4d R:%-4d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed);
-        tft_print(40, 134, TFT180_6X8_FONT, "T:%-4d R:%-4d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed);
-
-        /* ---- 循迹转向 PID 输出量 ---- */
-        tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft_print(40, 146, TFT180_6X8_FONT, "%.2f", g_turn_output);
+        tft_print(40, 122, TFT180_6X8_FONT, "lT:%-4d lR:%-4d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed);
+        tft_print(40, 134, TFT180_6X8_FONT, "rT:%-4d rR:%-4d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
@@ -155,17 +137,21 @@ int main(void)
     tft180_init();
 
     // 2. 初始化 ICM42688P 六轴传感器
-    if (icm42688p_init() != 0U) {
-        /* 初始化失败 —— 打印实际读到的 ID 便于排查，然后挂起 */
-        tft180_set_color(RGB565_RED, RGB565_WHITE);
-        tft_print(0, 136, TFT180_6X8_FONT, "IMU init FAIL!");
-        tft_print(120, 136, TFT180_6X8_FONT, "%u", (unsigned int)icm42688p_read_id());
-        while (1) {}
-    }
+    // if (icm42688p_init() != 0U) {
+    //     /* 初始化失败 —— 打印实际读到的 ID 便于排查，然后挂起 */
+    //     tft180_set_color(RGB565_RED, RGB565_WHITE);
+    //     tft_print(0, 136, TFT180_6X8_FONT, "IMU init FAIL!");
+    //     tft_print(120, 136, TFT180_6X8_FONT, "%u", (unsigned int)icm42688p_read_id());
+    //     while (1) {}
+    // }
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     Grayscale_Init_First(&g_grayscale_sensor);
     Encode_Init();
+    PID_init(&g_motor_left.speed_pid, PID_POSITION, (fp32[]){0.5f, 0.15f, 0.0f},
+             (fp32)MG513XGMR_MAX_PWM, (fp32)(MG513XGMR_MAX_PWM / 2));
+    PID_init(&g_motor_right.speed_pid, PID_POSITION, (fp32[]){0.5f, 0.15f, 0.0f},
+             (fp32)MG513XGMR_MAX_PWM, (fp32)(MG513XGMR_MAX_PWM / 2));
     DRV8873_Init();
     MG513XGMR_Init();    // 初始化左右电机速度/角度双闭环 PID
     Bluetooth_Init();
