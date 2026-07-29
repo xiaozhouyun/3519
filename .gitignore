@@ -1,36 +1,40 @@
 # ============================================
-# Keil MDK 编译产物及中间文件
+# Keil MDK 编译产物
 # ============================================
 
-# 编译输出目录
+# 中间文件 / 目标文件
 keil/Objects/
-keil/Listings/
-keil/List/
-keil/DebugConfig/
+*.o
+*.d
 
-# 链接输出与中间文件
+# 链接输出
 *.axf
 *.hex
 *.bin
 *.map
 *.lnp
-*.d
-*.o
-*.crf
-*.browse
 
-# 编译报告与日志
+# 编译报告
 *.build_log.htm
 *.lst
-*.htm
-keil/build_output.txt
 
-# 依赖追踪文件
+# 依赖追踪
 *.dep
 
-# Keil 用户界面布局与环境文件（个人配置文件）
-*.uvgui.*
+# Keil 用户界面布局（每人不同，不应提交）
 *.uvguix.*
-*.scvd
-*.iex
 
+# IDE 杂项
+*.iex
+*.scvd
+
+# 构建日志（脚本生成）
+keil/build_output.txt
+
+# Keil 输出目录补充
+keil/List/
+keil/DebugConfig/
+
+# Keil/ARM 浏览与数据库文件
+*.crf
+*.browse

@@ -16,16 +16,6 @@ typedef enum {
     ENCODE_RIGHT = 1   /**< 右轮编码器通道 (对应硬件 AB2 计数器) */
 } Encode_Channel_t;
 
-/** 全局左右轮编码器增量值 */
-extern int16_t g_encoder_left_delta;
-extern int16_t g_encoder_right_delta;
-
-/** 全局左右轮编码器总脉冲累计值 */
-extern int32_t g_encoder_left_total;
-extern int32_t g_encoder_right_total;
-
-
-
 /**
  * @brief  初始化左右编码器模块
  */

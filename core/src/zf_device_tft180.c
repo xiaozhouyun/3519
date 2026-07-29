@@ -666,7 +666,7 @@ void tft180_show_uint(uint16 x, uint16 y, const uint32 dat, uint8 num)
 
     if(10 > num)
     {
-        for(; 0 < num; num--)
+        for(uint8 digits = num; 0 < digits; digits--)
         {
             offset *= 10;
         }
