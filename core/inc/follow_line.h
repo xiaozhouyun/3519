@@ -31,6 +31,8 @@ typedef struct {
 
 // 全局循迹 PID 控制器句柄声明
 extern LineController_t g_line_controller;
+// 全局循迹转向 PID 控制输出量
+extern float g_turn_output;
 
 /**
  * @brief  初始化循迹 PID 控制器参数

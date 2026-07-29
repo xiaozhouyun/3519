@@ -22,6 +22,9 @@ LineController_t g_line_controller = {
     .max_output   = 800.0f
 };
 
+// 全局循迹转向 PID 控制输出量
+float g_turn_output = 0.0f;
+
 // 8 通道线序权重数组 (-3500 ~ 3500)
 static const float s_channel_weights[8] = {
     -3500.0f, -2500.0f, -1500.0f, -500.0f,
@@ -153,9 +156,9 @@ float FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, in
     float error = FollowLine_Calc_Error(sensor);
 
     // 2. PID 解算输出转向控制量
-    float turn_output = FollowLine_PID_Compute(p_ctrl, error);
-    g_motor_left.target_speed  = base_speed - turn_output;
-    g_motor_right.target_speed = base_speed + turn_output;
+    g_turn_output = FollowLine_PID_Compute(p_ctrl, error);
+    g_motor_left.target_speed  = base_speed - g_turn_output;
+    g_motor_right.target_speed = base_speed + g_turn_output;
     
-    return turn_output;
+    return g_turn_output;
 }

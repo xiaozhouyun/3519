@@ -99,6 +99,7 @@ static void DisplayTask(void *pvParameters)
     tft_print(0, 108, TFT180_6X8_FONT, "4-5:");
     tft_print(0, 122, TFT180_6X8_FONT, "L_SPD:");
     tft_print(0, 134, TFT180_6X8_FONT, "R_SPD:");
+    tft_print(0, 146, TFT180_6X8_FONT, "TURN:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
@@ -139,6 +140,10 @@ static void DisplayTask(void *pvParameters)
         tft180_set_color(RGB565_BLUE, RGB565_WHITE);
         tft_print(40, 122, TFT180_6X8_FONT, "T:%-4d R:%-4d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed);
         tft_print(40, 134, TFT180_6X8_FONT, "T:%-4d R:%-4d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed);
+
+        /* ---- 循迹转向 PID 输出量 ---- */
+        tft180_set_color(RGB565_RED, RGB565_WHITE);
+        tft_print(40, 146, TFT180_6X8_FONT, "%.2f", g_turn_output);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }
