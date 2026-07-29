@@ -58,6 +58,11 @@ void Bluetooth_Send_String(const char *str);
 void Bluetooth_Send_TestData(void);
 
 /**
+ * @brief  通过蓝牙串口发送当前循迹 PID 参数 (Kp, Ki, Kd) 给上位机
+ */
+void Bluetooth_Send_PID_Params(void);
+
+/**
  * @brief  设置颜色模式回调接口
  * @param  color 目标颜色 (@ref BT_Color_t)
  */
@@ -73,6 +78,11 @@ void BT_SetSpeed(uint8_t speed);
  * @brief  启动运动控制回调接口
  */
 void BT_Start(void);
+
+/**
+ * @brief  按键启动动作，复用蓝牙启动逻辑
+ */
+void Key_Start(void);
 
 /**
  * @brief  停止运动控制回调接口

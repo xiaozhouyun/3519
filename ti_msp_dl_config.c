@@ -207,6 +207,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
 		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
 
+    DL_GPIO_initDigitalInputFeatures(key_user_key_IOMUX,
+		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
+		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+
     DL_GPIO_initDigitalOutput(TB6612_AIN2_IOMUX);
 
     DL_GPIO_initDigitalOutput(TB6612_AIN1_IOMUX);
@@ -253,6 +257,9 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
 		DRV8873HPWPT_PH2_PIN);
+    DL_GPIO_setUpperPinsPolarity(GPIOB, DL_GPIO_PIN_31_EDGE_RISE_FALL);
+    DL_GPIO_clearInterruptStatus(GPIOB, key_user_key_PIN);
+    DL_GPIO_enableInterrupt(GPIOB, key_user_key_PIN);
     DL_GPIO_setPins(GPIOC, TFT_TFT_DC_PIN |
 		TFT_TFT_CS_PIN);
     DL_GPIO_enableOutput(GPIOC, TFT_TFT_DC_PIN |
@@ -364,6 +371,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
     }
     DL_SYSCTL_setULPCLKDivider(DL_SYSCTL_ULPCLK_DIV_2);
     DL_SYSCTL_setMCLKSource(SYSOSC, HSCLK, DL_SYSCTL_HSCLK_SOURCE_SYSPLL);
+    /* INT_GROUP1 Priority */
+    NVIC_SetPriority(GPIOB_INT_IRQn, 2);
 
 }
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_CLK_init(void) {

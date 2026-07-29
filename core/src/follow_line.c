@@ -17,10 +17,10 @@ LineController_t g_line_controller;
 // 全局循迹转向 PID 控制输出量
 float g_turn_output = 0.0f;
 
-// 8 通道线序权重数组 (-35.0f ~ 35.0f)
+// 8 通道线序权重数组 (-52.5f ~ 52.5f)
 static const float s_channel_weights[8] = {
-    -35.0f, -25.0f, -15.0f, -5.0f,
-      5.0f,  15.0f,  25.0f, 35.0f
+    -52.5f, -37.5f, -22.5f, -7.5f,
+      7.5f,  22.5f,  37.5f, 52.5f
 };
 
 /**

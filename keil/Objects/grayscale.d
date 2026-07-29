@@ -84,4 +84,5 @@
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_interrupt.h \
   D:\ti\mspm0_sdk_2_11_00_07\source\ti\driverlib\m0p\dl_systick.h \
   ..\core\inc\blue.h ..\core\inc\follow_line.h ..\core\inc\Grayscale.h \
-  ..\core\inc\encode.h ..\core\inc\MG513XGMR.h ..\core\inc\Q_pid.h
+  ..\core\inc\encode.h ..\core\inc\MG513XGMR.h ..\core\inc\Q_pid.h \
+  ..\core\inc\main.h

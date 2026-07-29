@@ -7,6 +7,7 @@
 
 #include "blue.h"
 #include "Grayscale.h"
+#include "main.h"
 #ifndef BLUE_HOST_TEST
 #include "ti_msp_dl_config.h"
 #endif
@@ -68,7 +69,17 @@ void Bluetooth_Send_TestData(void)
              (int)g_bt_running_flag, (int)g_bt_speed_grade,
              (long)g_motor_left.pulse_total, (long)g_motor_right.pulse_total);
     Bluetooth_Send_String(buf);
-    
+}
+
+/**
+ * @brief  通过蓝牙串口发送当前循迹 PID 参数 (Kp, Ki, Kd) 给上位机
+ */
+void Bluetooth_Send_PID_Params(void)
+{
+    char pid_buf[64];
+    snprintf(pid_buf, sizeof(pid_buf), "[PID] Kp:%.2f, Ki:%.3f, Kd:%.3f\r\n", 
+             g_line_controller.kp, g_line_controller.ki, g_line_controller.kd);
+    Bluetooth_Send_String(pid_buf);
 }
 
 /**
@@ -114,58 +125,35 @@ void Bluetooth_Process_Byte(uint8_t data)
         case 't':
             Bluetooth_Send_TestData();
             break;
+        case 'Q':  // 查询并上发循迹 PID 参数 (Kp, Ki, Kd)
+        case 'q':
+            Bluetooth_Send_PID_Params();
+            break;
         case 'P':  // 调整 PID 参数: Kp + 0.1
             g_line_controller.kp += 0.1f;
-            {
-                char buf[32];
-                snprintf(buf, sizeof(buf), "kp: %.2f\r\n", g_line_controller.kp);
-                Bluetooth_Send_String(buf);
-            }
+            Bluetooth_Send_PID_Params();
             break;
         case 'p':  // 调整 PID 参数: Kp - 0.1
             g_line_controller.kp -= 0.1f;
-            {
-                char buf[32];
-                snprintf(buf, sizeof(buf), "kp: %.2f\r\n", g_line_controller.kp);
-                Bluetooth_Send_String(buf);
-            }
+            Bluetooth_Send_PID_Params();
             break;
         case 'I':  // 调整 PID 参数: Ki + 0.01
             g_line_controller.ki += 0.01f;
-            {
-                char buf[32];
-                snprintf(buf, sizeof(buf), "ki: %.3f\r\n", g_line_controller.ki);
-                Bluetooth_Send_String(buf);
-            }
+            Bluetooth_Send_PID_Params();
             break;
         case 'i':  // 调整 PID 参数: Ki - 0.01
             g_line_controller.ki -= 0.01f;
-            {
-                char buf[32];
-                snprintf(buf, sizeof(buf), "ki: %.3f\r\n", g_line_controller.ki);
-                Bluetooth_Send_String(buf);
-            }
+            Bluetooth_Send_PID_Params();
             break;
-        case 'K':  
-            break;
-         case 'k':  
-            break;
+        case 'K':  // 调整 PID 参数: Kd + 0.5
         case 'D':
-            g_line_controller.kd += 0.001f;
-            {
-                char buf[32];
-                snprintf(buf, sizeof(buf), "kd: %.2f\r\n", g_line_controller.kd);
-                Bluetooth_Send_String(buf);
-            }
+            g_line_controller.kd += 0.5f;
+            Bluetooth_Send_PID_Params();
             break;
-       
+        case 'k':  // 调整 PID 参数: Kd - 0.5
         case 'd':
-            g_line_controller.kd -= 0.001f;
-            {
-                char buf[32];
-                snprintf(buf, sizeof(buf), "kd: %.3f\r\n", g_line_controller.kd);
-                Bluetooth_Send_String(buf);
-            }
+            g_line_controller.kd -= 0.5f;
+            Bluetooth_Send_PID_Params();
             break;
         default:
             // 忽略未定义或无效字符
@@ -191,7 +179,13 @@ void BT_SetSpeed(uint8_t speed)
  */
 void BT_Start(void)
 {
+    g_system_timer_sec = 0U;
     g_bt_running_flag = 1;
+}
+
+void Key_Start(void)
+{
+    BT_Start();
 }
 
 /**

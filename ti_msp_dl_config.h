@@ -305,6 +305,14 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define key_key3_PORT                                                    (GPIOC)
 #define key_key3_PIN                                             (DL_GPIO_PIN_7)
 #define key_key3_IOMUX                                           (IOMUX_PINCM85)
+/* Defines for user_key: GPIOB.31 with pinCMx 68 on package pin 27 */
+#define key_user_key_PORT                                                (GPIOB)
+// pins affected by this interrupt request:["user_key"]
+#define key_INT_IRQN                                            (GPIOB_INT_IRQn)
+#define key_INT_IIDX                            (DL_INTERRUPT_GROUP1_IIDX_GPIOB)
+#define key_user_key_IIDX                                   (DL_GPIO_IIDX_DIO31)
+#define key_user_key_PIN                                        (DL_GPIO_PIN_31)
+#define key_user_key_IOMUX                                       (IOMUX_PINCM68)
 /* Defines for AIN2: GPIOB.22 with pinCMx 50 on package pin 69 */
 #define TB6612_AIN2_PORT                                                 (GPIOB)
 #define TB6612_AIN2_PIN                                         (DL_GPIO_PIN_22)

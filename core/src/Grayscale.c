@@ -5,6 +5,7 @@
 
 #include "../inc/Grayscale.h"
 #include "blue.h"
+#include "main.h"
 
 #define GRAYSCALE_SERIAL_DELAY_CYCLES   (CPUCLK_FREQ / 200000U)
 
@@ -102,10 +103,12 @@ void Grayscale_Update(Grayscale_Sensor_t *sensor)
         }
     }
 
-    // 当扫到超过 6 条黑线 (≥ 7 条) 时，清零运行标志位并停止小车
+    // 当扫到超过 6 条黑线 (≥ 7 条) 且启动已满 5 秒以上时，清零运行标志位并停止小车
     if (black_count > 6U) {
-        g_bt_running_flag = 0U;
-        BT_Stop();
+        if (g_system_timer_sec >= 5U) {
+            g_bt_running_flag = 0U;
+            BT_Stop();
+        }
     }
 }
 

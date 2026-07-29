@@ -85,7 +85,7 @@
   ..\core\inc\zf_device_tft180.h ..\core\inc\icm42688p.h \
   ..\core\inc\fast_math.h ..\core\inc\Grayscale.h ..\core\inc\encode.h \
   ..\core\inc\drv8873.h ..\core\inc\blue.h ..\core\inc\follow_line.h \
-  ..\core\inc\MG513XGMR.h ..\core\inc\Q_pid.h \
+  ..\core\inc\MG513XGMR.h ..\core\inc\Q_pid.h ..\core\inc\main.h \
   ..\freertos\Source\include\FreeRTOS.h \
   ..\freertos\builds\LP_MSPM0G3507\release\FreeRTOSConfig.h \
   ..\freertos\Source\include\projdefs.h \

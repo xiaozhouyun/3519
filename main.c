@@ -13,6 +13,7 @@
 #include "drv8873.h"
 #include "blue.h"
 #include "follow_line.h"
+#include "main.h"
 #include "MG513XGMR.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -49,7 +50,7 @@ static void ChassisTask(void *pvParameters)
          Grayscale_Update(&g_grayscale_sensor);
         if(g_bt_running_flag==1)
         {     
-                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 700);
+                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 880);
                 MG513XGMR_Update();
         }
         else
@@ -141,6 +142,10 @@ static void DisplayTask(void *pvParameters)
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(35, 100, TFT180_6X8_FONT, "%s", bin_str);
 
+        // 通过蓝牙发送灰度二值化字符串给上位机
+        Bluetooth_Send_String(bin_str);
+        Bluetooth_Send_String("\r\n");
+
         /* ---- 灰度模拟量 ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
         tft_print(35, 112, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[0]);
@@ -152,9 +157,21 @@ static void DisplayTask(void *pvParameters)
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(40, 138, TFT180_6X8_FONT, "%.2f", g_turn_output);
 
-        vTaskDelay(pdMS_TO_TICKS(50U));
+        vTaskDelay(pdMS_TO_TICKS(1000U));
     }
 }
+
+void GROUP1_IRQHandler(void)
+{
+    uint32_t key_stat = DL_GPIO_getEnabledInterruptStatus(key_user_key_PORT,
+                                                           key_user_key_PIN);
+
+    if ((key_stat & key_user_key_PIN) != 0U) {
+        DL_GPIO_clearInterruptStatus(key_user_key_PORT, key_user_key_PIN);
+        Key_Start();
+    }
+}
+
 int main(void)
 {
     // 1. 系统底层外设与屏驱动初始化
@@ -172,11 +189,15 @@ int main(void)
 
     // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
     // Grayscale_Init_First(&g_grayscale_sensor);
-    FollowLine_Init(&g_line_controller, 4.80f, 0.0f, 0.002f); // 初始化循迹 PID 参数
+    FollowLine_Init(&g_line_controller, 5.20f, 0.0f, 0.002f); // 初始化循迹 PID 参数
     Encode_Init();
     DRV8873_Init();
     MG513XGMR_Init();    // 初始化左右电机速度/角度双闭环 PID
     Bluetooth_Init();
+
+    /* 使能 GPIOB 中断 (PB31 按键启动 + PB24 IMU INT2 共用 GROUP1) */
+    NVIC_ClearPendingIRQ(GPIOB_INT_IRQn);
+    NVIC_EnableIRQ(GPIOB_INT_IRQn);
  
 
     // 4. 创建底盘电机控制任务 (ChassisTask: 优先级 3, 100Hz 闭环控制)

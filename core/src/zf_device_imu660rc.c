@@ -373,18 +373,18 @@ void imu660rc_get_quarternion(void)
  * @brief  MSPM0 组 1 GPIO 中断服务函数 (包含 GPIOB 端口的中断触发)
  *         当 IMU660RC 解算完成并从 INT2 (PB24) 输出上升沿脉冲时，自动触发本 ISR 进行姿态更新
  */
-void GROUP1_IRQHandler(void)
-{
-    // 获取 GPIOB 端口引脚 24 (imuInt_int2_PIN) 的中断使能状态
-    uint32_t gpioStat = DL_GPIO_getEnabledInterruptStatus(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
-    if (gpioStat & IMU660RC_INT2_PIN)
-    {
-        // 清除 PB24 悬挂中断标志
-        DL_GPIO_clearInterruptStatus(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
-        // 执行四元数与姿态角更新
-        imu660rc_get_quarternion();
-    }
-}
+// void GROUP1_IRQHandler(void)
+// {
+//     // 获取 GPIOB 端口引脚 24 (imuInt_int2_PIN) 的中断使能状态
+//     uint32_t gpioStat = DL_GPIO_getEnabledInterruptStatus(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
+//     if (gpioStat & IMU660RC_INT2_PIN)
+//     {
+//         // 清除 PB24 悬挂中断标志
+//         DL_GPIO_clearInterruptStatus(IMU660RC_INT2_PORT, IMU660RC_INT2_PIN);
+//         // 执行四元数与姿态角更新
+//         imu660rc_get_quarternion();
+//     }
+// }
 
 // ===================================================================================================================
 // 核心初始化入口
