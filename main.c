@@ -48,7 +48,7 @@ static void ChassisTask(void *pvParameters)
          Grayscale_Update(&g_grayscale_sensor);
         if(g_bt_running_flag==1)
         {     
-                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 500);
+                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 300);
                 MG513XGMR_Update();
         }
         else
@@ -96,8 +96,8 @@ static void DisplayTask(void *pvParameters)
     tft_print(0,  80, TFT180_6X8_FONT, "BIN:");
     tft_print(0,  94, TFT180_6X8_FONT, "0-1:");
     tft_print(0, 108, TFT180_6X8_FONT, "4-5:");
-    tft_print(0, 122, TFT180_6X8_FONT, "L_SPD:");
-    tft_print(0, 134, TFT180_6X8_FONT, "R_SPD:");
+    tft_print(0, 122, TFT180_6X8_FONT, "L_MOT:");
+    tft_print(0, 134, TFT180_6X8_FONT, "R_MOT:");
 
     while (1) {
         /* ---- 第一行: Roll / Pitch / Yaw ---- */
@@ -122,10 +122,14 @@ static void DisplayTask(void *pvParameters)
         tft_print(35, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[4]);
         tft_print(80, 108, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[5]);
 
-        /* ---- 左右电机目标速度与实测速度 ---- */
+        /* ---- 左右电机: 目标速度(T) / 实测速度(R) / PWM输出(P) ---- */
         tft180_set_color(RGB565_BLUE, RGB565_WHITE);
-        tft_print(40, 122, TFT180_6X8_FONT, "lT:%-4d lR:%-4d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed);
-        tft_print(40, 134, TFT180_6X8_FONT, "rT:%-4d rR:%-4d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed);
+        tft_print(36, 122, TFT180_6X8_FONT, "T%-4dR%-4dPout%-4d", (int)g_motor_left.target_speed, (int)g_motor_left.current_speed, (int)g_motor_left.pwm_output);
+        tft_print(36, 134, TFT180_6X8_FONT, "T%-4dR%-4dPout%-4d", (int)g_motor_right.target_speed, (int)g_motor_right.current_speed, (int)g_motor_right.pwm_output);
+
+        /* ---- 循迹 PID 转向输出量 ---- */
+        tft180_set_color(RGB565_RED, RGB565_WHITE);
+        tft_print(40, 146, TFT180_6X8_FONT, "TURN:%.2f", g_turn_output);
 
         vTaskDelay(pdMS_TO_TICKS(50U));
     }

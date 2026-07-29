@@ -27,8 +27,8 @@ float g_turn_output = 0.0f;
 
 // 8 通道线序权重数组 (-3500 ~ 3500)
 static const float s_channel_weights[8] = {
-    -3500.0f, -2500.0f, -1500.0f, -500.0f,
-      500.0f,  1500.0f,  2500.0f, 3500.0f
+    -350.0f, -250.0f, -150.0f, -50.0f,
+      50.0f,  150.0f,  250.0f, 350.0f
 };
 
 /**
@@ -157,8 +157,8 @@ float FollowLine_Update(LineController_t *p_ctrl, Grayscale_Sensor_t *sensor, in
 
     // 2. PID 解算输出转向控制量
     g_turn_output = FollowLine_PID_Compute(p_ctrl, error);
-    g_motor_left.target_speed  = base_speed - g_turn_output;
-    g_motor_right.target_speed = base_speed + g_turn_output;
+    MG513XGMR_Set_Speed(MG513XGMR_LEFT, base_speed - g_turn_output);
+    MG513XGMR_Set_Speed(MG513XGMR_RIGHT, base_speed + g_turn_output);
     
     return g_turn_output;
 }

@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include "follow_line.h"
 #include "encode.h"
+#include "MG513XGMR.h"
 
 /**
  * @brief 蓝牙指令颜色枚举

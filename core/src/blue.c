@@ -66,7 +66,7 @@ void Bluetooth_Send_TestData(void)
     char buf[80];
     snprintf(buf, sizeof(buf), "[TEST] Run:%d, Speed:%d, EncL:%ld, EncR:%ld\r\n",
              (int)g_bt_running_flag, (int)g_bt_speed_grade,
-             (long)g_encoder_left_total, (long)g_encoder_right_total);
+             (long)g_motor_left.pulse_total, (long)g_motor_right.pulse_total);
     Bluetooth_Send_String(buf);
 }
 
