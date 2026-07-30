@@ -52,6 +52,13 @@ static void ChassisTask(void *pvParameters)
         {     
                 FollowLine_Update(&g_grayscale_sensor);
                 MG513XGMR_Update();
+                // 第三问里程计判断逻辑 g_odometer_mm (1500 ± 50 mm 范围内自动停车)
+                if (FollowLine_Get_Active_Question() == 3U)
+                {
+                    if (g_odometer_mm >= 1638.0f && g_odometer_mm <= 1642.0f) {
+                        BT_Stop();
+                    }
+                }
         }
         else
         {
@@ -142,19 +149,16 @@ static void DisplayTask(void *pvParameters)
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(35, 100, TFT180_6X8_FONT, "%s", bin_str);
 
-      
-        /* ---- 灰度模拟量 ---- */
-        tft180_set_color(RGB565_BLACK, RGB565_WHITE);
-        tft_print(35, 112, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[0]);
-        tft_print(80, 112, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[1]);
-        tft_print(35, 124, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[4]);
-        tft_print(80, 124, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[5]);
-
+      // 通过蓝牙发送灰度二值化字符串给上位机
+      if(g_bt_running_flag==1){
+        Bluetooth_Send_String(bin_str);
+        Bluetooth_Send_String("\r\n");
+      }
         /* ---- 循迹 PID 转向输出量 ---- */
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(40, 138, TFT180_6X8_FONT, "%.2f", g_turn_output);
 
-        vTaskDelay(pdMS_TO_TICKS(1500U));
+        vTaskDelay(pdMS_TO_TICKS(100U));
     }
 }
 
@@ -175,7 +179,7 @@ int main(void)
     SYSCFG_DL_init();
     tft180_init();
     FollowLine_Init(&g_question2_line_controller, 5.20f, 0.0f, 0.002f, 880);
-    g_question3_line_controller = g_question2_line_controller;
+    FollowLine_Init(&g_question3_line_controller, 4.20f, 0.0f, 0.002f, 600);
     FollowLine_Select_Question(3U);
     Encode_Init();
     DRV8873_Init();

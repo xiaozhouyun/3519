@@ -43,7 +43,7 @@ MG513XGMR_Motor_t g_motor_right;
 /** 双轮平均的带符号累计行驶里程，单位 mm。 */
 float g_odometer_mm = 0.0f;
 
-#define MG513XGMR_WHEEL_RADIUS_MM      (69.0f)
+#define MG513XGMR_WHEEL_RADIUS_MM      (35.0f)
 #define MG513XGMR_MM_PER_PULSE         ((2.0f * 3.1415926f * MG513XGMR_WHEEL_RADIUS_MM) \
                                         / (float)MG513XGMR_PULSES_PER_REV)
 
