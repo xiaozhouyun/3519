@@ -142,10 +142,7 @@ static void DisplayTask(void *pvParameters)
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(35, 100, TFT180_6X8_FONT, "%s", bin_str);
 
-        // // 通过蓝牙发送灰度二值化字符串给上位机
-        // Bluetooth_Send_String(bin_str);
-        // Bluetooth_Send_String("\r\n");
-
+      
         /* ---- 灰度模拟量 ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
         tft_print(35, 112, TFT180_6X8_FONT, "%u", (unsigned int)g_grayscale_sensor.analog_val[0]);

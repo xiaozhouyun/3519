@@ -21,5 +21,6 @@ extern LineController_t *g_active_line_controller;
 extern float g_turn_output;
 extern MG513XGMR_Motor_t g_motor_left;
 extern MG513XGMR_Motor_t g_motor_right;
+extern float g_odometer_mm;
 
 #endif /* MAIN_H */

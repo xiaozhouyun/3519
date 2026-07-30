@@ -40,6 +40,13 @@ MG513XGMR_Motor_t g_motor_left;
 /** 右电机控制器句柄 (包含模式、PID对象、反馈状态及PWM输出) */
 MG513XGMR_Motor_t g_motor_right;
 
+/** 双轮平均的带符号累计行驶里程，单位 mm。 */
+float g_odometer_mm = 0.0f;
+
+#define MG513XGMR_WHEEL_RADIUS_MM      (69.0f)
+#define MG513XGMR_MM_PER_PULSE         ((2.0f * 3.1415926f * MG513XGMR_WHEEL_RADIUS_MM) \
+                                        / (float)MG513XGMR_PULSES_PER_REV)
+
 /* ================================================================
  *  内部辅助 — 通道映射
  * ================================================================ */
@@ -102,6 +109,8 @@ void MG513XGMR_Init(void)
 {
     MG513XGMR_Motor_t *motor;
     fp32 params[3];
+
+    g_odometer_mm = 0.0f;
 
     /* ---- 左轮初始化 ---- */
     motor = &g_motor_left;
@@ -301,6 +310,8 @@ int16_t MG513XGMR_Get_PWM(MG513XGMR_Channel_t ch)
  */
 void MG513XGMR_Update(void)
 {
+    int16_t wheel_delta[2];
+
     /* 左右电机依次处理 */
     for (int i = 0; i < 2; i++) {
         MG513XGMR_Channel_t ch    = (MG513XGMR_Channel_t)i; // 电机通道
@@ -310,12 +321,13 @@ void MG513XGMR_Update(void)
 
         /* ---- 步骤1: 读取编码器，更新反馈量 ---- */
         int16_t delta = Encode_Get_Delta(enc);
+        wheel_delta[i] = delta;
 
         motor->pulse_total  += (int32_t)delta;
         motor->current_speed = (fp32)delta;
         motor->current_angle = (float)motor->pulse_total * 360.0f
                                / (float)MG513XGMR_PULSES_PER_REV;
-
+        
         /* ---- 步骤2: 按模式执行 PID ---- */
         switch (motor->mode) {
 
@@ -351,5 +363,9 @@ void MG513XGMR_Update(void)
             break;
         }
     }
+
+    g_odometer_mm += ((float)wheel_delta[MG513XGMR_LEFT] +
+                      (float)wheel_delta[MG513XGMR_RIGHT])
+                     * MG513XGMR_MM_PER_PULSE * 0.5f;
 }
 

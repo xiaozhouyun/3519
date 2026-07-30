@@ -80,7 +80,6 @@ int16_t Encode_Get_Delta(Encode_Channel_t channel)
     if (channel == ENCODE_LEFT) {
         delta = -delta;
     }
-
     return delta;
 }
 #endif

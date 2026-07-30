@@ -1,19 +1,19 @@
 /**
  * @file blue.c
  * @brief 蓝牙串口通信与指令解析模块实现文件
- * 
-
  */
 
 #include "blue.h"
 #include "Grayscale.h"
 #include "main.h"
+#include <stdio.h>
+#include <string.h>
+
 #ifndef BLUE_HOST_TEST
 #include "ti_msp_dl_config.h"
 #endif
 
 // 全局变量定义
-
 volatile uint8_t g_bluetooth_data   = 0;
 volatile uint8_t g_bt_speed_grade   = 1;
 volatile uint8_t g_bt_running_flag  = 0;
@@ -32,10 +32,6 @@ void Bluetooth_Init(void)
     NVIC_EnableIRQ(blue_INST_INT_IRQN);
 #endif
 }
-
-
-#include <stdio.h>
-#include <string.h>
 
 /**
  * @brief  通过蓝牙串口发送单字节
@@ -72,20 +68,34 @@ void Bluetooth_Send_TestData(void)
 }
 
 /**
- * @brief  通过蓝牙串口发送当前循迹 PID 参数 (Kp, Ki, Kd) 给上位机
+ * @brief  通过蓝牙串口发送当前循迹 PID 参数 (Kp, Ki, Kd)、里程计和灰度二值化字符串给上位机
+ * @note   缓冲区设为 128 字节以防数据截断溢出，并集中单次发送以降低串口传输阻塞时间
  */
 void Bluetooth_Send_PID_Params(void)
 {
-    char pid_buf[64];
+    char pid_buf[128];
     if (g_active_line_controller == NULL) {
         Bluetooth_Send_String("[PID] No question selected\r\n");
         return;
     }
 
-    snprintf(pid_buf, sizeof(pid_buf), "[Q%u] Kp:%.2f Ki:%.3f Kd:%.3f V:%d\r\n",
+    /* 1. 获取灰度传感器二值化 8 位字符串 */
+    char bin_str[9];
+    uint8_t dig = Grayscale_Get_Digital(&g_grayscale_sensor);
+    for (int i = 0; i < 8; i++) {
+        bin_str[i] = (dig & (1 << (7 - i))) ? '1' : '0';
+    }
+    bin_str[8] = '\0';
+
+    /* 2. 组装 PID 参数、里程计 (g_odometer_mm) 以及灰度二值化字符串 (bin_str) */
+    snprintf(pid_buf, sizeof(pid_buf),
+             "[Q%u] Kp:%.2f Ki:%.3f Kd:%.3f V:%d Odo:%.1f Bin:%s\r\n",
              (unsigned int)FollowLine_Get_Active_Question(),
              g_active_line_controller->kp, g_active_line_controller->ki,
-             g_active_line_controller->kd, g_active_line_controller->base_speed);
+             g_active_line_controller->kd, g_active_line_controller->base_speed,
+             g_odometer_mm, bin_str);
+
+    /* 3. 通过蓝牙发送字符串 */
     Bluetooth_Send_String(pid_buf);
 }
 
@@ -100,16 +110,12 @@ void Bluetooth_Process_Byte(uint8_t data)
     // 解析蓝牙命令（仅处理有效命令，无效字节静默丢弃）
     switch (data) {
         case 'R':  // 切换红色模式
-           
             break;
         case 'G':  // 切换绿色模式
-           
             break;
         case 'B':  // 切换蓝色模式
-           
             break;
         case '1':  // 保留
-         
             break;
         case '2':  // 选择第二问
             FollowLine_Select_Question(2U);
@@ -182,12 +188,7 @@ void Bluetooth_Process_Byte(uint8_t data)
 }
 
 /**
- * @brief  默认蓝牙设置颜色动作函数 (可根据需要扩展)
- */
-
-
-/**
- * @brief  默认蓝牙设置速度动作函数 (可根据需要扩展)
+ * @brief  默认蓝牙设置速度动作函数
  */
 void BT_SetSpeed(uint8_t speed)
 {
