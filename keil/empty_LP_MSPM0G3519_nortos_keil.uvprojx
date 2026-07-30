@@ -440,6 +440,11 @@
               <FilePath>..\core\src\encode.c</FilePath>
             </File>
             <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\core\src\key.c</FilePath>
+            </File>
+            <File>
               <FileName>blue.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\core\src\blue.c</FilePath>

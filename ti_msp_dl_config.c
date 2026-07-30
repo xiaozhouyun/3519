@@ -257,13 +257,22 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		dianci_dian1_PIN |
 		dianci_dian2_PIN |
 		DRV8873HPWPT_PH2_PIN);
-    DL_GPIO_setUpperPinsPolarity(GPIOB, DL_GPIO_PIN_31_EDGE_RISE_FALL);
-    DL_GPIO_clearInterruptStatus(GPIOB, key_user_key_PIN);
-    DL_GPIO_enableInterrupt(GPIOB, key_user_key_PIN);
+    DL_GPIO_setUpperPinsPolarity(GPIOB, DL_GPIO_PIN_29_EDGE_FALL |
+		DL_GPIO_PIN_30_EDGE_FALL |
+		DL_GPIO_PIN_31_EDGE_FALL);
+    DL_GPIO_clearInterruptStatus(GPIOB, key_key0_PIN |
+		key_key1_PIN |
+		key_user_key_PIN);
+    DL_GPIO_enableInterrupt(GPIOB, key_key0_PIN |
+		key_key1_PIN |
+		key_user_key_PIN);
     DL_GPIO_setPins(GPIOC, TFT_TFT_DC_PIN |
 		TFT_TFT_CS_PIN);
     DL_GPIO_enableOutput(GPIOC, TFT_TFT_DC_PIN |
 		TFT_TFT_CS_PIN);
+    DL_GPIO_setLowerPinsPolarity(GPIOC, DL_GPIO_PIN_7_EDGE_FALL);
+    DL_GPIO_clearInterruptStatus(GPIOC, key_key3_PIN);
+    DL_GPIO_enableInterrupt(GPIOC, key_key3_PIN);
 
 }
 
@@ -372,7 +381,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
     DL_SYSCTL_setULPCLKDivider(DL_SYSCTL_ULPCLK_DIV_2);
     DL_SYSCTL_setMCLKSource(SYSOSC, HSCLK, DL_SYSCTL_HSCLK_SOURCE_SYSPLL);
     /* INT_GROUP1 Priority */
-    NVIC_SetPriority(GPIOB_INT_IRQn, 2);
+    NVIC_SetPriority(GPIOB_INT_IRQn, 1);
 
 }
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_CLK_init(void) {

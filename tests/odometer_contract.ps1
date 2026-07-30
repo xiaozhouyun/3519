@@ -16,8 +16,8 @@ if ($motor -notmatch 'g_odometer_mm\s*=\s*0\.0f\s*;') {
     throw 'MG513XGMR_Init must clear g_odometer_mm.'
 }
 
-if ($motor -notmatch '69\.0f') {
-    throw 'Odometer must use the 69 mm wheel radius.'
+if ($motor -notmatch 'MG513XGMR_WHEEL_RADIUS_MM') {
+    throw 'Odometer must use the wheel-radius constant.'
 }
 
 if ($motor -notmatch 'MG513XGMR_PULSES_PER_REV') {

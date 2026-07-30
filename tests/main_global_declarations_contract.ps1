@@ -23,7 +23,9 @@ $requiredDeclarations = @(
     'extern\s+float\s+g_turn_output\s*;',
     'extern\s+MG513XGMR_Motor_t\s+g_motor_left\s*;',
     'extern\s+MG513XGMR_Motor_t\s+g_motor_right\s*;',
-    'extern\s+float\s+g_odometer_mm\s*;'
+    'extern\s+float\s+g_odometer_mm\s*;',
+    'extern\s+volatile\s+uint8_t\s+g_key_event\s*;',
+    'extern\s+volatile\s+uint8_t\s+g_key_double_click_pending\s*;'
 )
 
 foreach ($declaration in $requiredDeclarations) {

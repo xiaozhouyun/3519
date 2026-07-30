@@ -22,5 +22,7 @@ extern float g_turn_output;
 extern MG513XGMR_Motor_t g_motor_left;
 extern MG513XGMR_Motor_t g_motor_right;
 extern float g_odometer_mm;
+extern volatile uint8_t g_key_event;
+extern volatile uint8_t g_key_double_click_pending;
 
 #endif /* MAIN_H */

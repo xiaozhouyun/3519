@@ -14,6 +14,8 @@
 /* 第二、三问各自保存独立的循迹参数和 PID 历史。 */
 LineController_t g_question2_line_controller;
 LineController_t g_question3_line_controller;
+LineController_t g_question4_line_controller;
+LineController_t g_question5_line_controller;
 LineController_t *g_active_line_controller = NULL;
 static uint8_t s_active_question = 0U;
 
@@ -75,7 +77,14 @@ bool FollowLine_Select_Question(uint8_t question)
         p_ctrl = &g_question2_line_controller;
     } else if (question == 3U) {
         p_ctrl = &g_question3_line_controller;
-    } else {
+    } 
+     else if (question == 4U) {
+        p_ctrl = &g_question4_line_controller;
+    } 
+     else if (question ==5U) {
+        p_ctrl = &g_question5_line_controller;
+    } 
+    else {
         return false;
     }
 
@@ -186,9 +195,10 @@ float FollowLine_PID_Compute(LineController_t *p_ctrl, float error)
 /**
  * @brief  循迹闭环控制更新主接口 (基于数字量)
  * @param  sensor     灰度传感器结构体指针 (如 &g_grayscale_sensor)
+ * @param  base_speed 本次控制使用的基础巡航速度
  * @return float 转向控制调节输出量 (turn_output)
  */
-float FollowLine_Update(Grayscale_Sensor_t *sensor)
+float FollowLine_Update(Grayscale_Sensor_t *sensor, int base_speed)
 {
     LineController_t *p_ctrl = g_active_line_controller;
     if (p_ctrl == NULL) return 0.0f;
@@ -198,8 +208,8 @@ float FollowLine_Update(Grayscale_Sensor_t *sensor)
 
     // 2. PID 解算输出转向控制量
     g_turn_output = FollowLine_PID_Compute(p_ctrl, error);
-    MG513XGMR_Set_Speed(MG513XGMR_LEFT, p_ctrl->base_speed + g_turn_output);
-    MG513XGMR_Set_Speed(MG513XGMR_RIGHT, p_ctrl->base_speed - g_turn_output);
+    MG513XGMR_Set_Speed(MG513XGMR_LEFT, base_speed + g_turn_output);
+    MG513XGMR_Set_Speed(MG513XGMR_RIGHT, base_speed - g_turn_output);
     
     return g_turn_output;
 }

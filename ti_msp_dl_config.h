@@ -291,10 +291,15 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define TFT_TFT_BLK_IOMUX                                         (IOMUX_PINCM5)
 /* Defines for key0: GPIOB.29 with pinCMx 66 on package pin 25 */
 #define key_key0_PORT                                                    (GPIOB)
+// pins affected by this interrupt request:["key0","key1","user_key"]
+#define key_GPIOB_INT_IRQN                                      (GPIOB_INT_IRQn)
+#define key_GPIOB_INT_IIDX                      (DL_INTERRUPT_GROUP1_IIDX_GPIOB)
+#define key_key0_IIDX                                       (DL_GPIO_IIDX_DIO29)
 #define key_key0_PIN                                            (DL_GPIO_PIN_29)
 #define key_key0_IOMUX                                           (IOMUX_PINCM66)
 /* Defines for key1: GPIOB.30 with pinCMx 67 on package pin 26 */
 #define key_key1_PORT                                                    (GPIOB)
+#define key_key1_IIDX                                       (DL_GPIO_IIDX_DIO30)
 #define key_key1_PIN                                            (DL_GPIO_PIN_30)
 #define key_key1_IOMUX                                           (IOMUX_PINCM67)
 /* Defines for key2: GPIOC.6 with pinCMx 84 on package pin 63 */
@@ -303,13 +308,14 @@ bool SYSCFG_DL_SYSCTL_SYSPLL_init(void);
 #define key_key2_IOMUX                                           (IOMUX_PINCM84)
 /* Defines for key3: GPIOC.7 with pinCMx 85 on package pin 64 */
 #define key_key3_PORT                                                    (GPIOC)
+// pins affected by this interrupt request:["key3"]
+#define key_GPIOC_INT_IRQN                                      (GPIOC_INT_IRQn)
+#define key_GPIOC_INT_IIDX                      (DL_INTERRUPT_GROUP1_IIDX_GPIOC)
+#define key_key3_IIDX                                        (DL_GPIO_IIDX_DIO7)
 #define key_key3_PIN                                             (DL_GPIO_PIN_7)
 #define key_key3_IOMUX                                           (IOMUX_PINCM85)
 /* Defines for user_key: GPIOB.31 with pinCMx 68 on package pin 27 */
 #define key_user_key_PORT                                                (GPIOB)
-// pins affected by this interrupt request:["user_key"]
-#define key_INT_IRQN                                            (GPIOB_INT_IRQn)
-#define key_INT_IIDX                            (DL_INTERRUPT_GROUP1_IIDX_GPIOB)
 #define key_user_key_IIDX                                   (DL_GPIO_IIDX_DIO31)
 #define key_user_key_PIN                                        (DL_GPIO_PIN_31)
 #define key_user_key_IOMUX                                       (IOMUX_PINCM68)

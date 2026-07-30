@@ -1,20 +1,20 @@
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $PSScriptRoot
-$header = Get-Content -Raw (Join-Path $root 'core\inc\blue.h')
-$blue = Get-Content -Raw (Join-Path $root 'core\src\blue.c')
+$keyHeader = Get-Content -Raw (Join-Path $root 'core\inc\key.h')
+$key = Get-Content -Raw (Join-Path $root 'core\src\key.c')
 $main = Get-Content -Raw (Join-Path $root 'main.c')
 
-if ($header -notmatch 'void\s+Key_Start\s*\(void\)\s*;') {
-    throw 'blue.h must declare Key_Start.'
+if ($keyHeader -notmatch 'KEY_EVENT_USER') {
+    throw 'key.h must define the user-key event bit.'
 }
 
-if ($blue -notmatch '(?s)void\s+Key_Start\s*\(void\)\s*\{\s*BT_Start\s*\(\s*\)\s*;\s*\}') {
-    throw 'Key_Start must reuse BT_Start.'
+if ($key -notmatch '(?s)key_user_key_PIN.*?DL_GPIO_clearInterruptStatus\s*\(\s*GPIOB\s*,\s*key_user_key_PIN\s*\).*?g_key_event\s*\|=\s*KEY_EVENT_USER') {
+    throw 'key.c must record the PB31 user-key event.'
 }
 
-if ($main -notmatch '(?s)void\s+GROUP1_IRQHandler\s*\(void\)\s*\{.*?key_user_key_PIN.*?DL_GPIO_clearInterruptStatus\s*\(\s*key_user_key_PORT\s*,\s*key_user_key_PIN\s*\)\s*;.*?Key_Start\s*\(\s*\)\s*;') {
-    throw 'GROUP1_IRQHandler must clear PB31 and invoke Key_Start.'
+if ($main -match 'Key_Start\s*\(\s*\)') {
+    throw 'PB31 must not start the car while key functions are deferred.'
 }
 
-Write-Output 'PB31 key-start contract passed.'
+Write-Output 'PB31 key-event contract passed.'

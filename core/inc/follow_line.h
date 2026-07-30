@@ -86,9 +86,10 @@ float FollowLine_PID_Compute(LineController_t *p_ctrl, float error);
 /**
  * @brief  循迹闭环控制更新主接口 (数字量模式)
  * @param  sensor     灰度传感器句柄指针 (如 &g_grayscale_sensor)
+ * @param  base_speed 本次控制使用的基础巡航速度
  * @return float 转向控制调节输出量 (turn_output)
  */
-float FollowLine_Update(Grayscale_Sensor_t *sensor);
+float FollowLine_Update(Grayscale_Sensor_t *sensor, int base_speed);
 
 #endif /* FOLLOW_LINE_H */
 

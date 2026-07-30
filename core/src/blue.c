@@ -201,6 +201,7 @@ void BT_SetSpeed(uint8_t speed)
 void BT_Start(void)
 {
     g_system_timer_sec = 0U;
+    g_odometer_mm = 0.0f;
     g_bt_running_flag = 1;
 }
 

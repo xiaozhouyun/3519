@@ -18,8 +18,8 @@ if ($source -notmatch 'LineController_t\s+g_question3_line_controller\s*;') {
     throw 'Question 3 controller is missing.'
 }
 
-if ($main -notmatch 'g_question3_line_controller\s*=\s*g_question2_line_controller\s*;') {
-    throw 'Question 3 must start from question 2.'
+if ($main -notmatch 'FollowLine_Init\s*\(\s*&g_question3_line_controller') {
+    throw 'Question 3 must have an independent controller initialization.'
 }
 
 if ($main -notmatch 'FollowLine_Select_Question\s*\(\s*3U\s*\)') {

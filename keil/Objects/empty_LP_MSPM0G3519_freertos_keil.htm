@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\empty_LP_MSPM0G3519_freertos_keil.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\empty_LP_MSPM0G3519_freertos_keil.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Thu Jul 30 11:36:12 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Thu Jul 30 14:36:29 2026
 <BR><P>
 <H3>Maximum Stack Usage =        472 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -593,7 +593,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
+<BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
 </UL>
 
 <P><STRONG><a name="[6f]"></a>__2snprintf</STRONG> (Thumb, 60 bytes, Stack size 32 bytes, __2snprintf.o(.text))
@@ -684,7 +684,7 @@ Global Symbols
 <P><STRONG><a name="[d3]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_clear
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_init
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
 </UL>
 
 <P><STRONG><a name="[159]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text), UNUSED)
@@ -693,7 +693,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_memset_w
 </UL>
 
-<P><STRONG><a name="[c2]"></a>__aeabi_uidivmod</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, aeabi_sdivfast.o(.text))
+<P><STRONG><a name="[c5]"></a>__aeabi_uidivmod</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, aeabi_sdivfast.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayTask
 </UL>
 
@@ -719,12 +719,13 @@ Global Symbols
 
 <P><STRONG><a name="[15e]"></a>_f2d</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, f2d.o(.text), UNUSED)
 
-<P><STRONG><a name="[c5]"></a>__aeabi_fdiv</STRONG> (Thumb, 0 bytes, Stack size 20 bytes, fdiv.o(.text))
+<P><STRONG><a name="[b7]"></a>__aeabi_fdiv</STRONG> (Thumb, 0 bytes, Stack size 20 bytes, fdiv.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = __aeabi_fdiv
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_PID_Compute
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
 <P><STRONG><a name="[15f]"></a>__divsf3</STRONG> (Thumb, 0 bytes, Stack size 20 bytes, fdiv.o(.text), UNUSED)
@@ -737,11 +738,12 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fdiv
 </UL>
 
-<P><STRONG><a name="[c3]"></a>__aeabi_f2iz</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, ffixi.o(.text))
+<P><STRONG><a name="[b8]"></a>__aeabi_f2iz</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, ffixi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_f2iz
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
 <LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayTask
+<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
 <P><STRONG><a name="[160]"></a>_ffix</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, ffixi.o(.text), UNUSED)
@@ -754,8 +756,9 @@ Global Symbols
 <P><STRONG><a name="[83]"></a>__aeabi_i2f</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, fflti.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f_normalise
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
 <P><STRONG><a name="[161]"></a>_fflt</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, fflti.o(.text), UNUSED)
@@ -763,7 +766,7 @@ Global Symbols
 <P><STRONG><a name="[85]"></a>__aeabi_ui2f</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, fflti.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f_normalise
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
+<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
 </UL>
 
 <P><STRONG><a name="[162]"></a>_ffltu</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, fflti.o(.text), UNUSED)
@@ -1143,8 +1146,8 @@ Global Symbols
 
 <P><STRONG><a name="[167]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[b7]"></a>BT_Stop</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, blue.o(.text.BT_Stop))
-<BR><BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Update
+<P><STRONG><a name="[b0]"></a>BT_Stop</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, blue.o(.text.BT_Stop))
+<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Update
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
@@ -1152,7 +1155,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a6]"></a>Bluetooth_Process_Byte</STRONG> (Thumb, 648 bytes, Stack size 112 bytes, blue.o(.text.Bluetooth_Process_Byte))
+<P><STRONG><a name="[a6]"></a>Bluetooth_Process_Byte</STRONG> (Thumb, 652 bytes, Stack size 112 bytes, blue.o(.text.Bluetooth_Process_Byte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = Bluetooth_Process_Byte &rArr; Bluetooth_Send_PID_Params &rArr; __2snprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1193,7 +1196,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[cc]"></a>DL_Common_delayCycles</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, dl_common.o(.text.DL_Common_delayCycles))
-<BR><BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Update
+<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Update
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_init
 <LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_SYSCTL_SYSPLL_init
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_initPower
@@ -1255,11 +1258,11 @@ Global Symbols
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_TB6612PWM_init
 </UL>
 
-<P><STRONG><a name="[b9]"></a>DL_Timer_setCaptureCompareValue</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dl_timer.o(.text.DL_Timer_setCaptureCompareValue))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Set_Speed
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop_All
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Init
+<P><STRONG><a name="[bc]"></a>DL_Timer_setCaptureCompareValue</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dl_timer.o(.text.DL_Timer_setCaptureCompareValue))
+<BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Set_Speed
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop_All
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Init
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_servo_init
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_DRV8873_init
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_TB6612PWM_init
@@ -1293,34 +1296,34 @@ Global Symbols
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Bluetooth_Send_String
 </UL>
 
-<P><STRONG><a name="[b8]"></a>DRV8873_Init</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, drv8873.o(.text.DRV8873_Init))
+<P><STRONG><a name="[bb]"></a>DRV8873_Init</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, drv8873.o(.text.DRV8873_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = DRV8873_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ba]"></a>DRV8873_Set_Speed</STRONG> (Thumb, 88 bytes, Stack size 8 bytes, drv8873.o(.text.DRV8873_Set_Speed))
+<P><STRONG><a name="[bd]"></a>DRV8873_Set_Speed</STRONG> (Thumb, 88 bytes, Stack size 8 bytes, drv8873.o(.text.DRV8873_Set_Speed))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = DRV8873_Set_Speed
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
 </UL>
 
-<P><STRONG><a name="[bb]"></a>DRV8873_Stop</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, drv8873.o(.text.DRV8873_Stop))
+<P><STRONG><a name="[be]"></a>DRV8873_Stop</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, drv8873.o(.text.DRV8873_Stop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = DRV8873_Stop
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Stop_All
+<BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Stop_All
 </UL>
 
-<P><STRONG><a name="[bc]"></a>DRV8873_Stop_All</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, drv8873.o(.text.DRV8873_Stop_All))
+<P><STRONG><a name="[bf]"></a>DRV8873_Stop_All</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, drv8873.o(.text.DRV8873_Stop_All))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = DRV8873_Stop_All
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Init
 </UL>
@@ -1328,7 +1331,7 @@ Global Symbols
 <P><STRONG><a name="[d0]"></a>Encode_Get_Delta</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, encode.o(.text.Encode_Get_Delta))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Encode_Get_Delta
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
 </UL>
 
 <P><STRONG><a name="[f4]"></a>Encode_Init</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, encode.o(.text.Encode_Init))
@@ -1337,17 +1340,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c4]"></a>FollowLine_Calc_Error</STRONG> (Thumb, 188 bytes, Stack size 48 bytes, follow_line.o(.text.FollowLine_Calc_Error))
+<P><STRONG><a name="[c6]"></a>FollowLine_Calc_Error</STRONG> (Thumb, 188 bytes, Stack size 48 bytes, follow_line.o(.text.FollowLine_Calc_Error))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = FollowLine_Calc_Error &rArr; __aeabi_fdiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Get_Digital
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmplt
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmplt
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
 </UL>
 
 <P><STRONG><a name="[ac]"></a>FollowLine_Get_Active_Question</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, follow_line.o(.text.FollowLine_Get_Active_Question))
@@ -1364,14 +1367,14 @@ Global Symbols
 <P><STRONG><a name="[c7]"></a>FollowLine_PID_Compute</STRONG> (Thumb, 180 bytes, Stack size 24 bytes, follow_line.o(.text.FollowLine_PID_Compute))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = FollowLine_PID_Compute &rArr; __aeabi_fdiv
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpgt
+<BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpgt
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpge
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
 </UL>
 
 <P><STRONG><a name="[a9]"></a>FollowLine_Select_Question</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, follow_line.o(.text.FollowLine_Select_Question))
@@ -1379,14 +1382,14 @@ Global Symbols
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[b3]"></a>FollowLine_Update</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, follow_line.o(.text.FollowLine_Update))
+<P><STRONG><a name="[b9]"></a>FollowLine_Update</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, follow_line.o(.text.FollowLine_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = FollowLine_Update &rArr; FollowLine_Calc_Error &rArr; __aeabi_fdiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Set_Speed
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_PID_Compute
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
@@ -1400,21 +1403,21 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_mspm0g351x_uvision.o(RESET)
 </UL>
 <P><STRONG><a name="[ab]"></a>Grayscale_Get_Digital</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, grayscale.o(.text.Grayscale_Get_Digital))
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
+<BR><BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Bluetooth_Send_PID_Params
 <LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayTask
 </UL>
 
-<P><STRONG><a name="[b2]"></a>Grayscale_Update</STRONG> (Thumb, 364 bytes, Stack size 56 bytes, grayscale.o(.text.Grayscale_Update))
+<P><STRONG><a name="[b3]"></a>Grayscale_Update</STRONG> (Thumb, 364 bytes, Stack size 56 bytes, grayscale.o(.text.Grayscale_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = Grayscale_Update
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BT_Stop
+<BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BT_Stop
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Common_delayCycles
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
-<P><STRONG><a name="[cb]"></a>Key_Start</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, blue.o(.text.Key_Start))
+<P><STRONG><a name="[cb]"></a>Key_Start</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, blue.o(.text.Key_Start))
 <BR><BR>[Called By]<UL><LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GROUP1_IRQHandler
 </UL>
 
@@ -1423,7 +1426,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_clear
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_init
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop_All
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop_All
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1433,31 +1436,31 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = MG513XGMR_Set_Speed &rArr; PID_clear
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_clear
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpgt
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpgt
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpge
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
 </UL>
 
-<P><STRONG><a name="[b0]"></a>MG513XGMR_Stop_All</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, mg513xgmr.o(.text.MG513XGMR_Stop_All))
+<P><STRONG><a name="[b1]"></a>MG513XGMR_Stop_All</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, mg513xgmr.o(.text.MG513XGMR_Stop_All))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = MG513XGMR_Stop_All &rArr; PID_clear
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_clear
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Stop
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
-<P><STRONG><a name="[b4]"></a>MG513XGMR_Update</STRONG> (Thumb, 376 bytes, Stack size 40 bytes, mg513xgmr.o(.text.MG513XGMR_Update))
+<P><STRONG><a name="[ba]"></a>MG513XGMR_Update</STRONG> (Thumb, 376 bytes, Stack size 40 bytes, mg513xgmr.o(.text.MG513XGMR_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = MG513XGMR_Update &rArr; PID_calc &rArr; __aeabi_fmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_calc
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encode_Get_Delta
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Set_Speed
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Set_Speed
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
@@ -1466,15 +1469,15 @@ Global Symbols
 <P><STRONG><a name="[d1]"></a>PID_calc</STRONG> (Thumb, 448 bytes, Stack size 32 bytes, q_pid.o(.text.PID_calc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = PID_calc &rArr; __aeabi_fmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmplt
+<BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmplt
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmple
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpgt
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpgt
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpge
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
 </UL>
 
 <P><STRONG><a name="[cf]"></a>PID_clear</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, q_pid.o(.text.PID_clear))
@@ -1483,7 +1486,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Set_Speed
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Stop_All
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Stop_All
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Init
 </UL>
 
@@ -1534,7 +1537,7 @@ Global Symbols
 <P><STRONG><a name="[d9]"></a>SYSCFG_DL_DRV8873_init</STRONG> (Thumb, 116 bytes, Stack size 24 bytes, ti_msp_dl_config.o(.text.SYSCFG_DL_DRV8873_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = SYSCFG_DL_DRV8873_init &rArr; DL_Timer_initFourCCPWMMode
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptCompUpdateMethod
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareOutCtl
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_initFourCCPWMMode
@@ -1543,7 +1546,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_init
 </UL>
 
-<P><STRONG><a name="[ec]"></a>SYSCFG_DL_GPIO_init</STRONG> (Thumb, 268 bytes, Stack size 20 bytes, ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init))
+<P><STRONG><a name="[ec]"></a>SYSCFG_DL_GPIO_init</STRONG> (Thumb, 300 bytes, Stack size 20 bytes, ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = SYSCFG_DL_GPIO_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_init
@@ -1567,7 +1570,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_SYSCTL_configFCC
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Common_delayCycles
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidiv
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidiv
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_SYSCTL_init
 </UL>
@@ -1585,7 +1588,7 @@ Global Symbols
 <P><STRONG><a name="[e5]"></a>SYSCFG_DL_TB6612PWM_init</STRONG> (Thumb, 116 bytes, Stack size 24 bytes, ti_msp_dl_config.o(.text.SYSCFG_DL_TB6612PWM_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = SYSCFG_DL_TB6612PWM_init &rArr; DL_Timer_initFourCCPWMMode
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptCompUpdateMethod
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareOutCtl
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_initFourCCPWMMode
@@ -1643,7 +1646,7 @@ Global Symbols
 <P><STRONG><a name="[ed]"></a>SYSCFG_DL_servo_init</STRONG> (Thumb, 188 bytes, Stack size 24 bytes, ti_msp_dl_config.o(.text.SYSCFG_DL_servo_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = SYSCFG_DL_servo_init &rArr; DL_Timer_initFourCCPWMMode
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareValue
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptCompUpdateMethod
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_setCaptureCompareOutCtl
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Timer_initFourCCPWMMode
@@ -1680,7 +1683,7 @@ Global Symbols
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskCreate
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Bluetooth_Init
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Init
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Init
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8873_Init
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encode_Init
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Select_Question
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Init
@@ -1703,7 +1706,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvInitialiseNewTask
 </UL>
 
-<P><STRONG><a name="[bd]"></a>tft180_clear</STRONG> (Thumb, 424 bytes, Stack size 32 bytes, zf_device_tft180.o(.text.tft180_clear))
+<P><STRONG><a name="[c0]"></a>tft180_clear</STRONG> (Thumb, 424 bytes, Stack size 32 bytes, zf_device_tft180.o(.text.tft180_clear))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = tft180_clear &rArr; tft180_set_region
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_set_region
@@ -1715,13 +1718,13 @@ Global Symbols
 <P><STRONG><a name="[f2]"></a>tft180_init</STRONG> (Thumb, 4356 bytes, Stack size 48 bytes, zf_device_tft180.o(.text.tft180_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = tft180_init &rArr; tft180_clear &rArr; tft180_set_region
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_clear
+<BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_clear
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DL_Common_delayCycles
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[be]"></a>tft180_set_color</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, zf_device_tft180.o(.text.tft180_set_color))
+<P><STRONG><a name="[c1]"></a>tft180_set_color</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, zf_device_tft180.o(.text.tft180_set_color))
 <BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayTask
 </UL>
 
@@ -1730,10 +1733,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_set_region
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
+<BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
 </UL>
 
-<P><STRONG><a name="[bf]"></a>tft_print</STRONG> (Thumb, 1304 bytes, Stack size 120 bytes, zf_device_tft180.o(.text.tft_print))
+<P><STRONG><a name="[c2]"></a>tft_print</STRONG> (Thumb, 1304 bytes, Stack size 120 bytes, zf_device_tft180.o(.text.tft_print))
 <BR><BR>[Stack]<UL><LI>Max Depth = 240 + Unknown Stack Size
 <LI>Call Chain = tft_print &rArr; vsnprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1750,8 +1753,8 @@ Global Symbols
 
 <P><STRONG><a name="[f9]"></a>uxListRemove</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, list.o(.text.uxListRemove))
 <BR><BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvAddCurrentTaskToDelayedList
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvSampleTimeNow
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvTimerTask
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvCheckTasksWaitingTermination
@@ -1790,8 +1793,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = vListInsert
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvAddCurrentTaskToDelayedList
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvSampleTimeNow
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvTimerTask
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskPlaceOnEventList
@@ -1851,15 +1854,15 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eTaskConfirmSleepModeStatus
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskStepTick
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidiv
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidiv
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvIdleTask
 </UL>
 
 <P><STRONG><a name="[ff]"></a>vPortYield</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, port.o(.text.vPortYield))
 <BR><BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvAddNewTaskToReadyList
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvTimerTask
 <LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueReceive
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskResumeAll
@@ -1884,7 +1887,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xPortStartScheduler
 </UL>
 
-<P><STRONG><a name="[c0]"></a>vTaskDelay</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, tasks.o(.text.vTaskDelay))
+<P><STRONG><a name="[c3]"></a>vTaskDelay</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, tasks.o(.text.vTaskDelay))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskResumeAll
@@ -2029,7 +2032,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTimerCreateTimerTask
 </UL>
 
-<P><STRONG><a name="[b1]"></a>xTaskDelayUntil</STRONG> (Thumb, 164 bytes, Stack size 32 bytes, tasks.o(.text.xTaskDelayUntil))
+<P><STRONG><a name="[b2]"></a>xTaskDelayUntil</STRONG> (Thumb, 164 bytes, Stack size 32 bytes, tasks.o(.text.xTaskDelayUntil))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = xTaskDelayUntil &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskResumeAll
@@ -2073,8 +2076,8 @@ Global Symbols
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortExitCritical
 <LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortEnterCritical
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
+<BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvTimerTask
 <LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueReceive
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortFree
@@ -2095,7 +2098,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskStartScheduler
 </UL>
 
-<P><STRONG><a name="[c1]"></a>__aeabi_uidiv</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, aeabi_sdivfast.o(.text_divfast))
+<P><STRONG><a name="[c4]"></a>__aeabi_uidiv</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, aeabi_sdivfast.o(.text_divfast))
 <BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayTask
 <LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_SYSCTL_SYSPLL_init
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortSuppressTicksAndSleep
@@ -2126,13 +2129,12 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fcmpge
 </UL>
 
-<P><STRONG><a name="[b6]"></a>__aeabi_fcmpgt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, fcmp.o(i._fgr))
+<P><STRONG><a name="[c8]"></a>__aeabi_fcmpgt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, fcmp.o(i._fgr))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fcmpgt
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_calc
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Set_Speed
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_PID_Compute
-<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
 <P><STRONG><a name="[125]"></a>_fgr</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, fcmp.o(i._fgr), UNUSED)
@@ -2149,11 +2151,11 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fcmple
 </UL>
 
-<P><STRONG><a name="[b5]"></a>__aeabi_fcmplt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, fcmp.o(i._fls))
+<P><STRONG><a name="[b4]"></a>__aeabi_fcmplt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, fcmp.o(i._fls))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fcmplt
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_calc
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
@@ -2187,10 +2189,10 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_calc
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_PID_Compute
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Bluetooth_Process_Byte
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
 </UL>
 
 <P><STRONG><a name="[12a]"></a>_fadd</STRONG> (Thumb, 134 bytes, Stack size 16 bytes, faddsub.o(x$fpl$fadd), UNUSED)
@@ -2213,23 +2215,25 @@ Global Symbols
 <LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fleq
 </UL>
 
-<P><STRONG><a name="[c8]"></a>__aeabi_fmul</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, fmul.o(x$fpl$fmul))
+<P><STRONG><a name="[b6]"></a>__aeabi_fmul</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, fmul.o(x$fpl$fmul))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_fmul
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_calc
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_PID_Compute
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
 <P><STRONG><a name="[16a]"></a>_fmul</STRONG> (Thumb, 172 bytes, Stack size 16 bytes, fmul.o(x$fpl$fmul), UNUSED)
 
-<P><STRONG><a name="[c6]"></a>__aeabi_fsub</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, faddsub.o(x$fpl$fsub))
+<P><STRONG><a name="[b5]"></a>__aeabi_fsub</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, faddsub.o(x$fpl$fsub))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_fsub
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_calc
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_PID_Compute
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Calc_Error
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
+<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 </UL>
 
 <P><STRONG><a name="[12c]"></a>_fsub</STRONG> (Thumb, 204 bytes, Stack size 16 bytes, faddsub.o(x$fpl$fsub), UNUSED)
@@ -2253,26 +2257,30 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[2a]"></a>ChassisTask</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, main.o(.text.ChassisTask))
+<P><STRONG><a name="[2a]"></a>ChassisTask</STRONG> (Thumb, 160 bytes, Stack size 8 bytes, main.o(.text.ChassisTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = ChassisTask &rArr; MG513XGMR_Update &rArr; PID_calc &rArr; __aeabi_fmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BT_Stop
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Get_Active_Question
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Update
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FollowLine_Update
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Update
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Stop_All
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Update
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MG513XGMR_Stop_All
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BT_Stop
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmplt
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpgt
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmplt
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
 <P><STRONG><a name="[2b]"></a>SensorTask</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, main.o(.text.SensorTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = SensorTask &rArr; xTaskDelayUntil &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
+<BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
@@ -2283,14 +2291,14 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Bluetooth_Send_String
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Grayscale_Get_Digital
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_set_color
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_clear
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_print
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_set_color
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_clear
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidiv
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidiv
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
@@ -2298,7 +2306,7 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = tft180_set_region
 </UL>
 <BR>[Called By]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_char
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_clear
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_clear
 </UL>
 
 <P><STRONG><a name="[104]"></a>prvInitialiseNewTask</STRONG> (Thumb, 232 bytes, Stack size 32 bytes, tasks.o(.text.prvInitialiseNewTask))
