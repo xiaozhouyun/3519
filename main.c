@@ -50,7 +50,7 @@ static void ChassisTask(void *pvParameters)
          Grayscale_Update(&g_grayscale_sensor);
         if(g_bt_running_flag==1)
         {     
-                FollowLine_Update(&g_line_controller, &g_grayscale_sensor, 880);
+                FollowLine_Update(&g_grayscale_sensor);
                 MG513XGMR_Update();
         }
         else
@@ -142,9 +142,9 @@ static void DisplayTask(void *pvParameters)
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(35, 100, TFT180_6X8_FONT, "%s", bin_str);
 
-        // 通过蓝牙发送灰度二值化字符串给上位机
-        Bluetooth_Send_String(bin_str);
-        Bluetooth_Send_String("\r\n");
+        // // 通过蓝牙发送灰度二值化字符串给上位机
+        // Bluetooth_Send_String(bin_str);
+        // Bluetooth_Send_String("\r\n");
 
         /* ---- 灰度模拟量 ---- */
         tft180_set_color(RGB565_BLACK, RGB565_WHITE);
@@ -157,7 +157,7 @@ static void DisplayTask(void *pvParameters)
         tft180_set_color(RGB565_RED, RGB565_WHITE);
         tft_print(40, 138, TFT180_6X8_FONT, "%.2f", g_turn_output);
 
-        vTaskDelay(pdMS_TO_TICKS(1000U));
+        vTaskDelay(pdMS_TO_TICKS(1500U));
     }
 }
 
@@ -177,19 +177,9 @@ int main(void)
     // 1. 系统底层外设与屏驱动初始化
     SYSCFG_DL_init();
     tft180_init();
-
-    // 2. 初始化 ICM42688P 六轴传感器
-    // if (icm42688p_init() != 0U) {
-    //     /* 初始化失败 —— 打印实际读到的 ID 便于排查，然后挂起 */
-    //     tft180_set_color(RGB565_RED, RGB565_WHITE);
-    //     tft_print(0, 136, TFT180_6X8_FONT, "IMU init FAIL!");
-    //     tft_print(120, 136, TFT180_6X8_FONT, "%u", (unsigned int)icm42688p_read_id());
-    //     while (1) {}
-    // }
-
-    // 3. 初始化灰度循迹传感器、编码器、电机驱动与蓝牙模块
-    // Grayscale_Init_First(&g_grayscale_sensor);
-    FollowLine_Init(&g_line_controller, 5.20f, 0.0f, 0.002f); // 初始化循迹 PID 参数
+    FollowLine_Init(&g_question2_line_controller, 5.20f, 0.0f, 0.002f, 880);
+    g_question3_line_controller = g_question2_line_controller;
+    FollowLine_Select_Question(3U);
     Encode_Init();
     DRV8873_Init();
     MG513XGMR_Init();    // 初始化左右电机速度/角度双闭环 PID

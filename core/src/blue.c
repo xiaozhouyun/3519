@@ -77,8 +77,15 @@ void Bluetooth_Send_TestData(void)
 void Bluetooth_Send_PID_Params(void)
 {
     char pid_buf[64];
-    snprintf(pid_buf, sizeof(pid_buf), "[PID] Kp:%.2f, Ki:%.3f, Kd:%.3f\r\n", 
-             g_line_controller.kp, g_line_controller.ki, g_line_controller.kd);
+    if (g_active_line_controller == NULL) {
+        Bluetooth_Send_String("[PID] No question selected\r\n");
+        return;
+    }
+
+    snprintf(pid_buf, sizeof(pid_buf), "[Q%u] Kp:%.2f Ki:%.3f Kd:%.3f V:%d\r\n",
+             (unsigned int)FollowLine_Get_Active_Question(),
+             g_active_line_controller->kp, g_active_line_controller->ki,
+             g_active_line_controller->kd, g_active_line_controller->base_speed);
     Bluetooth_Send_String(pid_buf);
 }
 
@@ -101,15 +108,16 @@ void Bluetooth_Process_Byte(uint8_t data)
         case 'B':  // 切换蓝色模式
            
             break;
-        case '1':  // 低速档
+        case '1':  // 保留
          
             break;
-        case '2':  // 中速档
-
+        case '2':  // 选择第二问
+            FollowLine_Select_Question(2U);
+            Bluetooth_Send_PID_Params();
             break;
-        case '3':  // 高速档
-            BT_SetSpeed(3);
-            Bluetooth_Send_String("Speed Grade set to 3\r\n");
+        case '3':  // 选择第三问
+            FollowLine_Select_Question(3U);
+            Bluetooth_Send_PID_Params();
             break;
         case 'S':  // 启动小车
         case 's':
@@ -130,30 +138,42 @@ void Bluetooth_Process_Byte(uint8_t data)
             Bluetooth_Send_PID_Params();
             break;
         case 'P':  // 调整 PID 参数: Kp + 0.1
-            g_line_controller.kp += 0.1f;
-            Bluetooth_Send_PID_Params();
+            if (g_active_line_controller != NULL) {
+                g_active_line_controller->kp += 0.1f;
+                Bluetooth_Send_PID_Params();
+            }
             break;
         case 'p':  // 调整 PID 参数: Kp - 0.1
-            g_line_controller.kp -= 0.1f;
-            Bluetooth_Send_PID_Params();
+            if (g_active_line_controller != NULL) {
+                g_active_line_controller->kp -= 0.1f;
+                Bluetooth_Send_PID_Params();
+            }
             break;
         case 'I':  // 调整 PID 参数: Ki + 0.01
-            g_line_controller.ki += 0.01f;
-            Bluetooth_Send_PID_Params();
+            if (g_active_line_controller != NULL) {
+                g_active_line_controller->ki += 0.01f;
+                Bluetooth_Send_PID_Params();
+            }
             break;
         case 'i':  // 调整 PID 参数: Ki - 0.01
-            g_line_controller.ki -= 0.01f;
-            Bluetooth_Send_PID_Params();
+            if (g_active_line_controller != NULL) {
+                g_active_line_controller->ki -= 0.01f;
+                Bluetooth_Send_PID_Params();
+            }
             break;
         case 'K':  // 调整 PID 参数: Kd + 0.5
         case 'D':
-            g_line_controller.kd += 0.5f;
-            Bluetooth_Send_PID_Params();
+            if (g_active_line_controller != NULL) {
+                g_active_line_controller->kd += 0.5f;
+                Bluetooth_Send_PID_Params();
+            }
             break;
         case 'k':  // 调整 PID 参数: Kd - 0.5
         case 'd':
-            g_line_controller.kd -= 0.5f;
-            Bluetooth_Send_PID_Params();
+            if (g_active_line_controller != NULL) {
+                g_active_line_controller->kd -= 0.5f;
+                Bluetooth_Send_PID_Params();
+            }
             break;
         default:
             // 忽略未定义或无效字符
